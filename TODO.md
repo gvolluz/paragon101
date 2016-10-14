@@ -22,3 +22,10 @@ API
 * structure complète pas juste sauver le json; persos peuvent être privés ou publics
 * sauver un perso dans la DB
 * récupérer un perso depuis la DB
+
+- base 
+https://www.leaseweb.com/labs/2015/10/creating-a-simple-rest-api-in-php/
+
+- intégrer plutôt 
+https://github.com/mevdschee/php-crud-api
+
