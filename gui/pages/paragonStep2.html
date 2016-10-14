@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">             
+        <h2>{{ etapeActuelle }}</h2>
+        <p>Répartissez vos Sofias de Caractéristiques entre vos Caractéristiques principales et dérivées. Les Caractéristiques primordiales pour le metatype choisi sont mises en évidence à titre indicatif.</p>
+        <a href="#/paragonStep3" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
+        <table class="table table_caracteristiques">
+            <thead>
+                <tr>
+                    <td>Caractéristique</td>
+                    <td>Base</td>
+                    <td>Points ajoutés</td>
+                    <td>Valeur finale</td>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr><td colspan="4" class="center bg-primary"><h4>Principales</h4></td></tr>                
+                <tr ng-class="personnage.metatype.nom === 'Hoplite' || 
+                              personnage.metatype.nom === 'Ombre' || 
+                              personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
+                    <td>Acuité</td>
+                    <td>{{ personnage.acuiteMin }}</td>
+                    <td><input type="number" ng-model="personnage.acuiteBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.acuite() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.nom === 'Faucon' || 
+                              personnage.metatype.nom === 'Ombre' || 
+                              personnage.metatype.nom === 'Marionnettiste' ? 'bg-success' : ''">
+                    <td>Adresse</td>
+                    <td>{{ personnage.adresseMin }}</td>
+                    <td><input type="number" ng-model="personnage.adresseBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.adresse() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.nom === 'Rhéto' || 
+                              personnage.metatype.nom === 'Marionnettiste' || 
+                              personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
+                    <td>Astuce</td>
+                    <td>{{ personnage.astuceMin }}</td>
+                    <td><input type="number" ng-model="personnage.astuceBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.astuce() }}</td>
+                </tr>
+                <tr>
+                    <td>Détermination</td>
+                    <td>{{ personnage.determinationMin }}</td>
+                    <td><input type="number" ng-model="personnage.determinationBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.determination() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.nom === 'Rhéto' ? 'bg-success' : ''">
+                    <td>Prestance</td>
+                    <td>{{ personnage.prestanceMin }}</td>
+                    <td><input type="number" ng-model="personnage.prestanceBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.prestance() }}</td>
+                </tr> 
+                <tr ng-class="personnage.metatype.nom === 'Faucon' ? 'bg-success' : ''">
+                    <td>Robustesse</td>
+                    <td>{{ personnage.robustesseMin }}</td>
+                    <td><input type="number" ng-model="personnage.robustesseBase" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.robustesse() }}</td>
+                </tr>
+                <tr><td colspan="4" class="center bg-primary"><h4>Dérivées</h4></td></tr>
+                <tr>
+                    <td>Impact</td>
+                    <td colspan="3">{{ personnage.impact() }}</td>
+                </tr>
+                <tr>
+                    <td>Polem</td>
+                    <td>{{ personnage.polemMin }}</td>
+                    <td>-</td>            
+                    <td>{{ personnage.polem() }}</td>
+                </tr>
+                <tr>
+                    <td>Stoa</td>
+                    <td>{{ personnage.stoaMin() }}</td>
+                    <td>-</td>
+                    <td>{{ personnage.stoa() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.nom === 'Hoplite' ? 'bg-success' : ''">
+                    <td>Tachyos</td>
+                    <td>{{ personnage.tachyosMin }}</td>
+                    <td><input type="number" ng-model="personnage.tachyosBase" ng-model-options="{ getterSetter: true }" min="0" max="5"/></td>
+                    <td>{{ personnage.tachyos() }}</td>
+                </tr>
+                <tr>
+                    <td>Zois</td>
+                    <td>{{ personnage.zoisMin() }}</td>
+                    <td>-</td>
+                    <td>{{ personnage.zois() }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#/paragonStep3" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
+    </div>
+</div>

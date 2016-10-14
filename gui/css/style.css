@@ -1,0 +1,61 @@
+.table_caracteristiques,
+.table_competences{
+    /*border: solid 1px;*/
+}
+
+.table_caracteristiques thead,
+.table_competences thead{
+    font-weight: bold;
+}
+
+.table_caracteristiques td,
+.table_competences td{
+    text-align: center;
+    /*border: solid 1px;*/
+}
+
+.table_caracteristiques td input,
+.table_competences td input{
+    text-align: center;
+    width: 40px;
+}
+
+.long input {
+    width: 250px !important;
+}
+
+/******** classes génériques ********/
+.center{
+    text-align: center !important;
+}
+
+.recap{
+    margin-top: 5px;
+    padding: 1em;
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #FFF;
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+    -webkit-border-radius: 0 0 20px 0;
+    border-radius: 0 0 20px 0;
+}
+
+.recap li{
+    list-style: none;
+}
+
+.breadcrumb ul{
+    display: inline;
+}
+
+.breadcrumb li{
+    list-style: none;
+}
+
+.disabled {
+  cursor: not-allowed;
+}

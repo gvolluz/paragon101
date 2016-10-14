@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr-fr" ng-app="paragonApp">
+    <head>
+        <title>Paragon 101</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta charset="UTF-8">
+
+        <!-- load bootstrap via CDN -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+        
+        <!-- application CSS -->
+        <link rel="stylesheet" href="css/style.css">
+    
+        <!-- load angular via CDN -->
+        <script src="//code.angularjs.org/1.5.8/angular.min.js"></script>
+        <script src="//code.angularjs.org/1.5.8/angular-route.min.js"></script>
+        <script src="//code.angularjs.org/1.5.8/angular-cookies.min.js"></script>
+        
+        <!-- application scripts -->
+        <script src="app.js"></script>
+        <script src="routes.js"></script>
+        <script src="services.js"></script>
+        <!-- controllers -->
+        <script src="controllerHome.js"></script>
+        <script src="controllerParagonStep1.js"></script>
+        <script src="controllerParagonStep2.js"></script>
+        <script src="controllerParagonStep3.js"></script>
+        <script src="controllerParagonStep4.js"></script>
+        <script src="controllerParagonStep5.js"></script>
+        <script src="controllerParagonStep6.js"></script>
+        <script src="directives.js"></script>
+    </head>
+    <body>
+        <div ng-controller="mainController">
+            <header>
+                <nav class="navbar navbar-default">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">            
+                            <bread-crumb></bread-crumb>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="container">
+                <recap-perso 
+                 show-recapitulatif="{{ showRecapitulatif }}"
+                 uuid="{{ personnage.uuid }}"
+                 nom="{{ personnage.nom }}"
+                 metatype="{{ personnage.metatype.nom }}"
+                 axe="{{ personnage.axe }}"
+                 car-sofias="{{ personnage.carSofias }}"
+                 comp-sofias="{{ personnage.compSofias }}"></recap-perso>
+                <ng-view></ng-view>
+            </div>
+		</div>
+    </body>
+</html>

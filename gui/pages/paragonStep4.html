@@ -1,0 +1,188 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-2"> 
+        <h2>{{ etapeActuelle }}</h2>
+        <p>Choisissez l'Axe de votre Paragon, et répartissez les éventuels bonus: 
+        <select ng-model="personnage.axe" ng-options="axe for axe in constantes.axesListe"></select>
+        </p>
+        <hr/>        
+        <a href="#/paragonStep5" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
+        <div ng-show="personnage.axe==='Crésus'">
+            <h3>Crésus</h3>
+            <p>Le Paragon reçoit 100'000 DR de capital de départ. Passez à l'étape suivante.</p>
+        </div>
+        <div ng-show="personnage.axe==='Aristote'">
+            <h3>Aristote</h3>
+            <p>Le Paragon reçoit</p>
+            <ul>
+                <li>20 points supplémentaires, à distribuer dans les Compétences (uniquement)</li>
+                <li>5 points de Contact supplémentaires (gardés au chaud en réserve pour une prochaine étape)</li>        
+            </ul>
+            <h3>Compétence choisies</h3>
+            <div ng-show="!personnage.competencesListe.length">
+                <p>Aucune compétence choisie pour le moment!</p>
+            </div>
+            <div ng-show="personnage.competencesListe.length">
+                <table class="table table_competences">
+                    <thead>
+                        <tr>
+                            <td>Compétence</td>
+                            <td>Base</td>
+                            <td>Points déjà répartis</td>
+                            <td>Points répartis via l'Axe</td>
+                            <td>Rang</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- -->
+                        <tr ng-controller="paragonStep3CompetencesController"
+                            ng-repeat="competence in personnage.competencesListe">
+                            <td>{{ competence.nom }}</td>
+                            <td>{{ competence.min }}</td>
+                            <td>{{ competence.base }}</td>
+                            <td><input type="number" ng-model="competence.axeManuel" min="0" max="5"/></td>
+                            <td>{{ competence.rang() }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+        <div ng-show="personnage.axe==='Persée'">
+            <h3>Persée</h3>
+            <p>Le Paragon reçoit 12 points supplémentaires à répartir dans</p>
+            <ul>
+                <li>Caractéristiques (max 18)</li>
+                <li>Zois</li>
+                <li>Tachyos (max 15)</li>
+                <li>Stoa (max 100)</li>
+                <li>Polem (max 100)</li>
+            </ul>
+            <table class="table table_caracteristiques">
+            <thead>
+                <tr>
+                    <td>Caractéristique</td>
+                    <td>Base</td>
+                    <td>Points déjà répartis</td>
+                    <td>Points répartis via l'Axe</td>
+                    <td>Valeur finale</td>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr><td colspan="5" class="center bg-primary"><h4>Principales</h4></td></tr>  
+                <tr ng-class="personnage.metatype.name === 'Hoplite' || 
+                              personnage.metatype.name === 'Ombre' || 
+                              personnage.metatype.name === 'Phreaker' ? 'bg-success' : ''">
+                    <td>Acuité</td>
+                    <td>{{ personnage.acuiteMin }}</td>
+                    <td>{{ personnage.acuiteBase() }}</td>
+                    <td><input type="number" ng-model="personnage.acuiteAxeManuel" ng-model-options="{ getterSetter: true }" /></td>
+                    <td>{{ personnage.acuite() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.name === 'Faucon' || 
+                              personnage.metatype.name === 'Ombre' || 
+                              personnage.metatype.name === 'Marionnettiste' ? 'bg-success' : ''">
+                    <td>Adresse</td>
+                    <td>{{ personnage.adresseMin }}</td>
+                    <td>{{ personnage.adresseBase() }}</td>
+                    <td><input type="number" ng-model="personnage.adresseAxeManuel" ng-model-options="{ getterSetter: true }" /></td>
+                    <td>{{ personnage.adresse() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.name === 'Rhéto' || 
+                              personnage.metatype.name === 'Marionnettiste' || 
+                              personnage.metatype.name === 'Phreaker' ? 'bg-success' : ''">
+                    <td>Astuce</td>
+                    <td>{{ personnage.astuceMin }}</td>
+                    <td>{{ personnage.astuceBase() }}</td>
+                    <td><input type="number" ng-model="personnage.astuceAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.astuce() }}</td>
+                </tr>
+                <tr>
+                    <td>Détermination</td>
+                    <td>{{ personnage.determinationMin }}</td>
+                    <td>{{ personnage.determinationBase() }}</td>
+                    <td><input type="number" ng-model="personnage.determinationAxeManuel" ng-model-options="{ getterSetter: true }" /></td>
+                    <td>{{ personnage.determination() }}</td>
+                </tr>
+                <tr ng-class="personnage.metatype.name === 'Rhéto' ? 'bg-success' : ''">
+                    <td>Prestance</td>
+                    <td>{{ personnage.prestanceMin }}</td>
+                    <td>{{ personnage.prestanceBase() }}</td>
+                    <td><input type="number" ng-model="personnage.prestanceAxeManuel" ng-model-options="{ getterSetter: true }" min="0" max="15"/></td>
+                    <td>{{ personnage.prestance() }}</td>
+                </tr>   
+                <tr ng-class="personnage.metatype.name === 'Faucon' ? 'bg-success' : ''">
+                    <td>Robustesse</td>
+                    <td>{{ personnage.robustesseMin }}</td>
+                    <td>{{ personnage.robustesseBase() }}</td>
+                    <td><input type="number" ng-model="personnage.robustesseAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.robustesse() }}</td>
+                </tr> 
+                <tr><td colspan="5" class="center bg-primary"><h4>Dérivées</h4></td></tr> 
+                <tr>
+                    <td>Impact</td>
+                    <td colspan="3">{{ personnage.impact() }}</td>
+                </tr>
+                <tr>
+                    <td>Polem</td>
+                    <td>{{ personnage.polemMin }}</td>
+                    <td>{{ personnage.polemBase() }}</td>
+                    <td><input type="number" ng-model="personnage.polemAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.polem() }}</td>
+                </tr>
+                <tr>
+                    <td>Stoa</td>
+                    <td>{{ personnage.stoaMin() }}</td>
+                    <td>{{ personnage.stoaBase() }}</td>
+                    <td><input type="number" ng-model="personnage.stoaAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.stoa() }}</td>
+                </tr>    
+                <tr ng-class="personnage.metatype.name === 'Hoplite' ? 'bg-success' : ''">
+                    <td>Tachyos</td>
+                    <td>{{ personnage.tachyosMin }}</td>
+                    <td>{{ personnage.tachyosBase() }}</td>
+                    <td><input type="number" ng-model="personnage.tachyosAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.tachyos() }}</td>
+                </tr>
+                <tr>
+                    <td>Zois</td>
+                    <td>{{ personnage.zoisMin() }}</td>
+                    <td>{{ personnage.zoisBase() }}</td>
+                    <td><input type="number" ng-model="personnage.zoisAxeManuel" ng-model-options="{ getterSetter: true }"/></td>
+                    <td>{{ personnage.zois() }}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div ng-show="personnage.axe==='Héraklès'">
+            <h3>Héraklès</h3>
+            <p>Le Paragon doit </p>
+            <ul>
+                <li>augmenter une Caractéristique de 6 points (maximum 20)</li>
+                <li>augmenter de 10 les Tachyos (maximum 20)</li>
+            </ul>
+            <hr/>
+            <p>Caractéristique:</p>
+            <ul>
+                <li><a ng-click="augmenterHerakles('acuite')">Acuité</a></li>
+                <li><a ng-click="augmenterHerakles('adresse')">Adresse</a></li>
+                <li><a ng-click="augmenterHerakles('astuce')">Astuce</a></li>
+                <li><a ng-click="augmenterHerakles('determination')">Détermination</a></li>
+                <li><a ng-click="augmenterHerakles('prestance')">Prestance</a></li>
+                <li><a ng-click="augmenterHerakles('robustesse')">Robustesse</a></li>
+            </ul>
+        </div>
+        <div ng-show="personnage.axe==='Panmetron'">
+            <h3>Panmetron</h3>
+            <p>Le Paragon reçoit automatiquement</p>
+            <ul>
+                <li>2 points de Caractéristique</li>
+                <li>2 points de Compétence</li>
+                <li>2 points de Zois</li>
+                <li>2 points de Polem</li>
+                <li>2 points de Stoa</li>
+                <li>2 points de Tachyos</li>
+                <li>2 points de Contacts</li>
+                <li>20'000 DR</li>
+            </ul>
+        </div>
+    </div>
+</div>
