@@ -1,14 +1,13 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <h2>{{ etapeActuelle }}</h2>
-        <label>Nom:</label><input type="text" ng-model="personnage.nom" max="10"/><a ng-click="genererNom();" class="btn btn-primary" data-toggle="tooltip" title="Super noms!">Aha !</a>
-        <label>Âge:</label><input type="number" ng-model="personnage.age" min="18" max="75"/>
-        <p>Choisissez un metatype. Celui-ci va définir les Caractéristiques à privilégier (ce qui est uniquement un conseil) et les Compétences de profession (qui sont obligatoires).</p>
-        <hr/>
-        <div>
-            <label>Liste des metatypes:</label>
-            <select ng-model="personnage.metatype" ng-options="metatype.nom for metatype in constantes.metatypesListe"></select>
-        </div>
-        <a href="#/paragonStep2" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
-    </div>
-</div>
+<toolbar></toolbar>
+<h2>{{ etapeActuelle }}</h2>
+<p>Choisissez un metatype. Celui-ci va définir les Caractéristiques à privilégier (ce qui est uniquement un conseil) et les Compétences de profession (qui sont obligatoires). Définissez ensuite le nom et l'âge du Paragon. Si vous manquez d'inspiration, laissez-vous tenter par un 'Aha!', vous pourriez être surpris...</p>
+<hr/>
+<label>Liste des metatypes</label>
+<select ng-model="personnage.metatype" ng-options="metatype.nom for metatype in constantes.metatypesListe"></select>
+<br/>
+<label>Nom</label>
+<input type="text" ng-model="personnage.nom" max="10"/>
+<a ng-click="genererNom();" class="btn btn-primary" data-toggle="tooltip" title="Super noms!">Aha !</a>
+<br/>
+<label>Âge</label>
+<input type="number" ng-model="personnage.age" min="18" max="75"/>

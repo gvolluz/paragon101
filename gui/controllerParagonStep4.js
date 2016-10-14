@@ -1,14 +1,16 @@
 //CONTROLLER - PARAGON STEP 4
 paragonApp.controller('paragonStep4Controller', ['$scope', 'personnageService', function($scope, personnageService) {
     $scope.etapeActuelle = 'Choix de l\'Axe';
-        
+    $scope.$parent.pagePrecedente = '#/paragonStep3/';
+    $scope.$parent.pageSuivante = '#/paragonStep5/';
+
     $scope.constantes = personnageService.constantes;
     $scope.personnage = personnageService.personnage;
-    
-    $scope.$watch('personnage', function(newValue, oldValue){       
-        personnageService.personnage = newValue;    
+
+    $scope.$watch('personnage', function(newValue, oldValue){
+        personnageService.personnage = newValue;
     });
-    
+
     $scope.augmenterHerakles = function(carac){
         switch(carac){
             case 'acuite':
@@ -30,11 +32,11 @@ paragonApp.controller('paragonStep4Controller', ['$scope', 'personnageService', 
                 $scope.personnage.robustesseAxeAuto = 6;
                 break;
         }
-        
+
         //Et dans tous les cas
         $scope.personnage.tachyosAxeAuto += 10;
         if($scope.personnage.tachyosAxeAuto>20){
             $scope.personnage.tachyosAxeAuto = 20;
-        }        
+        }
     }
 }]);

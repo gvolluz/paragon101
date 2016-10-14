@@ -1,46 +1,7 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">      
-        <h2>{{ etapeActuelle }}</h2>
-        <p>Ce wizard de génération de Paragon pour Ichorpunk vous accompagne dans la création manuelle de vos Paragons.</p>
-        <div>
-            <hr/>    
-            <a href="#/paragonStep1" class="btn btn-primary">Démarrer</a>
-            <a ng-click="personnageAleatoire();" class="btn btn-primary" data-toggle="tooltip" title="Met des valeurs aléatoires dans les Caractéristiques etc.">Stats aléatoires</a>
-            <hr/>
-            <div>
-                <h3>Liste des personnages sauvegardés localement</h3>
-                <a ng-click="personnageNouveau();" class="btn btn-primary" data-toggle="tooltip" title="Générer un personnage">Nouveau personnage</a>
-            <a ng-click="sauverPersonnage();" class="btn btn-primary" data-toggle="tooltip" title="Sauver">Sauver le personnage courant</a>
-                <div ng-show="!personnagesListe.length">Aucun personnage sauvé.</div>
-                <table ng-show="personnagesListe.length>0" class="table table_caracteristiques">
-                    <thead>
-                        <tr>
-                            <td>UUID</td>
-                            <td>Nom</td>
-                            <td>Âge</td>
-                            <td>Metatype</td>
-                            <td>Axe</td>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr ng-repeat="personnage in personnagesListe
-                            | startFrom:currentPage*pageSize | limitTo:pageSize">
-                            <td>{{ personnage.uuid }}</td>
-                            <td>{{ personnage.nom }}</td>
-                            <td>{{ personnage.age }}</td>
-                            <td>{{ personnage.metatype }}</td>
-                            <td>{{ personnage.axe }}</td>
-                            <td><a ng-click="chargerPersonnage(personnage.uuid);"><span class="glyphicon glyphicon-play-circle"></span></a></td>
-                            <td><a ng-click="supprimerPersonnage(personnage.uuid);"><span class="glyphicon glyphicon-remove"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>                
-                <a ng-click="personnagesListePaginationPrecedent()" 
-                   ng-class="{disabled: personnagesListePaginationPrecedent()}"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                {{currentPage+1}}/{{numberOfPages()}}
-                <a ng-click="personnagesListePaginationSuivant()"
-                   ng-class="{disabled: personnagesListePaginationSuivant()}"><span class="glyphicon glyphicon-chevron-right"></span></a>
-            </div>
-        </div>
-    </div>
+<div class="toolbar">
+    <a ng-click="personnage.aleatoire();" class="btn btn-success" data-toggle="tooltip" title="Met des valeurs aléatoires dans les Caractéristiques etc."><span class="glyphicon glyphicon-random"></span></a>
+    <a ng-click="personnage.creer();" class="btn btn-success" data-toggle="tooltip" title="Générer un tout nouveau personnage"><span class="glyphicon glyphicon-plus"></span></a>
+    <a ng-click="personnage.sauver();" class="btn btn-success" data-toggle="tooltip" title="Sauver le personnage courant dans le cookie"><span class="glyphicon glyphicon-save"></span></a>
 </div>
+<h2>{{ etapeActuelle }}</h2>
+<p>Ce wizard de génération de Paragon pour Ichorpunk vous accompagne dans la création manuelle de vos Paragons.</p>

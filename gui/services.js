@@ -44,33 +44,32 @@ paragonApp.service('personnageService', function(){
             'Spyr','Step','Sim','Soc','Soph','Ser','Tele','Tim','Tit','Tryp','Phr','Or',
             'Ori','Ari','Ar','Ned'
         ];
-        
+
         var index = this.de(0,prefixes.length-1);
         return prefixes[index];
     }
-    
+
     this.troisConsonnes = function(lettre1,lettre2,lettre3){
         const regex = /[bcdfghjklmnpqrstvwxz]/i;
-        
+
         var patt = new RegExp(regex);
         if(     true === patt.test(lettre1)
            &&   true === patt.test(lettre2)
            &&   true === patt.test(lettre3)){
             return true;
         }
-        
-        return false;        
+
+        return false;
     }
-    
+
     this.milieu = function(taille, actuel=''){
         var paires = 'abecualdefegaheijikilimonopuoqrisateuvewxeyezea';
-        
+
         var lettre = '';
         var name = '';
         for(var i=0;i<taille;i++){
-            lettre = paires.substr(this.de(0,paires.length),1); 
-            
-            
+            lettre = paires.substr(this.de(0,paires.length),1);
+
             if(actuel.length > 2){
                 var lettreA = actuel.substr(i-1,1);
                 var lettreAA = actuel.substr(i-2,1);
@@ -78,12 +77,12 @@ paragonApp.service('personnageService', function(){
                 while(lettre === lettreA && lettre === lettreAA){
                     lettre = paires.substr(this.de(0,paires.length),1);
                 }
-                
+
                 //3 consonnes l'une après l'autre bof...
-                while(this.troisConsonnes(lettreAA, lettreA, lettre)){                    
+                while(this.troisConsonnes(lettreAA, lettreA, lettre)){
                     lettre = paires.substr(this.de(0,paires.length),1);
                 }
-                
+
                 //certains couples sont impossibles (tw, tz etc.)
                 while(
                         (lettreA === 't' && lettre == 'z')
@@ -93,16 +92,16 @@ paragonApp.service('personnageService', function(){
                     ||  (lettreA === 'b' && lettre == 'q')
                 ){
                     lettre = paires.substr(this.de(0,paires.length),1);
-                } 
+                }
             }
-            
+
             name += lettre;
             actuel += lettre;
         }
-      
+
         return name;
     };
-    
+
     this.suffixes = function(){
         //But : fabriquer des fins de nom
         //à la grecque ou bretinienne
@@ -124,31 +123,28 @@ paragonApp.service('personnageService', function(){
             'gurn',            'ate',             'ote',
             'ocle'
         ];
-        
+
         var index = this.de(0,suffixes.length-1);
         return suffixes[index];
     }
-    
-    
+
     this.nomGenerateur = function(){
         var prenom = this.prefixes();
         prenom += this.milieu(this.de(1,3),prenom);
-        
+
         var nom = this.prefixes();
         nom += this.milieu(this.de(1,2),nom)+this.suffixes();
-        
+
         prenom = prenom.capitalizeFirstLetter();
         nom = nom.capitalizeFirstLetter();
-        
+
         return prenom + ' ' + nom;
     }
-    
-    
-    
+
     this.de = function(min,max){
         return Math.floor(max*Math.random())+min;
     }
-    
+
     this.guid = function(){
                   function s4() {
                     return Math.floor((1 + Math.random()) * 0x10000)
@@ -158,12 +154,12 @@ paragonApp.service('personnageService', function(){
                   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
                     s4() + '-' + s4() + s4() + s4();
                 };
-    
+
     this.constantes = {
-        cookieNomListe: 'P101CL',
+        cookiePersoNom: 'P101P',
         axesListe: ['Crésus', 'Aristote', 'Persée', 'Héraklès', 'Panmetron'],
         metatypesListe: [
-                    {   
+                    {
                         nom: 'Hoplite',
                         competences:[
                              'Armes de poing',

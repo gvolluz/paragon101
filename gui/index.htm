@@ -7,15 +7,15 @@
 
         <!-- load bootstrap via CDN -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-        
+
         <!-- application CSS -->
         <link rel="stylesheet" href="css/style.css">
-    
+
         <!-- load angular via CDN -->
         <script src="//code.angularjs.org/1.5.8/angular.min.js"></script>
         <script src="//code.angularjs.org/1.5.8/angular-route.min.js"></script>
         <script src="//code.angularjs.org/1.5.8/angular-cookies.min.js"></script>
-        
+
         <!-- application scripts -->
         <script src="app.js"></script>
         <script src="routes.js"></script>
@@ -32,26 +32,30 @@
     </head>
     <body>
         <div ng-controller="mainController">
-            <header>
-                <nav class="navbar navbar-default">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-3">            
-                            <bread-crumb></bread-crumb>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-            <div class="container">
-                <recap-perso 
-                 show-recapitulatif="{{ showRecapitulatif }}"
-                 uuid="{{ personnage.uuid }}"
-                 nom="{{ personnage.nom }}"
-                 metatype="{{ personnage.metatype.nom }}"
-                 axe="{{ personnage.axe }}"
-                 car-sofias="{{ personnage.carSofias }}"
-                 comp-sofias="{{ personnage.compSofias }}"></recap-perso>
-                <ng-view></ng-view>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div>
+                    <bread-crumb
+                        page-precedente="{{ pagePrecedente }}"
+                        page-suivante="{{ pageSuivante }}">
+                    </bread-crumb>
+                </div>
+                <div>
+                    <recap-perso
+                        show-recapitulatif="{{ showRecapitulatif }}"
+                        uuid="{{ personnage.uuid }}"
+                        nom="{{ personnage.nom }}"
+                        metatype="{{ personnage.metatype.nom }}"
+                        axe="{{ personnage.axe }}"
+                        car-sofias="{{ personnage.carSofias }}"
+                        comp-sofias="{{ personnage.compSofias }}">
+                    </recap-perso>
+                </div>
+                <div>
+                    <ng-view></ng-view>
+                </div>
             </div>
+            <div class="col-md-3"></div>
 		</div>
     </body>
 </html>

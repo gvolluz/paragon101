@@ -1,142 +1,139 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">      
-        <h2>{{ etapeActuelle }}</h2>
+<toolbar></toolbar>
+<h2>{{ etapeActuelle }}</h2>
 
-        <a href="#/paragonStep6" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
-        <h3>Caractéristiques</h3>
-        <table class="table table_caracteristiques">
-            <thead>
-                <tr>
-                    <td>Caractéristique</td>
-                    <td>Base</td>
-                    <td>Points ajoutés au début</td>
-                    <td>Points ajoutés par l'Axe (automatique)</td>
-                    <td>Points ajoutés par l'Axe (manuellement)</td>
-                    <td>Valeur finale</td>
-                </tr>
-            </thead>
-            <tbody> 
-                <tr><td colspan="6" class="center bg-primary"><h4>Principales</h4></td></tr>
-                <tr ng-class="personnage.metatype.nom === 'Hoplite' || 
-                              personnage.metatype.nom === 'Ombre' || 
-                              personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
-                    <td>Acuité</td>
-                    <td>{{ personnage.acuiteMin }}</td>
-                    <td>{{ personnage.acuiteBase() }}</td>
-                    <td>{{ personnage.acuiteAxeAuto() }}</td>
-                    <td>{{ personnage.acuiteAxeManuel() }}</td>
-                    <td>{{ personnage.acuite() }}</td>
-                </tr>
-                <tr ng-class="personnage.metatype.nom === 'Faucon' || 
-                              personnage.metatype.nom === 'Ombre' || 
-                              personnage.metatype.nom === 'Marionnettiste' ? 'bg-success' : ''">
-                    <td>Adresse</td>
-                    <td>{{ personnage.adresseMin }}</td>
-                    <td>{{ personnage.adresseBase() }}</td>
-                    <td>{{ personnage.adresseAxeAuto() }}</td>
-                    <td>{{ personnage.adresseAxeManuel() }}</td>
-                    <td>{{ personnage.adresse() }}</td>
-                </tr>
-                <tr ng-class="personnage.metatype.nom === 'Rhéto' || 
-                              personnage.metatype.nom === 'Marionnettiste' || 
-                              personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
-                    <td>Astuce</td>
-                    <td>{{ personnage.astuceMin }}</td>
-                    <td>{{ personnage.astuceBase() }}</td>
-                    <td>{{ personnage.astuceAxeAuto() }}</td>
-                    <td>{{ personnage.astuceAxeManuel() }}</td>
-                    <td>{{ personnage.astuce() }}</td>
-                </tr>
-                <tr>
-                    <td>Détermination</td>
-                    <td>{{ personnage.determinationMin }}</td>
-                    <td>{{ personnage.determinationBase() }}</td>
-                    <td>{{ personnage.determinationAxeAuto() }}</td>
-                    <td>{{ personnage.determinationAxeManuel() }}</td>
-                    <td>{{ personnage.determination() }}</td>
-                </tr>
-                <tr ng-class="personnage.metatype.nom === 'Rhéto' ? 'bg-success' : ''">
-                    <td>Prestance</td>
-                    <td>{{ personnage.prestanceMin }}</td>
-                    <td>{{ personnage.prestanceBase() }}</td>
-                    <td>{{ personnage.prestanceAxeAuto() }}</td>
-                    <td>{{ personnage.prestanceAxeManuel() }}</td>
-                    <td>{{ personnage.prestance() }}</td>
-                </tr>
-                <tr ng-class="personnage.metatype.nom === 'Faucon' ? 'bg-success' : ''">
-                    <td>Robustesse</td>
-                    <td>{{ personnage.robustesseMin }}</td>
-                    <td>{{ personnage.robustesseBase() }}</td>
-                    <td>{{ personnage.robustesseAxeAuto() }}</td>
-                    <td>{{ personnage.robustesseAxeManuel() }}</td>
-                    <td>{{ personnage.robustesse() }}</td>
-                </tr> 
-                <tr><td colspan="6" class="center bg-primary"><h4>Dérivées</h4></td></tr>
-                <tr ng-class="personnage.metatype.nom === 'Hoplite' ? 'bg-success' : ''">
-                    <td>Tachyos</td>
-                    <td>{{ personnage.tachyosMin }}</td>
-                    <td>{{ personnage.tachyosBase() }}</td>
-                    <td>{{ personnage.tachyosAxeAuto() }}</td>
-                    <td>{{ personnage.tachyosAxeManuel() }}</td>
-                    <td>{{ personnage.tachyos() }}</td>
-                </tr>
-                <tr>
-                    <td>Zois</td>
-                    <td>{{ personnage.zoisMin() }}</td>
-                    <td>{{ personnage.zoisBase() }}</td>
-                    <td>{{ personnage.zoisAxeAuto() }}</td>
-                    <td>{{ personnage.zoisAxeManuel() }}</td>
-                    <td>{{ personnage.zois() }}</td>
-                </tr>
-                <tr>
-                    <td>Impact</td>
-                    <td colspan="3">{{ personnage.impact() }}</td>
-                </tr>
-                <tr>
-                    <td>Stoa</td>
-                    <td>{{ personnage.stoaMin() }}</td>
-                    <td>{{ personnage.stoaBase() }}</td>
-                    <td>{{ personnage.stoaAxeAuto() }}</td>
-                    <td>{{ personnage.stoaAxeManuel() }}</td>
-                    <td>{{ personnage.stoa() }}</td>
-                </tr>
-                <tr>
-                    <td>Polem</td>
-                    <td>{{ personnage.polemMin }}</td>
-                    <td>{{ personnage.polemBase() }}</td>
-                    <td>{{ personnage.polemAxeAuto() }}</td>
-                    <td>{{ personnage.polemAxeManuel() }}</td>
-                    <td>{{ personnage.polem() }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>Compétence choisies</h3>
-        <div ng-show="!personnage.competencesListe.length">
-            <p>Aucune compétence choisie pour le moment!</p>
-        </div>
-        <div ng-show="personnage.competencesListe.length">
-            <table class="table table_competences">
-                <thead>
-                    <tr>
-                        <td>Compétence</td>
-                        <td>Base</td>
-                        <td>Points répartis</td>
-                        <td>Rang</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- -->
-                    <tr ng-controller="paragonStep3CompetencesController"
-                        ng-repeat="competence in personnage.competencesListe">
-                        <td class="long" ><input type="text" ng-model="competence.nom"/></td>
-                        <td>{{ competence.min }}</td>
-                        <td><input type="number" ng-model="competence.base" min="0" max="5"/></td>
-                        <td>{{ competence.rang() }}</td>
-                        <td><a ng-click="supprimerCompetence(competence)"><span class="glyphicon glyphicon-remove"></span></a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#/paragonStep6" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
-        </div>
-    </div>
+<a href="#/paragonStep6" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
+<h3>Caractéristiques</h3>
+<table class="table table_caracteristiques">
+    <thead>
+        <tr>
+            <td>Caractéristique</td>
+            <td>Base</td>
+            <td>Points ajoutés au début</td>
+            <td>Points ajoutés par l'Axe (automatique)</td>
+            <td>Points ajoutés par l'Axe (manuellement)</td>
+            <td>Valeur finale</td>
+        </tr>
+    </thead>
+    <tbody> 
+        <tr><td colspan="6" class="center bg-primary"><h4>Principales</h4></td></tr>
+        <tr ng-class="personnage.metatype.nom === 'Hoplite' ||
+                      personnage.metatype.nom === 'Ombre' ||
+                      personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
+            <td>Acuité</td>
+            <td>{{ personnage.acuiteMin }}</td>
+            <td>{{ personnage.acuiteBase() }}</td>
+            <td>{{ personnage.acuiteAxeAuto() }}</td>
+            <td>{{ personnage.acuiteAxeManuel() }}</td>
+            <td>{{ personnage.acuite() }}</td>
+        </tr>
+        <tr ng-class="personnage.metatype.nom === 'Faucon' ||
+                      personnage.metatype.nom === 'Ombre' ||
+                      personnage.metatype.nom === 'Marionnettiste' ? 'bg-success' : ''">
+            <td>Adresse</td>
+            <td>{{ personnage.adresseMin }}</td>
+            <td>{{ personnage.adresseBase() }}</td>
+            <td>{{ personnage.adresseAxeAuto() }}</td>
+            <td>{{ personnage.adresseAxeManuel() }}</td>
+            <td>{{ personnage.adresse() }}</td>
+        </tr>
+        <tr ng-class="personnage.metatype.nom === 'Rhéto' ||
+                      personnage.metatype.nom === 'Marionnettiste' ||
+                      personnage.metatype.nom === 'Phreaker' ? 'bg-success' : ''">
+            <td>Astuce</td>
+            <td>{{ personnage.astuceMin }}</td>
+            <td>{{ personnage.astuceBase() }}</td>
+            <td>{{ personnage.astuceAxeAuto() }}</td>
+            <td>{{ personnage.astuceAxeManuel() }}</td>
+            <td>{{ personnage.astuce() }}</td>
+        </tr>
+        <tr>
+            <td>Détermination</td>
+            <td>{{ personnage.determinationMin }}</td>
+            <td>{{ personnage.determinationBase() }}</td>
+            <td>{{ personnage.determinationAxeAuto() }}</td>
+            <td>{{ personnage.determinationAxeManuel() }}</td>
+            <td>{{ personnage.determination() }}</td>
+        </tr>
+        <tr ng-class="personnage.metatype.nom === 'Rhéto' ? 'bg-success' : ''">
+            <td>Prestance</td>
+            <td>{{ personnage.prestanceMin }}</td>
+            <td>{{ personnage.prestanceBase() }}</td>
+            <td>{{ personnage.prestanceAxeAuto() }}</td>
+            <td>{{ personnage.prestanceAxeManuel() }}</td>
+            <td>{{ personnage.prestance() }}</td>
+        </tr>
+        <tr ng-class="personnage.metatype.nom === 'Faucon' ? 'bg-success' : ''">
+            <td>Robustesse</td>
+            <td>{{ personnage.robustesseMin }}</td>
+            <td>{{ personnage.robustesseBase() }}</td>
+            <td>{{ personnage.robustesseAxeAuto() }}</td>
+            <td>{{ personnage.robustesseAxeManuel() }}</td>
+            <td>{{ personnage.robustesse() }}</td>
+        </tr> 
+        <tr><td colspan="6" class="center bg-primary"><h4>Dérivées</h4></td></tr>
+        <tr ng-class="personnage.metatype.nom === 'Hoplite' ? 'bg-success' : ''">
+            <td>Tachyos</td>
+            <td>{{ personnage.tachyosMin }}</td>
+            <td>{{ personnage.tachyosBase() }}</td>
+            <td>{{ personnage.tachyosAxeAuto() }}</td>
+            <td>{{ personnage.tachyosAxeManuel() }}</td>
+            <td>{{ personnage.tachyos() }}</td>
+        </tr>
+        <tr>
+            <td>Zois</td>
+            <td>{{ personnage.zoisMin() }}</td>
+            <td>{{ personnage.zoisBase() }}</td>
+            <td>{{ personnage.zoisAxeAuto() }}</td>
+            <td>{{ personnage.zoisAxeManuel() }}</td>
+            <td>{{ personnage.zois() }}</td>
+        </tr>
+        <tr>
+            <td>Impact</td>
+            <td colspan="3">{{ personnage.impact() }}</td>
+        </tr>
+        <tr>
+            <td>Stoa</td>
+            <td>{{ personnage.stoaMin() }}</td>
+            <td>{{ personnage.stoaBase() }}</td>
+            <td>{{ personnage.stoaAxeAuto() }}</td>
+            <td>{{ personnage.stoaAxeManuel() }}</td>
+            <td>{{ personnage.stoa() }}</td>
+        </tr>
+        <tr>
+            <td>Polem</td>
+            <td>{{ personnage.polemMin }}</td>
+            <td>{{ personnage.polemBase() }}</td>
+            <td>{{ personnage.polemAxeAuto() }}</td>
+            <td>{{ personnage.polemAxeManuel() }}</td>
+            <td>{{ personnage.polem() }}</td>
+        </tr>
+    </tbody>
+</table>
+<h3>Compétence choisies</h3>
+<div ng-show="!personnage.competencesListe.length">
+    <p>Aucune compétence choisie pour le moment!</p>
+</div>
+<div ng-show="personnage.competencesListe.length">
+    <table class="table table_competences">
+        <thead>
+            <tr>
+                <td>Compétence</td>
+                <td>Base</td>
+                <td>Points répartis</td>
+                <td>Rang</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- -->
+            <tr ng-controller="paragonStep3CompetencesController"
+                ng-repeat="competence in personnage.competencesListe">
+                <td class="long" ><input type="text" ng-model="competence.nom"/></td>
+                <td>{{ competence.min }}</td>
+                <td><input type="number" ng-model="competence.base" min="0" max="5"/></td>
+                <td>{{ competence.rang() }}</td>
+                <td><a ng-click="supprimerCompetence(competence)"><span class="glyphicon glyphicon-remove"></span></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="#/paragonStep6" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
 </div>
