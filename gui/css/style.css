@@ -48,12 +48,17 @@
     list-style: none;
 }
 
-.breadcrumb ul{
+.breadcrumb{
+    background: none;
     display: inline;
 }
 
 .breadcrumb li{
     list-style: none;
+}
+
+.toolbar{
+    margin: 10px 2px;
 }
 
 .disabled {

@@ -2,7 +2,7 @@
 paragonApp.directive('recapPerso', function(){
     return{
         restrict: 'AECM',
-        templateUrl: 'directives/recapPerso.html', 
+        templateUrl: 'directives/recapPerso.html',
         replace: true,
         scope:{
             showRecapitulatif: "@",
@@ -19,8 +19,11 @@ paragonApp.directive('recapPerso', function(){
 paragonApp.directive('breadCrumb', function(){
     return{
         restrict: 'AECM',
-        templateUrl: 'directives/breadCrumb.html', 
+        templateUrl: 'directives/breadCrumb.html',
         replace: true,
-        scope: {}
+        scope: {
+            pagePrecedente: "@",
+            pageSuivante: "@"
+        }
     }
 });

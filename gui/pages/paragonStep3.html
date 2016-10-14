@@ -1,36 +1,33 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">   
-        <h2>{{ etapeActuelle }}</h2>
-        <p>Définissez les Compétences du Paragon. Ce dernier a automatiquement sa langue maternelle et 4 Compétences issues de son metatype à Rang 1.</p>
-        <hr/>
-        <h3>Compétence choisies</h3>
-        <a href="#/paragonStep3" ng-click="ajoutCompetence()" class="btn btn-primary">Ajouter une compétence</a>
-        <div ng-show="!personnage.competencesListe.length">
-            <p>Aucune compétence choisie pour le moment!</p>
-        </div>
-        <div ng-show="personnage.competencesListe.length">
-            <table class="table table_competences">
-                <thead>
-                    <tr>
-                        <td>Compétence</td>
-                        <td>Base</td>
-                        <td>Points répartis</td>
-                        <td>Rang</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- -->
-                    <tr ng-controller="paragonStep3CompetencesController"
-                        ng-repeat="competence in personnage.competencesListe">
-                        <td class="long" ><input type="text" ng-model="competence.nom"/></td>
-                        <td>{{ competence.min }}</td>
-                        <td><input type="number" ng-model="competence.base" min="0" max="5"/></td>
-                        <td>{{ competence.rang() }}</td>
-                        <td><a ng-click="supprimerCompetence(competence)"><span class="glyphicon glyphicon-remove"></span></a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <a href="#/paragonStep4" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>
-    </div>
+<toolbar></toolbar>
+<h2>{{ etapeActuelle }}</h2>
+<p>Définissez les Compétences du Paragon. Ce dernier a automatiquement sa langue maternelle et 4 Compétences issues de son metatype à Rang 1.</p>
+<hr/>
+<h3>Compétence choisies</h3>
+<a href="#/paragonStep3" ng-click="ajoutCompetence()" class="btn btn-primary">Ajouter une compétence</a>
+<div ng-show="!personnage.competencesListe.length">
+    <p>Aucune compétence choisie pour le moment!</p>
 </div>
+<div ng-show="personnage.competencesListe.length">
+    <table class="table table_competences">
+        <thead>
+            <tr>
+                <td>Compétence</td>
+                <td>Base</td>
+                <td>Points répartis</td>
+                <td>Rang</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- -->
+            <tr ng-controller="paragonStep3CompetencesController"
+                ng-repeat="competence in personnage.competencesListe">
+                <td class="long" ><input type="text" ng-model="competence.nom"/></td>
+                <td>{{ competence.min }}</td>
+                <td><input type="number" ng-model="competence.base" min="0" max="5"/></td>
+                <td>{{ competence.rang() }}</td>
+                <td><a ng-click="supprimerCompetence(competence)"><span class="glyphicon glyphicon-remove"></span></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<a href="#/paragonStep4" class="btn btn-primary" data-toggle="tooltip" title="Passez à l'étape suivante">Suivant</a>

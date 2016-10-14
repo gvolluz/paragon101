@@ -1,11 +1,9 @@
-<div class="col-md-8 col-md-offset-2">
-    <a class="btn btn-primary" ng-click="showRecapitulatif = !showRecapitulatif" >Récapitulatif</a>
-    <ul class="recap" ng-class="{ 'hidden': ! showRecapitulatif }">
-        <li>UUID: {{ uuid }}</li>
-        <li>Nom: {{ nom }}</li>
-        <li>Metatype: {{ metatype }}</li>
-        <li>Axe: {{ axe }}</li>
-        <li>Sofias de Caractéristiques: {{ carSofias }}</li>
-        <li>Sofias de Compétences: {{ compSofias }}</li>
-    </ul>
-</div>
+<ul class="recap">
+	<li><h3>Données actuelles du Paragon</h3></li>
+    <li>UUID: {{ uuid }}</li>
+    <li>Nom: {{ nom }}</li>
+    <li>Metatype: {{ metatype }}</li>
+    <li>Axe: {{ axe }}</li>
+    <li>Sofias de Caractéristiques: {{ carSofias }}</li>
+    <li>Sofias de Compétences: {{ compSofias }}</li>
+</ul>
