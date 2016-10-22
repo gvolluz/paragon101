@@ -1,7 +1,7 @@
 //SERVICE
 
-function Competence(aName='',aMin='',aBase='',aAxeAuto='',aAxeManuel=''){
-    this.nom = aName;
+function Competence(aNom='',aMin='',aBase='',aAxeAuto='',aAxeManuel=''){
+    this.nom = aNom;
     this.min = aMin;
     this.base = aBase;
     this.axeAuto = aAxeAuto;
@@ -19,14 +19,14 @@ function Competence(aName='',aMin='',aBase='',aAxeAuto='',aAxeManuel=''){
     };
 }
 
-Competence.prototype = {
-    nom: '',
-    min: 0,
-    base: 0,
-    axeAuto: 0,
-    axeManuel: 0,
-    selfChanged: false
-};
+//Competence.prototype = {
+//    nom: '',
+//    min: 0,
+//    base: 0,
+//    axeAuto: 0,
+//    axeManuel: 0,
+//    selfChanged: false
+//};
 
 paragonApp.service('personnageService', function(){
     this.prefixes = function(){
@@ -225,14 +225,25 @@ paragonApp.service('personnageService', function(){
         //Données génériques
         nom: this.nomGenerateur(),
         age: 20,
+        sexe: 'F',
+        origine: 'Aftokratorias',
+        profession: 'Agent de la Froura',
+        capital: 0,
         metatype: this.constantes.metatypesListe[2],
         axe: this.constantes.axesListe[2],
         carSofias: this.constantes.carSofiasDepart,
         compSofias: this.constantes.compSofiasDepart,
+        sofias: function(){
+          return this.carSofias+this.compSofias;  
+        },
         //Compétences - de base au moins la langue maternelle
         competencesListe: [
             new Competence('Langue maternelle: XXXXX', 1,0,0,0,false)
         ],
+        
+        contactsListe: [],
+        equipementListe: [],
+        
         /*****************************************************************/
         /*******           Caractéristiques        ***********************/
         /*****************************************************************/
@@ -617,12 +628,15 @@ paragonApp.service('personnageService', function(){
         
         //Quand on regénère aléatoirement un perso 
         //on a pas forcément envie de changer son uid
-        //son nom et son âge, juste ses stats, par contre
+        //son nom et son âge, etc., mais juste ses stats, par contre
         //pour un nouveau personnage si
         if( true === total ){
             perso.uuid = this.guid();
             perso.nom = this.nomGenerateur();
             perso.age = 20;
+            perso.sexe = 'F';
+            perso.origine = 'Aftokratorias';
+            perso.capital = 0;
         }
         
         perso.metatype = this.constantes.metatypesListe[0];
@@ -671,10 +685,172 @@ paragonApp.service('personnageService', function(){
         perso._stoaAxeAuto = 0;
         perso._stoaAxeManuel = 0;
         
-        //Contacts
+        perso.contactsListe = [];
+        perso.equipementListe = [];
+    };
+    
+    this.redux = function(){
+        var p = this.personnage;
         
-        //
+        var perso = {
+            nom: p.nom,
+            age: p.age,
+            sexe: p.sexe,
+            origine: p.origine,
+            capital: p.capital,
+            
+            sofias: p.sofias(),
+            metatype: p.metatype.nom,
+            axe: p.axe,
+            
+            acuite: p.acuite(),
+            adresse: p.adresse(),
+            astuce: p.astuce(),
+            determination: p.determination(),
+            prestance: p.prestance(),
+            robustesse: p.robustesse(),
+            
+            impact: p.impact(),
+            polem: p.polem(),
+            stoa: p.stoa(),
+            tachyos: p.tachyos(),
+            zois: p.zois()           
+            
         };
+        
+        perso.mystique = 'A définir';
+        perso.politique = 'A définir';
+        perso.geopolitique = 'A définir';
+        perso.moeurs = 'A définir';
+        
+        perso.competences = [new Array(p.competencesListe.length)];
+        for(var i=0;i<p.competencesListe.length;i++){           
+            perso.competences[i] = {
+                nom: p.competencesListe[i].nom,
+                rang: p.competencesListe[i].rang()
+            };            
+        }
+        
+        perso.contacts = new Array(p.contactsListe.length);
+        for(var i=0;i<p.contactsListe.length;i++){            
+            perso.contacts[i] = {
+                nom: p.contactsListe[i].nom,
+                rang: p.contactsListe[i].rang()
+            };        
+        }
+        
+        perso.equipement = new Array(p.equipementListe.length);
+        for(var i=0;i<p.equipementListe.length;i++){            
+            perso.equipement[i] = {
+                nom: p.equipementListe[i].nom          
+            }
+        }        
+        
+        return perso;
+    }
+    
+    this.latex = function(reduxPerso){
+        console.log(reduxPerso);
+        var archetype = '';
+        var lf = '\n';
+        //4 espaces = 1 tab
+        var tb = '    ';
+        var bs = '\\';
+        
+        archetype += '%%%%%%%%%%%%% ARCHETYPE DU '+reduxPerso.metatype+'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+lf;
+        
+        archetype += bs+'section{'+reduxPerso.metatype+'}'+lf;
+        
+        archetype += bs+'begin{introtext}'+lf;
+        archetype += reduxPerso.nom+' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a accumsan diam. Vivamus id metus viverra, blandit diam vitae, consequat odio. Etiam sed justo non augue imperdiet eleifend vel sit amet enim. Nullam nec ornare sapien. Etiam a ultrices massa, eget malesuada felis. In eros augue, laoreet ut dui ac, egestas condimentum ex. Aliquam erat volutpat. Vivamus mattis massa non sollicitudin fringilla.'+lf;
+        archetype += bs+'end{introtext}'+lf;
+        archetype += bs+'includegraphics[scale=0.6]{img/ArchetypePlaceholder.png}'+bs+bs+lf;
+        archetype += bs+'emph{'+reduxPerso.nom+', une fauconne enragée}'+lf;
+        archetype += bs+'vfill'+lf;
+        archetype += bs+'columnbreak'+lf;
+        archetype += lf;
+        archetype += bs+'noindent %otherwise we have the paragraph start indent!'+lf;
+        archetype += bs+'textbf{Données personnelles}'+lf;
+        archetype += bs+'begin{tabbing}'+lf;
+        archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+        archetype += tb+'Metatype '+bs+'> : '+bs+'> '+reduxPerso.metatype+bs+bs+lf;
+        archetype += tb+'Axe'+bs+'>:'+bs+'>'+reduxPerso.axe+bs+bs+lf;
+        archetype += tb+'Politique'+bs+'>:'+bs+'>'+reduxPerso.politique+bs+bs+lf;
+        archetype += tb+'Géopolitique'+bs+'>:'+bs+'>'+reduxPerso.geopolitique+bs+bs+lf;
+        archetype += tb+'Moeurs'+bs+'>:'+bs+'>'+reduxPerso.moeurs+bs+bs+lf;
+        archetype += tb+'Mystique'+bs+'>:'+bs+'>'+reduxPerso.mystique+lf;
+        archetype += bs+'end{tabbing}'+lf;
+        archetype += bs+'textbf{Caractéristiques}'+lf;
+        archetype += bs+'begin{tabbing}'+lf;
+        archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{AC}uité'+bs+'>:'+bs+'>'+reduxPerso.acuite+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{AD}resse'+bs+'>:'+bs+'>'+reduxPerso.adresse+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{AS}tuce'+bs+'>:'+bs+'>'+reduxPerso.astuce+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{DE}termination'+bs+'>:'+bs+'>'+reduxPerso.determination+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{PR}estance'+bs+'>:'+bs+'>'+reduxPerso.prestance+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{RO}bustesse'+bs+'>:'+bs+'>'+reduxPerso.robustesse+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{IM}pact'+bs+'>:'+bs+'>'+reduxPerso.impact+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{PO}lem'+bs+'>:'+bs+'>'+reduxPerso.polem+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{ST}oa'+bs+'>:'+bs+'>'+reduxPerso.stoa+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{TA}chyos'+bs+'>:'+bs+'>'+reduxPerso.tachyos+bs+bs+lf;
+        archetype += tb+bs+'textcolor{CaracCode}{ZO}is'+bs+'>:'+bs+'>'+reduxPerso.zois+lf;
+        archetype += bs+'end{tabbing}'+lf;
+        archetype += bs+'textbf{Compétences}'+lf;
+        archetype += bs+'begin{tabbing}'+lf;
+        archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+        
+        for(var i=0;i<reduxPerso.competences.length;i++){            
+            archetype += tb+reduxPerso.competences[i].nom+bs+'>:'+bs+'>'+reduxPerso.competences[i].rang+bs+bs+lf;
+        }
+        
+        //!!!!! attention à supprimer le dernier \\ !!!!!!
+        archetype = archetype.substr(0,archetype.length-3)+lf;
+        
+        archetype += bs+'end{tabbing}'+lf;
+        archetype += bs+'textbf{Contacts}'+lf;
+        archetype += bs+'begin{tabbing}'+lf;
+        archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+        
+        for(var i=0;i<reduxPerso.contacts.length;i++){            
+            archetype += tb+reduxPerso.contacts[i].nom+''+bs+'>:'+bs+'>'+reduxPerso.contacts[i].rang+bs+bs+lf;
+        }
+        
+        //!!!!! attention à supprimer le dernier \\ !!!!!!        
+        archetype = archetype.substr(0,archetype.length-3)+lf;
+        
+        archetype += bs+'end{tabbing}'+lf;
+        archetype += bs+'textbf{Équipement}'+lf;
+        archetype += bs+'begin{description}'+lf;
+        
+        for(var i=0;i<reduxPerso.equipement.length;i++){         
+            archetype += tb+bs+'item['+reduxPerso.equipement[i].nom+'] '+reduxPerso.equipement[i].description+lf;
+        }
+        
+        archetype += bs+'end{description}'+lf;          
+        
+        return archetype;
+    }
+    
+    this.exporter = function(format='json'){
+        var perso = 'Format d\'exportation inconnu...';
+
+        switch(format){
+            case 'json':
+                perso = JSON.stringify(this.redux());
+                break;
+            case 'LaTeX':
+                perso = this.latex(this.redux());
+                break;
+            case 'csv':
+                perso = this.csv(this.redux());
+                break;
+            case 'pdf':
+                perso = this.pdf(this.redux());
+                break;
+        }
+        
+        return perso;
+    }
     
    
 });
