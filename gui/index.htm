@@ -46,9 +46,14 @@
                         uuid="{{ personnage.uuid }}"
                         nom="{{ personnage.nom }}"
                         metatype="{{ personnage.metatype.nom }}"
-                        axe="{{ personnage.axe }}"
+                        axe="{{ personnage._axe.nom }}"
                         car-sofias="{{ personnage.carSofias }}"
-                        comp-sofias="{{ personnage.compSofias }}">
+                        comp-sofias="{{ personnage.compSofias }}"
+                        age="{{ personnage.age }}"
+                        sexe="{{ personnage.sexe }}"
+                        origine="{{ personnage.origine }}"
+                        capital="{{ personnage.capital() }}"
+                    >
                     </recap-perso>
                 </div>
                 <div>
@@ -57,6 +62,6 @@
             </div>
             <div class="col-md-3"></div>
 		</div>
-        <a id="personnageExport" href="" style="display:none;">Exporter</a>
+        <a id="personnageExport" href="" style="display:none;"></a>
     </body>
 </html>

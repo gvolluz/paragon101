@@ -2,12 +2,25 @@
 <h2>{{ etapeActuelle }}</h2>
 <p>Choisissez un metatype. Celui-ci va définir les Caractéristiques à privilégier (ce qui est uniquement un conseil) et les Compétences de profession (qui sont obligatoires). Définissez ensuite le nom et l'âge du Paragon. Si vous manquez d'inspiration, laissez-vous tenter par un 'Aha!', vous pourriez être surpris...</p>
 <hr/>
-<label>Liste des metatypes</label>
-<select ng-model="personnage.metatype" ng-options="metatype.nom for metatype in constantes.metatypesListe"></select>
-<br/>
-<label>Nom</label>
-<input type="text" ng-model="personnage.nom" max="10"/>
+<label>Origine</label>&nbsp;&nbsp;<select ng-model="personnage.origine" ng-options="origine for origine in constantes.originesListe"></select>
+
+<br>
+<label>Nom</label>&nbsp;&nbsp;<input type="text" ng-model="personnage.nom" max="10"/>
 <a ng-click="genererNom();" class="btn btn-primary" data-toggle="tooltip" title="Super noms!">Aha !</a>
-<br/>
-<label>Âge</label>
-<input type="number" ng-model="personnage.age" min="18" max="75"/>
+
+<br>
+<label>Âge</label>&nbsp;&nbsp;<input type="number" ng-model="personnage.age" min="18" max="75"/>&nbsp;&nbsp;<label>Sexe</label>&nbsp;&nbsp;<select ng-model="personnage.sexe" ng-options="sexe for sexe in constantes.sexesListe"></select>
+<br>
+
+<label>Salaire mensuel</label>&nbsp;&nbsp;<select ng-model="personnage.salaire" ng-options="salaire.nom for salaire in constantes.salairesListe"></select>
+<label>Capital actuel</label>&nbsp;&nbsp;<span>{{ personnage.capital() }}</span>
+<br>
+<label>Metatype</label>
+<select ng-model="personnage.metatype" ng-options="metatype.nom for metatype in constantes.metatypesListe"></select>
+<br>
+
+<label>Axe</label>
+<select ng-model="personnage.axe" ng-model-options="{ getterSetter: true }" ng-options="axe.nom for axe in constantes.axesListe"></select>
+<br>
+<span>{{ personnage._axe.description }}</span>
+

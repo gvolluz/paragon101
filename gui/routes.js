@@ -33,10 +33,11 @@ paragonApp.config(function($routeProvider){
             templateUrl: 'pages/paragonStep6.html',
             controller: 'paragonStep6Controller'          
         })
-        /*.when('/paragonStep7', {
+        .when('/paragonStep7', {
             templateUrl: 'pages/paragonStep7.html',
             controller: 'paragonStep7Controller'          
         })
+    /*
         .when('/paragonStep8', {
             templateUrl: 'pages/paragonStep8.html',
             controller: 'paragonStep8Controller'          
