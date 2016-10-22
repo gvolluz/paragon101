@@ -11,7 +11,11 @@ paragonApp.directive('recapPerso', function(){
             metatype: "@",
             axe: "@",
             carSofias: "@",
-            compSofias: "@"
+            compSofias: "@",
+            age: "@",
+            sexe: "@",
+            origine: "@",
+            capital: "@",
         }
     }
 });
