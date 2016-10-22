@@ -1,35 +1,56 @@
 //CONTROLLER - HOME
 paragonApp.controller('homeController', ['$scope', '$cookies', '$log', 'personnageService', function($scope, $cookies, $log, personnageService) {  
 
+    var clickEvent = new MouseEvent("click", {
+            "view": window,
+            "bubbles": true,
+            "cancelable": false
+        });
+    
+    $scope.constantes = personnageService.constantes;
+    $scope.personnage = personnageService.personnage;
+    
     $scope.etapeActuelle = 'Bienvenue';
     $scope.$parent.pagePrecedente = '#/';
     $scope.$parent.pageSuivante = '#/paragonStep1/';
-
-    $scope.chargerCookiePerso = function(){
-        var perso = $cookies.getObject(personnageService.constantes.cookiePersoNom) || {uuid:'XXX'};
-
-        //Ne réellement charger le perso que si le cookie est valide
-        if(perso.uuid !== 'XXX'){
-            $scope.personnage = perso;
-        }
-    };
-
-    $scope.sauverCookiePerso = function(perso){
-        $cookies.putObject(personnageService.constantes.cookiePersoNom, perso);
-    };
-
-    $scope.supprimerCookiePerso = function(){
-        $cookies.remove(personnageService.constantes.cookiePersoNom);
-    };
-
-    $scope.personnage.sauver = function(){
-        $scope.sauverCookiePerso(personnageService.personnage);
-    };
+    
+    $scope.formatsExportation = ['json', 'LaTeX', 'pdf', 'csv'];
+    $scope.formatExportation = 'json';
 
     $scope.personnage.creer = function(){
         personnageService.personnageRAZ(true, $log);
-
-        $scope.personnage.sauver();
+    }
+    
+    $scope.personnage.exporter = function(){
+        var perso = personnageService.exporter($scope.formatExportation);
+        
+        var type = 'text/plain';
+        var ext = '.txt';
+        
+        switch($scope.formatExportation){
+            case 'json':
+                type = 'text/json';
+                ext = '.json';
+                break;
+            case 'LaTeX':
+                type = 'application/x-tex';
+                ext = '.tex';
+                break;
+            case 'csv':
+                type = 'text/csv';
+                ext = '.csv';
+                break;
+            case 'pdf':
+                type = 'application/pdf';
+                ext = '.pdf';
+                break;
+        }
+        
+        var formBlob = new Blob([perso], { type: type });
+        var a = document.getElementById('personnageExport');
+        a.setAttribute('href', window.URL.createObjectURL(formBlob));
+        a.download = 'Paragon-'+$scope.personnage.uuid+ext; 
+        a.dispatchEvent(clickEvent);
     }
 
     $scope.personnage.aleatoire = function(){
@@ -72,8 +93,6 @@ paragonApp.controller('homeController', ['$scope', '$cookies', '$log', 'personna
             );
             personnage.competencesListe.push( comp );
         };
-
-        $scope.personnage.sauver(personnageService.personnage);
     };
 
 }]);
