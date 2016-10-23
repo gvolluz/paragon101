@@ -2,3 +2,33 @@
 <h2>{{ etapeActuelle }}</h2>
 <p>Créez les Contacts de votre personnage.</p>
 <hr/>
+<h3>Contacts</h3>
+<a ng-click="personnage.ajouterContact()" class="btn btn-primary" data-toggle="tooltip" title="Ajouter un Contact"><span class="glyphicon glyphicon-plus"></a>
+<div ng-show="!personnage.contactsListe.length">
+    <p>Aucun Contact pour le moment!</p>
+</div>
+<div ng-show="personnage.contactsListe.length">
+    <table class="table table_competences">
+        <thead>
+            <tr>
+                <td>Contact</td>
+                <td>Occupation</td>
+                <td>Base</td>
+                <td>Points répartis</td>
+                <td>Rang</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- -->
+            <tr ng-controller="paragonStep4ContactsController"
+                ng-repeat="contact in personnage.contactsListe">
+                <td class="long" ><input type="text" ng-model="contact.nom"/></td>
+                <td class="long" ><input type="text" ng-model="contact.occupation"/></td>
+                <td>{{ contact.min }}</td>
+                <td><input type="number" ng-model="contact.base" min="0" max="5"/></td>
+                <td>{{ contact.rang() }}</td>
+                <td><a ng-click="personnage.supprimerContact(contact)"><span class="glyphicon glyphicon-remove"></span></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
