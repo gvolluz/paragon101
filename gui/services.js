@@ -6,7 +6,7 @@ function Competence(/* optional */ aNom='',aMin=0,aBase=0,aAxeAuto=0,aAxeManuel=
     this.base = aBase;
     this.axeAuto = aAxeAuto;
     this.axeManuel = aAxeManuel;
-    //Pour éviter les appels récursifs des watch...
+    //Pour éviter les appels récursifs des watchs...
     //Il semble que depuis 2012 il y a demande pour ajouter
     //au core cette fonctionnalité dans la watch elle-même
     //puisque le cas est fréquent...
@@ -17,20 +17,6 @@ function Competence(/* optional */ aNom='',aMin=0,aBase=0,aAxeAuto=0,aAxeManuel=
         +this.axeAuto
         +this.axeManuel;
     };
-}
-
-function Contact(/* optional */ aNom='', aOccupation='', aMin=0,aBase=0,aAxeAuto=0,aAxeManuel=0){
-    this.nom = aNom;
-    this.occupation = aOccupation;
-    this.base = aBase;
-    this.axeAuto = aAxeAuto;
-    this.axeManuel = aAxeManuel;
-    
-    this.rang = function(){
-        return this.base
-              +this.axeAuto
-              +this.axeManuel;
-    }
 }
 
 function Equipement(/* optional */ aNom='', aDescription='', aCout=0){
@@ -167,6 +153,19 @@ paragonApp.service('personnageService', function(){
                   return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
                     s4() + '-' + s4() + s4() + s4();
                 };
+    
+    this.Contact = function(/* optional */ nom='', occupation='', min=0,base=0,selfChanged=false){
+        this.nom = nom;
+        this.occupation = occupation;
+        this.min = min;
+        this.base = base;
+        //Pour éviter les appels récursifs des watchs
+        this.selfChanged = selfChanged;
+
+        this.rang = function(){
+            return this.min+this.base;
+        }
+    };
 
     this.constantes = {
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
@@ -262,7 +261,7 @@ paragonApp.service('personnageService', function(){
     };
     
     this.langueMaternelle = function(origine){
-        console.log(origine);
+        //console.log(origine);
         var index = self.constantes.originesListe.indexOf(origine);
         return (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
     };    
@@ -333,7 +332,23 @@ paragonApp.service('personnageService', function(){
             new Competence(this.langueMaternelle(this.constantes.originesListe[0]), 1,0,0,0,false)
         ],
         
-        contactsListe: [],
+        contactsListe: [],       
+        
+        supprimerContact: function(contact){
+            var index = this.contactsListe.indexOf(contact);
+            this.contactsListe.splice(index,1);
+            //Resetter les sofias!
+            this.contactsSofias += contact.base;
+        },        
+        ajouterContact: function(){
+            var contact = new self.Contact(
+                self.nomGenerateur(),
+                'Occupation',
+                0,0,false
+            );
+            this.contactsListe.push( contact );
+        },
+        
         equipementListe: [],
         
         /*****************************************************************/
