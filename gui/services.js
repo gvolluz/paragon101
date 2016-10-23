@@ -448,6 +448,172 @@ paragonApp.service('personnageService', function(){
     
     this.constantes = {
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
+        competencesCombatListe:[
+            'Armes d\'épaule',
+            'Armes de jet',
+            'Armes lourdes',
+            'Armes de mêlée',
+            'Armes exotiques',
+            'Boxe bretinienne',
+            'Judo',
+            'Jiu-jitsu',
+            'Lutte grecque'
+        ],
+        competencesEtiquetteListe:[
+            'Ankh-Rose',
+            'Architectes',
+            'Brouwersliga',
+            'DEP',
+            'Dingdan shé yinshen',
+            'Drachensee Ltd',
+            'Dockers',
+            'Drachen',
+            'Drews',
+            'Esclaves',
+            'Finance',
+            'Fritenkers',
+            'Froura',
+            'Gangs',
+            'GAT',
+            'Gotha',
+            'GRYDAN',
+            'Hétaires',
+            'Jul\'ek',
+            'Kalti Akab',
+            'Kérberos',
+            'kinêma',
+            'Leeds Garden',
+            'Maisons du Crime',
+            'Mao Huo',
+            'Marins',
+            'Mode',
+            'OPE',
+            'Paragons',
+            'Politiciens',
+            'Presse',
+            'Récupérateurs',
+            'Rike',
+            'Routiers',
+            'Sport autokinite',
+            'Sport éolien',
+            'Stratos',
+            'Shan Luwei Yuan',
+            'Syllips kranio',
+            'Vabensliga',
+            'Wyrlards',
+            'Zhongguo'
+        ],
+        competencesMetierListe:[
+            'Armurerie',
+            'Bureaucratie',
+            'Cartographie',
+            'Chant',
+            'Comptabilité',
+            'Commandement',
+            'Comédie',
+            'Contrefaçon',
+            'Criminalistique',
+            'Cryptographie',
+            'Danse',
+            'Déminage',
+            'Dessin',
+            'Droit',
+            'Électricité',
+            'Électronique',
+            'Hermaphorique',
+            'Hypnose',
+            'Ichornétique',
+            'Ichoromatique',
+            'Immobilisation',
+            'Imposture',
+            'Interrogatoire',
+            'Kinêma',
+            'Mécanique',
+            'Médecine',
+            'Métallurgie',
+            'Menuiserie',
+            'Musique',
+            'Oenologie',
+            'Peinture',
+            'Photographie',
+            'Phreaking',
+            'Pilotage autokinite',
+            'Pilotage éole',
+            'Pilotage fortigo',
+            'Pilotage hermaphore',
+            'Pilotage kini',
+            'Pilotage navire',
+            'Pilotage thalès',
+            'Pister',
+            'Plomberie',
+            'Premiers soins',
+            'Psychanalyse',
+            'Psychologie',
+            'Recherche documentaire',
+            'Sculpture',
+            'Sécurité',
+            'Serrurerie',
+            'Survie',
+            'Télécommunications',
+            'Taxidermie'
+        ],
+        competencesScienceListe:[
+            'Anthropologie',
+            'Archéologie',
+            'Architecture',
+            'Astrologie',
+            'Biochimie',
+            'Biologie',
+            'Botanique',
+            'Cosmogonie',
+            'Criminalistique',
+            'Economie',
+            'Géographie',
+            'Géologie',
+            'Glaciologie',
+            'Histoire',
+            'Hydrologie',
+            'Ichorologie',
+            'Mathématiques',
+            'Météorologie',
+            'Minéralogie',
+            'Occultisme',
+            'Océanographie',
+            'Paléontologie',
+            'Pharmacologie',
+            'Phrénologie',
+            'Physique',
+            'Politique',
+            'Sismologie',
+            'Sociologie',
+            'Stratégie',
+            'Volcanologie',
+            'Zoologie'
+        ],
+        competencesDiversListe:[
+            'Baratin',
+            'Bricolage',
+            'Discrétion',
+            'Dissimulation',
+            'Dressage',
+            'Équitation',
+            'Grimpe',
+            'Jeu',
+            'Langue: aforakien',
+            'Langue: arabe',
+            'Langue: bretinien',
+            'Langue: grec',
+            'Langue: zhongguo',
+            'Lecture à l\'envers',
+            'Lecture sur les lèvres',
+            'Natation',
+            'Négociation',
+            'Orientation',
+            'Parachutisme',
+            'Persuasion',
+            'Plongée',
+            'Syllips kranio'
+        ],
         languesListe: ['grec', 'bretinien', 'grec', 'zhongguo'],        
         sexesListe: ['Femme', 'Homme'],
         salairesListe: [
@@ -542,7 +708,8 @@ paragonApp.service('personnageService', function(){
     //TODO: intégrer à personnage
     this.langueMaternelle = function(origine){
         var index = self.constantes.originesListe.indexOf(origine);
-        return (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
+        var langue = 'Langue maternelle : ' + (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
+        return langue;
     };//END langueMaternelle
     
     /*****************************************************************************/
@@ -612,7 +779,7 @@ paragonApp.service('personnageService', function(){
         },
         //Compétences - de base au moins la langue maternelle
         competencesListe: [
-            new self.Competence(this.langueMaternelle(this.constantes.originesListe[0]), 1,0,false)
+            new self.Competence(self.langueMaternelle(this.constantes.originesListe[0]), 1,0,false)
         ],               
         supprimerCompetence: function(competence){
             var index = this.competencesListe.indexOf(competence);
@@ -620,9 +787,9 @@ paragonApp.service('personnageService', function(){
             //Resetter les sofias!
             this.compSofias += competence.base;
         },        
-        ajouterCompetence: function(){
+        ajouterCompetence: function(nom='Compétence'){
             var competence = new self.Competence(
-                'Compétence',
+                nom,
                 0,0,false
             );
             this.competencesListe.push( competence );

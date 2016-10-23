@@ -28,6 +28,7 @@ paragonApp.directive('breadCrumb', function(){
         templateUrl: 'directives/breadCrumb.html',
         replace: true,
         scope: {
+            position: "@",
             pagePrecedente: "@",
             pageSuivante: "@"
         }

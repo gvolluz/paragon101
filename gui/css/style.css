@@ -20,17 +20,51 @@
     width: 40px;
 }
 
+.competences-liste,
+.competences-liste ul{
+    display: inline;
+    list-style: none;
+}
+
+.competences-liste li{
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+    
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: bold;
+    background: #8f0d0d;
+    padding: 5px 10px 5px 10px;
+    
+    width: 30%;
+    text-align: center; 
+}
+
+.competences-liste .active{
+    background-color: #000;
+    color: #FFF;
+}
+
+.competences-liste li:hover{
+    background: #e68f8f;
+    text-decoration: none;
+    cursor: copy;
+}
+
 .long input {
     width: 250px !important;
 }
 
 /******** classes génériques ********/
+.main-content{/* pour usage futur*/}
+
 .center{
     text-align: center !important;
 }
 
 .recap{
-    margin-top: 2.5em;
+    margin-top: 50px;
     padding: 0 1em;
     background-color: #428bca;
     border-color: #357ebd;
@@ -49,12 +83,27 @@
 }
 
 .breadcrumb{
-    margin-left: -1%;
-    width: 50%;
-    background: #000;
+    background: none;
     display: inline;
+    max-height: 50px;
+}
+
+.breadcrumb-header{
     position: fixed;
-    top: 0;
+    top: 0;    
+}
+
+.breadcrumb-footer{    
+    position: fixed;
+    bottom: 0;    
+}
+
+.breadcrumb>li+li:before{
+    content: none;
+}
+
+.breadcrumb .btn{
+    font-size: 0.9em;
 }
 
 .breadcrumb li{
@@ -66,5 +115,21 @@
 }
 
 .disabled {
-  cursor: not-allowed;
+    cursor: not-allowed;
+}
+
+.glyphicon-medium{
+    font-size: 1.5em;
+}
+
+.glyphicon-large{
+    font-size: 2em;
+}
+
+.glyphicon-remove{
+    color: #F00;
+}
+
+.glyphicon-remove:hover{
+    color: #F55;
 }

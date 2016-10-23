@@ -13,7 +13,24 @@ paragonApp.controller('paragonStep3Controller', ['$scope', '$routeParams', 'pers
     });
 
     //Initialiser les compétences de metatype
-    $scope.personnage.initialiseCompetence();    
+    $scope.personnage.initialiseCompetence();
+    
+    $scope.copyToClipboard = function(event) {
+        var element = event.target;
+        $scope.clipBoard = $(element).html();
+        
+        $(element).siblings(element).removeClass('active');
+        $(element).addClass('active');        
+    }
+    
+    $scope.pasteFromClipboard = function(competence){
+        if($scope.clipBoard){
+            competence.nom = $scope.clipBoard;
+        }
+        else{
+            alert('Le presse-papiers est vide! Clique sur une compétence dans une des listes ci-dessous.');
+        }
+    }
 }]);
 
 paragonApp.controller('paragonStep3CompetencesController', ['$scope', 'personnageService', function($scope, personnageService) {

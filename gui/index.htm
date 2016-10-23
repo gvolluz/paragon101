@@ -5,8 +5,21 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta charset="UTF-8">
 
-        <!-- load bootstrap via CDN -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- JQUERY -->
+        <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <!-- load bootstrap via CDN 
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+        -->
 
         <!-- application CSS -->
         <link rel="stylesheet" href="css/style.css">
@@ -32,10 +45,11 @@
     </head>
     <body>
         <div ng-controller="mainController">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
                 <div>
                     <bread-crumb
+                        position="header"
                         page-precedente="{{ pagePrecedente }}"
                         page-suivante="{{ pageSuivante }}">
                     </bread-crumb>
@@ -58,11 +72,11 @@
                     >
                     </recap-perso>
                 </div>
-                <div>
+                <div class="main-content">
                     <ng-view></ng-view>
                 </div>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-1"></div>
 		</div>
         <a id="personnageExport" href="" style="display:none;"></a>
     </body>
