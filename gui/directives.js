@@ -13,6 +13,7 @@ paragonApp.directive('recapPerso', function(){
             carSofias: "@",
             compSofias: "@",
             contactsSofias: "@",
+            totalSofias: "@",
             age: "@",
             sexe: "@",
             origine: "@",
@@ -27,6 +28,7 @@ paragonApp.directive('breadCrumb', function(){
         templateUrl: 'directives/breadCrumb.html',
         replace: true,
         scope: {
+            position: "@",
             pagePrecedente: "@",
             pageSuivante: "@"
         }
