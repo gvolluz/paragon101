@@ -10,6 +10,23 @@ paragonApp.controller('paragonStep4Controller', ['$scope', 'personnageService', 
     $scope.$watch('personnage', function(newValue, oldValue){
         personnageService.personnage = newValue;
     });
+    
+    $scope.copyToClipboard = function(event) {
+        var element = event.target;
+        $scope.clipBoard = $(element).html();
+        
+        $(element).siblings(element).removeClass('active');
+        $(element).addClass('active');        
+    }
+    
+    $scope.pasteFromClipboard = function(contact){
+        if($scope.clipBoard){
+            contact.occupation = $scope.clipBoard;
+        }
+        else{
+            alert('Le presse-papiers est vide! Clique sur une occupation dans la liste ci-dessous.');
+        }
+    }
 }]);
 
 paragonApp.controller('paragonStep4ContactsController', ['$scope', 'personnageService', function($scope, personnageService) {
