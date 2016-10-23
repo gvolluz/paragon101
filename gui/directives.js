@@ -13,6 +13,7 @@ paragonApp.directive('recapPerso', function(){
             carSofias: "@",
             compSofias: "@",
             contactsSofias: "@",
+            totalSofias: "@",
             age: "@",
             sexe: "@",
             origine: "@",
