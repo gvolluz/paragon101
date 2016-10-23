@@ -708,8 +708,9 @@ paragonApp.service('personnageService', function(){
     //TODO: intégrer à personnage
     this.langueMaternelle = function(origine){
         var index = self.constantes.originesListe.indexOf(origine);
-        var langue = 'Langue maternelle : ' + (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
-        return langue;
+        var langue1 = 'Langue maternelle : ';
+        var langue2 = (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
+        return langue1+langue2;
     };//END langueMaternelle
     
     /*****************************************************************************/
@@ -779,7 +780,7 @@ paragonApp.service('personnageService', function(){
         },
         //Compétences - de base au moins la langue maternelle
         competencesListe: [
-            new self.Competence(self.langueMaternelle(this.constantes.originesListe[0]), 1,0,false)
+            new this.Competence(this.langueMaternelle(this.constantes.originesListe[0]), 1,0,false)
         ],               
         supprimerCompetence: function(competence){
             var index = this.competencesListe.indexOf(competence);

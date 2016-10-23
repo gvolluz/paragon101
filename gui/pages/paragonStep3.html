@@ -1,12 +1,12 @@
 <toolbar></toolbar>
-<h2>{{ etapeActuelle }}</h2>
-<p>Définis les Compétences de ton Paragon.</p>
-<a class="btn btn-warning" ng-click="montrerAstuce=!montrerAstuce">Astuce</a>
-<p ng-show="montrerAstuce">Ton Paragon obtient automatiquement sa langue maternelle et 4 Compétences issues de son metatype à Rang 1.
-    <br>Pour ajouter une Compétence, choisis dans la liste des compétences une compétence en cliquant dessus, puis cliques sur le bouton d'ajout. Ta nouvelle Compétence apparaîtra avec le bon nom.
-    <br>Tu peux aussi cliquer sur une Compétence de la liste et utiliser le bouton <a><span class="glyphicon glyphicon-paste"/></a> d'une des Compétences de ton Paragon, le nom sera automatiquement collé.</p>
+<h2><a class="btn btn-warning btn-small" ng-click="montrerAstuce=!montrerAstuce"><span class="glyphicon glyphicon-info-sign"></span></a>|{{ etapeActuelle }}</h2>
+<p ng-show="montrerAstuce">Définis ici les Compétences de ton Paragon.
+    Ton Paragon obtient automatiquement sa langue maternelle et 4 Compétences issues de son metatype à Rang 1. Ces compétences sont affichées en <span class="competence-de-metatype">violet</span> et sont obligatoires. Pour ajouter une nouvelle Compétence, choisis dans la liste des compétences une compétence en cliquant dessus, puis cliques sur le bouton d'ajout. Ta nouvelle Compétence apparaîtra avec le bon nom. Tu peux aussi cliquer sur une Compétence de la liste et utiliser le bouton <a><span class="glyphicon glyphicon-paste"/></a> d'une des Compétences de ton Paragon, le nom sera automatiquement collé. Pour supprimer une Compétence (c'est définitif...), clique sur le bouton <a><span class="glyphicon glyphicon-remove"/></a> d'une des Compétences de ton Paragon.
+</p>
 <hr/>
-<h3>Compétences</h3>
+<h3>Compétences du Paragon</h3>
+<span>Contenu du presse-papier: {{ clipBoard || 'presse-papier vide!' }}</span>
+<br>
 <a ng-click="personnage.ajouterCompetence(clipBoard)" class="btn btn-primary" data-toggle="tooltip" title="Ajouter une Compétence (copie le contenu du clipBoard comme nouveau nom!)"><span class="glyphicon glyphicon-plus"></a>
 <div ng-show="!personnage.competencesListe.length">
     <p>Aucune compétence pour le moment!</p>
@@ -26,20 +26,21 @@
             <!-- -->
             <tr ng-controller="paragonStep3CompetencesController"
                 ng-repeat="competence in personnage.competencesListe">
-                <td class="long" ><input type="text" ng-model="competence.nom"/></td>
-                <td>{{ competence.min }}</td>
-                <td><input type="number" ng-model="competence.base" min="0" max="{{ 5-competence.min }}"/></td>
-                <td>{{ competence.rang() }}</td>
+                <td class="long" ng-class="competence.min>0?'competence-de-metatype':''" ><input type="text" ng-model="competence.nom"/></td>
+                <td ng-class="competence.min>0?'competence-de-metatype':''" >{{ competence.min }}</td>
+                <td ng-class="competence.min>0?'competence-de-metatype':''" ><input type="number" ng-model="competence.base" min="0" max="{{ 5-competence.min }}"/></td>
+                <td ng-class="competence.min>0?'competence-de-metatype':''" >{{ competence.rang() }}</td>
                 <td>
-                    <a ng-click="pasteFromClipboard(competence)" data-toggle="tooltip" title="Coller '{{ clipBoard }}' comme nom de compétence"><span class="glyphicon-medium glyphicon glyphicon-paste"></span></a>
-                    <a ng-click="personnage.supprimerCompetence(competence)"><span class="glyphicon-medium glyphicon glyphicon glyphicon-remove"></span></a></td>
+                    <a ng-click="pasteFromClipboard(competence)" data-toggle="tooltip" title="Coller '{{ clipBoard || 'presse-papier vide' }}' comme nom de compétence"><span class="glyphicon-medium glyphicon glyphicon-paste"></span></a>
+                    <a ng-show="competence.min==0" ng-click="personnage.supprimerCompetence(competence)"><span class="glyphicon-medium glyphicon glyphicon glyphicon-remove"></span></a></td>
             </tr>
         </tbody>
     </table>
 </div>
-<h3>Liste de compétences</h3>
-<a class="btn btn-primary" ng-click="montrerListeCombat = !montrerListeCombat" data-toggle="tooltip" title="Compétences de combat">Combat</a>
-<a class="btn btn-primary" ng-click="montrerListeEtiquettes = !montrerListeEtiquettes" data-toggle="tooltip" title="Compétences d'étiquettes spécifiques">Étiquettes</a>
+<h3>Liste de Compétences possibles</h3>
+<a class="btn btn-primary" ng-click="montrerListeCombat=!montrerListeCombat" 
+   data-toggle="tooltip" title="Compétences de combat">Combat</a>
+<a class="btn btn-primary" ng-click="montrerListeEtiquette = !montrerListeEtiquette" data-toggle="tooltip" title="Compétences d'étiquette spécifiques">Étiquette</a>
 <a class="btn btn-primary" ng-click="montrerListeMetier = !montrerListeMetier" data-toggle="tooltip" title="Compétences de métier">Métier</a>
 <a class="btn btn-primary" ng-click="montrerListeScience = !montrerListeScience" data-toggle="tooltip" title="Compétences scientifiques">Science</a>
 <a class="btn btn-primary" ng-click="montrerListeDivers = !montrerListeDivers" data-toggle="tooltip" title="Compétences diverses (langues etc.)">Divers</a>
@@ -48,8 +49,8 @@
     <div ng-show="montrerListeCombat">
         <li ng-repeat="competence in constantes.competencesCombatListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
     </div>
-    <div ng-show="montrerListeEtiquettes">
-            <li ng-repeat="competence in constantes.competencesEtiquetteListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
+    <div ng-show="montrerListeEtiquette">
+            <li ng-repeat="competence in constantes.competencesEtiquetteListe" ng-click="copyToClipboard($event);">{{ 'Étiquette: '+competence }}</li>
     </div>
     <div ng-show="montrerListeMetier">
             <li ng-repeat="competence in constantes.competencesMetierListe" ng-click="copyToClipboard($event);">{{ competence }}</li>

@@ -20,6 +20,10 @@
     width: 40px;
 }
 
+.competence-de-metatype{
+    background: #a56af2;
+}
+
 .competences-liste,
 .competences-liste ul{
     display: inline;
@@ -27,6 +31,8 @@
 }
 
 .competences-liste li{
+    margin-right: 5px;
+    display: inline-flex;
     -webkit-border-radius: 5;
     -moz-border-radius: 5;
     border-radius: 5px;
@@ -37,7 +43,7 @@
     background: #8f0d0d;
     padding: 5px 10px 5px 10px;
     
-    width: 30%;
+    width: auto;
     text-align: center; 
 }
 
@@ -65,7 +71,7 @@
 
 .recap{
     margin-top: 50px;
-    padding: 0 1em;
+    padding: 10px;
     background-color: #428bca;
     border-color: #357ebd;
     color: #FFF;
@@ -76,6 +82,7 @@
     transition: all 0.8s ease;
     -webkit-border-radius: 0 0 20px 0;
     border-radius: 0 0 20px 0;
+    width: 80%;
 }
 
 .recap li{
