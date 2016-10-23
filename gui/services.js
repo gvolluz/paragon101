@@ -436,9 +436,10 @@ paragonApp.service('personnageService', function(){
         }
     };//END Contact
     
-    this.Equipement = function(/* optional */ nom='', description='', cout=0){
+    this.Equipement = function(/* optional */ nom='', constructeur='', type='', cout=0){
         this.nom = nom;
-        this.description = description;
+        this.constructeur = constructeur;
+        this.type = type;
         this.cout = cout;
     };//END Equipement
 
@@ -923,7 +924,19 @@ paragonApp.service('personnageService', function(){
             this.contactsListe.push( contact );
         },
         
-        equipementListe: [],
+        equipementListe: [],               
+        supprimerEquipement: function(equipement){
+            var index = this.equipementListe.indexOf(equipement);
+            this.equipementListe.splice(index,1);
+            //Le capital est auto-calculé à mesure
+        },        
+        ajouterEquipement: function(){
+            var equipement = new self.Equipement(
+                nom,
+                0,0,false
+            );
+            this.competencesListe.push( competence );
+        },
         
         /*****************************************************************/
         /*******           Caractéristiques        ***********************/
