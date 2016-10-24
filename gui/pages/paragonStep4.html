@@ -1,9 +1,13 @@
 <toolbar></toolbar>
-<h2>{{ etapeActuelle }}</h2>
-<p>Créez les Contacts de votre personnage.</p>
+<h2><a class="btn btn-warning btn-small" ng-click="montrerAstuce=!montrerAstuce"><span class="glyphicon glyphicon-info-sign"></span></a>|{{ etapeActuelle }}</h2>
+<p ng-show="montrerAstuce">Définis ici les Contacts de ton Paragon.
+    Pour ajouter un nouveau Contact, choisis dans la liste des idées d'occupations une occupation en cliquant dessus, puis cliques sur le bouton d'ajout. Ton nouveau Contact apparaîtra avec un nom généré aléatoirement et la bonne occupation. Tu peux aussi cliquer sur un Contact de la liste et utiliser le bouton <a><span class="glyphicon glyphicon-paste"/></a> d'un des Contacts de ton Paragon, le nom de l'occupation sera automatiquement collé. Pour supprimer un Contact (c'est définitif...), clique sur le bouton <a><span class="glyphicon glyphicon-remove"/></a> d'un des Contacts de ton Paragon.
+</p>
 <hr/>
-<h3>Contacts</h3>
-<a ng-click="personnage.ajouterContact()" class="btn btn-primary" data-toggle="tooltip" title="Ajouter un Contact"><span class="glyphicon glyphicon-plus"></a>
+<h3>Contacts du Paragon</h3>
+<span>Contenu du presse-papier: {{ clipBoard || 'presse-papier vide!' }}</span>
+<br>
+<a ng-click="personnage.ajouterContact(clipBoard)" class="btn btn-primary" data-toggle="tooltip" title="Ajouter un Contact"><span class="glyphicon glyphicon-plus"></a>
 <div ng-show="!personnage.contactsListe.length">
     <p>Aucun Contact pour le moment!</p>
 </div>
@@ -16,6 +20,7 @@
                 <td>Base</td>
                 <td>Points répartis</td>
                 <td>Rang</td>
+                <td>Actions</td>
             </tr>
         </thead>
         <tbody>
@@ -27,8 +32,14 @@
                 <td>{{ contact.min }}</td>
                 <td><input type="number" ng-model="contact.base" min="0" max="5"/></td>
                 <td>{{ contact.rang() }}</td>
-                <td><a ng-click="personnage.supprimerContact(contact)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td>
+                    <a ng-click="pasteFromClipboard(contact)" data-toggle="tooltip" title="Coller '{{ clipBoard || 'presse-papier vide' }}' comme occupation"><span class="glyphicon-medium glyphicon glyphicon-paste"></span></a>
+                    <a ng-click="personnage.supprimerContact(contact)"><span class="glyphicon-medium glyphicon glyphicon glyphicon-remove"></span></a></td>
             </tr>
         </tbody>
-    </table>
-</div>
+    </table>   
+</div> 
+<h3>Idées d'occupations</h3>
+<ul class="competences-liste">
+    <li ng-repeat="occupation in constantes.contactsOccupationListe" ng-click="copyToClipboard($event);">{{ occupation }}</li>
+</ul>
