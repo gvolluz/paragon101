@@ -25,12 +25,15 @@
 }
 
 .competences-liste,
-.competences-liste ul{
+.competences-liste ul,
+.equipement-liste,
+.equipement-liste ul{
     display: inline;
     list-style: none;
 }
 
-.competences-liste li{
+.competences-liste li,
+.equipement-liste li{
     margin-right: 5px;
     display: inline-flex;
     -webkit-border-radius: 5;
@@ -45,6 +48,16 @@
     
     width: auto;
     text-align: center; 
+}
+
+.equipement-liste li{
+    margin-bottom: 5px;
+    font-weight: normal;
+    background: #888;
+}
+
+.equipement-liste li:hover{
+    background: #444;
 }
 
 .competences-liste .active{

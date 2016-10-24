@@ -293,8 +293,9 @@ paragonApp.service('personnageService', function(){
         perso.equipement = new Array(p.equipementListe.length);
         for(var i=0;i<p.equipementListe.length;i++){            
             perso.equipement[i] = {
+                constructeur: p.equipementListe[i].constructeur,
                 nom: p.equipementListe[i].nom,
-                description: p.equipementListe[i].description,
+                type: p.equipementListe[i].type,
                 cout: p.equipementListe[i].cout
             }
         }        
@@ -375,7 +376,7 @@ paragonApp.service('personnageService', function(){
         archetype += bs+'begin{description}'+lf;
         
         for(var i=0;i<reduxPerso.equipement.length;i++){         
-            archetype += tb+bs+'item['+reduxPerso.equipement[i].nom+'] '+reduxPerso.equipement[i].description+' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
+            archetype += tb+bs+'item['+reduxPerso.equipement[i].type+'] '+reduxPerso.equipement[i].constructeur+' : '+reduxPerso.equipement[i].nom+ ' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
         }
         
         archetype += bs+'end{description}'+lf;          
@@ -527,7 +528,7 @@ paragonApp.service('personnageService', function(){
             {nom: 'Poings rikiens', constructeur: '-', type: 'perforant', cout: '30'},
             {nom: 'Pulsor', constructeur: '-', type: 'grenade telsa', cout: '800'}
         ],
-        equipementProtectionListe:[
+        equipementProtectionsListe:[
             {nom: 'Apollon 01k', constructeur: 'KV', type: 'khiton renforcé', cout: '200'},
             {nom: 'Générique', constructeur: 'Divers', type: 'casque léger', cout: '200'},
             {nom: 'Générique', constructeur: 'Divers', type: 'gants légers', cout: '200'},
@@ -930,13 +931,47 @@ paragonApp.service('personnageService', function(){
             this.equipementListe.splice(index,1);
             //Le capital est auto-calculé à mesure
         },        
-        ajouterEquipement: function(){
-            var equipement = new self.Equipement(
-                nom,
-                0,0,false
-            );
-            this.competencesListe.push( competence );
+        ajouterEquipement: function(equipement){
+            var copieEquipement;
+            if(equipement){
+                copieEquipement = new self.Equipement(
+                    equipement.nom,
+                    equipement.constructeur,
+                    equipement.type,
+                    equipement.cout
+                );   
+            }
+            else{
+                copieEquipement = new self.Equipement(
+                    'Nom',
+                    'Constructeur',
+                    'Type',
+                    0
+                    );
+            }
+            this.equipementListe.push( copieEquipement );
         },
+        
+        
+        /**------------>    CAPITAL         <------------------------**/
+                
+        _capitalMin: function(){  
+            var salaire = this.salaire.montant;   
+            var fortune = (this._axe.nom === 'Crésus')?self.constantes.bonusCresusDrachmes:0;
+            return salaire + ((salaire*12-salaire)/5)*(this.age-18)+fortune;
+        },
+        
+        _capitalEquipement: function(){
+            var coutEquipement = 0;
+            for(var i=0; i<this.equipementListe.length; i++){
+                coutEquipement += parseInt(this.equipementListe[i].cout);
+            }
+            return coutEquipement;
+        },
+        
+        capital: function(){
+            return this._capitalMin()-this._capitalEquipement();
+        }, 
         
         /*****************************************************************/
         /*******           Caractéristiques        ***********************/
@@ -1089,29 +1124,7 @@ paragonApp.service('personnageService', function(){
         //Toujours calculé
         robustesse: function(){
             return this.robustesseMin+this._robustesseBase;
-        },
-        
-        /**------------>    CAPITAL         <------------------------**/
-                
-        _capitalMin: function(){  
-            var salaire = this.salaire.montant;   
-            var fortune = (this._axe.nom === 'Crésus')?self.constantes.bonusCresusDrachmes:0;
-            return salaire + ((salaire*12-salaire)/5)*(this.age-18)+fortune;
-        },
-        
-        _capitalEquipement: function(){
-            var coutEquipement = 0;
-            
-            for(var i=0; i<this.equipementListe.length; i++){
-                coutEquipement += this.equipementListe[i].cout;
-            }
-            
-            return coutEquipement;
-        },
-        
-        capital: function(){
-            return this._capitalMin()-this._capitalEquipement();
-        },  
+        }, 
         
         /**------------>    IMPACT          <------------------------**/
                 
