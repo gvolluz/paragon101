@@ -27,13 +27,16 @@
 .competences-liste,
 .competences-liste ul,
 .equipement-liste,
-.equipement-liste ul{
+.equipement-liste ul,
+.affinites-liste,
+.affinites-liste ul{
     display: inline;
     list-style: none;
 }
 
 .competences-liste li,
-.equipement-liste li{
+.equipement-liste li,
+.affinites-liste li{
     margin-right: 5px;
     display: inline-flex;
     -webkit-border-radius: 5;
@@ -58,6 +61,17 @@
 
 .equipement-liste li:hover{
     background: #444;
+}
+
+.affinites-liste li{
+    margin-bottom: 5px;
+    font-weight: normal;
+    background: #444;
+    text-align: justify;
+}
+
+.affinites-liste li:hover{
+    background: #222;
 }
 
 .competences-liste .active{

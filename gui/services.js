@@ -161,10 +161,15 @@ paragonApp.service('personnageService', function(){
             perso.profession = this.constantes.professionDefaut;
             perso.origine = this.constantes.originesListe[0];
             perso.competencesListe = [
-                new Competence(this.langueMaternelle(perso.origine), 1,0,0,0,false)
+                new Competence(this.langueMaternelle(perso.origine),1,0,false)
             ];
             perso.contactsListe = [];
             perso.equipementListe = [];
+        
+            perso.affinitePolitique = this.constantes.affinitesPolitiquesListe[0];
+            perso.affiniteGeopolitique = this.constantes.affinitesGeopolitiquesListe[0];
+            perso.affiniteMystique = this.constantes.affinitesMystiquesListe[0];
+            perso.affiniteMoeurs = this.constantes.affinitesMoeursListe[0];
         }
         
         perso.metatype = this.constantes.metatypesListe[0];
@@ -268,10 +273,10 @@ paragonApp.service('personnageService', function(){
             
         };
         
-        perso.mystique = 'A définir';
-        perso.politique = 'A définir';
-        perso.geopolitique = 'A définir';
-        perso.moeurs = 'A définir';
+        perso.affiniteMystique = p.affiniteMystique;
+        perso.affinitePolitique = p.affinitePolitique;
+        perso.affiniteGeopolitique = p.affiniteGeopolitique;
+        perso.affiniteMoeurs = p.affiniteMoeurs;
         
         perso.competences = [new Array(p.competencesListe.length)];
         for(var i=0;i<p.competencesListe.length;i++){           
@@ -303,6 +308,9 @@ paragonApp.service('personnageService', function(){
         return perso;
     };//END redux
     
+    this.csv = function(reduxPerso){ return 'Bientôt!';};   
+    this.pdf = function(reduxPerso){ return 'Bientôt!';};   
+        
     this.latex = function(reduxPerso){
         var archetype = '';
         var lf = '\n';
@@ -328,10 +336,10 @@ paragonApp.service('personnageService', function(){
         archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
         archetype += tb+'Metatype '+bs+'> : '+bs+'> '+reduxPerso.metatype+bs+bs+lf;
         archetype += tb+'Axe'+bs+'>:'+bs+'>'+reduxPerso.axe+bs+bs+lf;
-        archetype += tb+'Politique'+bs+'>:'+bs+'>'+reduxPerso.politique+bs+bs+lf;
-        archetype += tb+'Géopolitique'+bs+'>:'+bs+'>'+reduxPerso.geopolitique+bs+bs+lf;
-        archetype += tb+'Moeurs'+bs+'>:'+bs+'>'+reduxPerso.moeurs+bs+bs+lf;
-        archetype += tb+'Mystique'+bs+'>:'+bs+'>'+reduxPerso.mystique+lf;
+        archetype += tb+'Politique'+bs+'>:'+bs+'>'+reduxPerso.affinitePolitique+bs+bs+lf;
+        archetype += tb+'Géopolitique'+bs+'>:'+bs+'>'+reduxPerso.affiniteGeopolitique+bs+bs+lf;
+        archetype += tb+'Moeurs'+bs+'>:'+bs+'>'+reduxPerso.affiniteMoeurs+bs+bs+lf;
+        archetype += tb+'Mystique'+bs+'>:'+bs+'>'+reduxPerso.affiniteMystique+lf;
         archetype += bs+'end{tabbing}'+lf;
         archetype += bs+'textbf{Caractéristiques}'+lf;
         archetype += bs+'begin{tabbing}'+lf;
@@ -746,6 +754,64 @@ paragonApp.service('personnageService', function(){
             'Seahandler',
             'Wyrlard'
         ],
+        affinitesPolitiquesListe:[
+            {nom: 'Basiléiste',
+            description: 'Le Basiléiste est un passéiste, un conservateur pur et dur, le plus souvent impérialiste, voire, pour les plus extrêmes, fervent défenseur des monarchies absolues. Dans l\'Aftokratorias, il lorgne avec envie sur le Rike et la gloire du Köng. Dans le Rike, il est un fervent supporter de la maison köngale et regarde avec mépris l\'Aftokratorias. Dans les deux cas, il crache sur les OPE. En théorie, aucun Opéien n\'est Basiléiste, mais beaucoup de cadres de Kérberos le sont pourtant très ouvertement.'},
+             {nom: 'Démocrate',
+            description: 'Le Démocrate abhorre les notions d\'aristocratie, de mainmise d\'une élite féodale sur le pouvoir. Il défend vaillamment les droits du peuple, la liberté d\'expression, et s\'avère en général plutôt progressiste. Dans l\'Aftokratorias, il représente la majorité de la population. Dans le Rike, il est un fritenker, un dissident aux moeurs dissolues, étroitement surveillé par Leeds Garden. Dans les OPE, il représente la moitié la plus modérée de la population.'},
+             {nom: 'Néo-platonicien',
+            description: 'Le Néo-Platonicien est un adepte du collectivisme, de la raison et de la Cité Juste. Il est généralement convaincu que seuls la mise en commun et le partage des richesses peuvent apporter le plus grand bien. Dans les OPE, il représente une bonne moitié de la population. Dans l\'Aftokratorias et le Rike, il est étroitement surveillé par le gouvernement, voire persécuté.'},
+             {nom: 'Anarchiste',
+            description: 'L\'Anarchiste représente une frange plutôt réduite de la population de Gaïa, qui recherche un collectivisme total, niant tout droit aux biens individuels non utilisés; généralement très engagé politiquement, il refuse l\'idée d\'un pouvoir central, et en défend la mise en place de structures ordrées dépourvues d\'autorité centrale. Dans les OPE, il est vu comme un collectiviste extrémiste aux idées révolutionnaires. Dans l\'Aftokratorias, il est généralement mal vu, voire persécuté. Dans le Rike, il est littéralement pourchassé.'},
+             {nom: 'Sans avis',
+            description: 'La politique, c\'est pour les autres.'}
+        ],
+        affinitesGeopolitiquesListe:[
+             {nom: 'Iréniste',
+            description: 'L\'Iréniste est un pacifiste, profondément humaniste, défenseur du rapprochement entre les peuples. Généralement désabusé, il est dégoûté par les excès de la Guerre Mondiale et fait tout pour aider son prochain.'},
+             {nom: 'Polémiste',
+            description: 'Le Polémiste est un belliqueux, convaincu que "sa" nation aurait dû remporter la Guerre Mondiale. Revanchard, xénophobe, le Polémiste fait tout ce qui est en son pouvoir pour que la Guerre reprenne et que "sa" nation termine le travail.'},
+             {nom: 'Qabbaliste',
+            description: 'Le Qabbaliste sait pertinemment que la Guerre Mondiale n\'a jamais pris fin. Conspirationniste actif, théoricien du complot, le Qabbaliste sait que des puissances occultes manipulent les gouvernements, et cachent au public "le" grand secret. Il se pourrait même que le Qabbaliste fasse partie du Complot, à son insu ou non.'},
+             {nom: 'Sans avis',
+            description: 'La géopolitique, c\'est pour les autres.'}
+        ],
+        affinitesMystiquesListe:[
+             {nom: 'Dévot',
+            description: 'Le Dévot respecte et défend les traditions ancestrales, qu\'elles soient hellénistiques ou nordiques. Certes, les Dieux ont abandonné les Humains, mais il reste de l\'espoir. Le Dévot fera tout ce qui est en son pouvoir pour convertir les autres et ramener les Dieux auprès des Humains.'},
+             {nom: 'Défaitiste',
+            description: 'Le Défaitiste a perdu toute illusion. l\'Âge d\'Or des Dieux de l\'Olympe (ou d\'Asgard) est révolue depuis longtemps. La fin des temps, le Ragnarök, sont proches. Il n\'y a plus aucun espoir, alors à quoi bon lutter ? Nombreux sont les Défaitistes qui abandonnent toute forme de morale pour laisser leurs plus bas instincts s\'exprimer. Beaucoup plus rares sont ceux qui font exactement l\'inverse en signe d\'expiation.'},
+             {nom: 'Monothéiste',
+            description: 'Le Monothéiste est plutôt rare dans les sociétés hellénistiques et bretiniennes, et se rencontre en général dans les Royaumes Arabes, c\'est à dire au Moyen-Orient. Adepte d\'un seul Dieu, celui d\'Abraham, il est plutôt secret, mais convaincu que son peuple a été choisi pour un grand dessein. Dans le Rike, le Monothéiste est persécuté. Dans l\'Aftokratorias et les OPE, plus tolérants, il est seulement tourné en dérision.'},
+             {nom: 'Chamaniste',
+            description: 'Le Chamaniste est influencé par les cultures euphoriennes d\'origine et vénère les esprits de Gaïa. Si les plus grands rassemblements de Chamanistes se trouvent dans les OPE, il n\'est pas rare que de nombreux jeunes Aftokratoriens, influencés par certaines astéris du rolo podi, le soient plus ou moins ouvertement. De même, la plupart des dews bretiniens, qui sont officiellement inféodés aux dieux de l\'Asgard, n\'ont pas oublié leurs traditions naturalistes, et peuvent être considérés comme des Chamanistes.'},
+             {nom: 'Humaniste',
+            description: 'L\'Humaniste est un réaliste moderne, souvent philosophe ou attiré par les sciences, qui se veut rationnel. De toute évidence pour l\'Humaniste, les Dieux n\'ont jamais existé et ne sont que des créations de l\'esprit, inspirées jadis aux tribus et aux peuplades primitives par leurs peurs ancestrales. Encore plutôt rare avant-guerre, l\'affinité Humaniste ne cesse de se développer dans l\'Aftokratorias et dans les OPE. Dans le Rike, les Humanistes sont lynchés en place publique.'},
+             {nom: 'Sans avis',
+            description: 'Rien à cirer.'}
+        ],
+        affinitesMoeursListe:[
+             {nom: 'Agynécien',
+            description: '(opposé: Gynécien) l\'Agynécien est un fervent défenseur de la cause féministe, voire un membre officiel de l\'Agynéciade. Rares sont les hommes nés avant-guerre à être Agynéciens, sauf dans les OPE où l\'égalité est une vertu nationale.'},
+             {nom: 'Déiciste',
+            description: '(opposé: Ragnarökien) convaincu par la Prophétie de la Pythie, le Déiciste met tout en œuvre pour contrer le retour des Titans, que cela soit avec l\'aide des Dieux ou pas.'},
+             {nom: 'Gynécien',
+            description: '(opposé: Agynécien) le Gynécien est un fervent défenseur du modèle familial traditionnel; il représente encore en cela la majorité des gens nés avant-guerre.'},
+             {nom: 'Hédoniste',
+            description: '(opposé: Spartiate) l\'Hédoniste est un fervent partisan du relâchement des mœurs. Il défend l\'abolition de la prohibition, est généralement fêtard, soutient activement les homosexuels et la relation traditionnelle entre le maître et son élève.'},
+             {nom: 'Ichoricien',
+            description: '(opposé: Raisonnable) l\'Ichoricien fait partie des très rares individus convaincus que l\'ichor est en réalité le sang des Titans, et non une simple boue énergétique. Généralement issu de milieux mystiques, il est souvent tourné en dérision par la majorité de la population, et utilisé comme bouc émissaire par la presse.'},
+             {nom: 'Podoniste',
+            description: '(opposé: Somatiste) le Podoniste est un fervent défenseur de l\'esclavage traditionnel. Comme leurs conditions de vie sont généralement meilleures que celles des ouvriers libres de l\'industrie, de nombreux esclaves athéniens sont Podonistes.'},
+             {nom: 'Ragnarökien',
+            description: '(opposé: Déiciste) convaincu par la Prophétie de la Pythie, le Ragnarökien fait tout pour œuvrer dans son sens et s\'attirer les faveurs des Titans. Mieux vaut être du côté des vainqueurs.'},
+             {nom: 'Raisonnable',
+            description: '(opposé: Ichoricien) le Raisonnable, généralement membre de la communauté des philosophes ou sympathisant, sait pertinemment, toutes les études le prouvent d\'ailleurs, que l\'ichor n\'est pas le sang des Titans. Toute personne qui prétendrait le contraire ne serait qu\'un affabulateur - nous ne sommes pas dans une bobine de science-fiction, par Hermès !'},
+             {nom: 'Somatiste',
+            description: '(opposé: Podoniste) le Somatiste prône l\'abolition de l\'esclavage, sous quelque forme que cela soit, et est généralement un défenseur des libertés individuelles. Le courant de pensée Somatiste est de plus en plus répandu dans l\'Aftokratorias, au grand dam des esclaves athéniens.'},
+             {nom: 'Spartiate',
+            description: '(opposé: Hédoniste) le Spartiate est contre les relations éraste/éromène, contre les relations homosexuelles en général, contre l\'alcool, contre les drogues - de manière générale, il s\'agit d\'un puritain qui est contre pratiquement tous les plaisirs de la vie.'}
+        ],
         languesListe: ['grec', 'bretinien', 'grec', 'zhongguo'],        
         sexesListe: ['Femme', 'Homme'],
         salairesListe: [
@@ -992,6 +1058,10 @@ paragonApp.service('personnageService', function(){
             this.equipementListe.push( copieEquipement );
         },
         
+        affinitePolitique: this.constantes.affinitesPolitiquesListe[0],
+        affiniteGeopolitique: this.constantes.affinitesGeopolitiquesListe[0],
+        affiniteMystique: this.constantes.affinitesMystiquesListe[0],
+        affiniteMoeurs: this.constantes.affinitesMoeursListe[0],
         
         /**------------>    CAPITAL         <------------------------**/
                 
