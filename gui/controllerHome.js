@@ -49,7 +49,7 @@ paragonApp.controller('homeController', ['$scope', '$cookies', '$log', 'personna
         var formBlob = new Blob([perso], { type: type });
         var a = document.getElementById('personnageExport');
         a.setAttribute('href', window.URL.createObjectURL(formBlob));
-        a.download = 'Paragon-'+$scope.personnage.uuid+ext; 
+        a.download = $scope.personnage.metatype+'_'+$scope.personnage.nom+ext; 
         a.dispatchEvent(clickEvent);
     }
 
