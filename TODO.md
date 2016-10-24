@@ -1,14 +1,20 @@
 GUI
 
-- Supprimer la sauvegarde par cookie et ne sauver que le personnage courant à chaque modif
-- Ajouter les étapes suivantes:
+- Export/Import phase 2
+* csv
+* pdf
+* centraliser dans personnageService pour avoir accès partout
 
-* affinités
-* capital
-* contacts
-* etc.
+- Compétences
+* supprimer les compétences de meta sur changement du meta
 
-- Export/Import simple (fichier JSON à télécharger)
+- Équipement
+* ajouter les détails utiles (dégâts pour les armes par ex.) en une propriété 'extras' ['extra1', 'extra2'] <== extra par ex. "Dégâts 5", "Protection 4", etc.
+
+
+- PNJs aléatoires
+* ajouter fonctionnalité (combien de pnjs, quel(s) metatype, nom de base (par ex. "Garde#" et auto un compteur), création des stats vitales (caracs principales et dérivées utiles, compétences, équipement)
+* ajouter export spécifique aux formats standards
 
 - OAuth pour sauver settings, personnages etc.
 * Dropbox (prio 1)
