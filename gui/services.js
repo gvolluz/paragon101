@@ -1,10 +1,4 @@
 //SERVICE
-function Equipement(/* optional */ aNom='', aDescription='', aCout=0){
-    this.nom = aNom;
-    this.description = aDescription;
-    this.cout = aCout;
-}
-
 paragonApp.service('personnageService', function(){
     var self = this;
     
@@ -299,8 +293,9 @@ paragonApp.service('personnageService', function(){
         perso.equipement = new Array(p.equipementListe.length);
         for(var i=0;i<p.equipementListe.length;i++){            
             perso.equipement[i] = {
+                constructeur: p.equipementListe[i].constructeur,
                 nom: p.equipementListe[i].nom,
-                description: p.equipementListe[i].description,
+                type: p.equipementListe[i].type,
                 cout: p.equipementListe[i].cout
             }
         }        
@@ -381,7 +376,7 @@ paragonApp.service('personnageService', function(){
         archetype += bs+'begin{description}'+lf;
         
         for(var i=0;i<reduxPerso.equipement.length;i++){         
-            archetype += tb+bs+'item['+reduxPerso.equipement[i].nom+'] '+reduxPerso.equipement[i].description+' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
+            archetype += tb+bs+'item['+reduxPerso.equipement[i].type+'] '+reduxPerso.equipement[i].constructeur+' : '+reduxPerso.equipement[i].nom+ ' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
         }
         
         archetype += bs+'end{description}'+lf;          
@@ -441,6 +436,13 @@ paragonApp.service('personnageService', function(){
             return this.min+this.base;
         }
     };//END Contact
+    
+    this.Equipement = function(/* optional */ nom='', constructeur='', type='', cout=0){
+        this.nom = nom;
+        this.constructeur = constructeur;
+        this.type = type;
+        this.cout = cout;
+    };//END Equipement
 
     /*****************************************************************************/
     /*                Constantes/valeurs par défaut                              */
@@ -449,170 +451,260 @@ paragonApp.service('personnageService', function(){
     this.constantes = {
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
         competencesCombatListe:[
-            'Armes d\'épaule',
-            'Armes de jet',
-            'Armes lourdes',
-            'Armes de mêlée',
-            'Armes exotiques',
-            'Boxe bretinienne',
-            'Judo',
-            'Jiu-jitsu',
-            'Lutte grecque'
+            'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
+            'Armes exotiques','Boxe bretinienne','Judo','Jiu-jitsu','Lutte grecque'
         ],
         competencesEtiquetteListe:[
-            'Ankh-Rose',
-            'Architectes',
-            'Brouwersliga',
-            'DEP',
-            'Dingdan shé yinshen',
-            'Drachensee Ltd',
-            'Dockers',
-            'Drachen',
-            'Drews',
-            'Esclaves',
-            'Finance',
-            'Fritenkers',
-            'Froura',
-            'Gangs',
-            'GAT',
-            'Gotha',
-            'GRYDAN',
-            'Hétaires',
-            'Jul\'ek',
-            'Kalti Akab',
-            'Kérberos',
-            'kinêma',
-            'Leeds Garden',
-            'Maisons du Crime',
-            'Mao Huo',
-            'Marins',
-            'Mode',
-            'OPE',
-            'Paragons',
-            'Politiciens',
-            'Presse',
-            'Récupérateurs',
-            'Rike',
-            'Routiers',
-            'Sport autokinite',
-            'Sport éolien',
-            'Stratos',
-            'Shan Luwei Yuan',
-            'Syllips kranio',
-            'Vabensliga',
-            'Wyrlards',
-            'Zhongguo'
+            'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
+            'Drachensee Ltd','Dockers','Drachen','Drews','Esclaves','Finance',
+            'Fritenkers','Froura','Gangs','GAT','Gotha','GRYDAN','Hétaires',
+            'Jul\'ek','Kalti Akab','Kérberos','kinêma','Leeds Garden',
+            'Maisons du Crime','Mao Huo','Marins','Mode','OPE','Paragons',
+            'Politiciens','Presse','Récupérateurs','Rike','Routiers','Sport autokinite',
+            'Sport éolien','Stratos','Shan Luwei Yuan','Syllips kranio','Vabensliga',
+            'Wyrlards','Zhongguo'
         ],
         competencesMetierListe:[
-            'Armurerie',
-            'Bureaucratie',
-            'Cartographie',
-            'Chant',
-            'Comptabilité',
-            'Commandement',
-            'Comédie',
-            'Contrefaçon',
-            'Criminalistique',
-            'Cryptographie',
-            'Danse',
-            'Déminage',
-            'Dessin',
-            'Droit',
-            'Électricité',
-            'Électronique',
-            'Hermaphorique',
-            'Hypnose',
-            'Ichornétique',
-            'Ichoromatique',
-            'Immobilisation',
-            'Imposture',
-            'Interrogatoire',
-            'Kinêma',
-            'Mécanique',
-            'Médecine',
-            'Métallurgie',
-            'Menuiserie',
-            'Musique',
-            'Oenologie',
-            'Peinture',
-            'Photographie',
-            'Phreaking',
-            'Pilotage autokinite',
-            'Pilotage éole',
-            'Pilotage fortigo',
-            'Pilotage hermaphore',
-            'Pilotage kini',
-            'Pilotage navire',
-            'Pilotage thalès',
-            'Pister',
-            'Plomberie',
-            'Premiers soins',
-            'Psychanalyse',
-            'Psychologie',
-            'Recherche documentaire',
-            'Sculpture',
-            'Sécurité',
-            'Serrurerie',
-            'Survie',
-            'Télécommunications',
-            'Taxidermie'
+            'Armurerie','Bureaucratie','Cartographie','Chant','Comptabilité','Commandement',
+            'Comédie','Contrefaçon','Criminalistique','Cryptographie','Danse','Déminage',
+            'Dessin','Droit','Électricité','Électronique','Hermaphorique','Hypnose',            'Ichornétique','Ichoromatique','Immobilisation','Imposture','Interrogatoire',
+            'Kinêma','Mécanique','Médecine','Métallurgie','Menuiserie','Musique',
+            'Oenologie','Peinture','Photographie','Phreaking','Pilotage autokinite',
+            'Pilotage éole','Pilotage fortigo','Pilotage hermaphore','Pilotage kini',
+            'Pilotage navire','Pilotage thalès','Pister','Plomberie','Premiers soins',
+            'Psychanalyse','Psychologie','Recherche documentaire','Sculpture',
+            'Sécurité','Serrurerie','Survie','Télécommunications','Taxidermie'
         ],
         competencesScienceListe:[
-            'Anthropologie',
-            'Archéologie',
-            'Architecture',
-            'Astrologie',
-            'Biochimie',
-            'Biologie',
-            'Botanique',
-            'Cosmogonie',
-            'Criminalistique',
-            'Economie',
-            'Géographie',
-            'Géologie',
-            'Glaciologie',
-            'Histoire',
-            'Hydrologie',
-            'Ichorologie',
-            'Mathématiques',
-            'Météorologie',
-            'Minéralogie',
-            'Occultisme',
-            'Océanographie',
-            'Paléontologie',
-            'Pharmacologie',
-            'Phrénologie',
-            'Physique',
-            'Politique',
-            'Sismologie',
-            'Sociologie',
-            'Stratégie',
-            'Volcanologie',
-            'Zoologie'
+            'Anthropologie','Archéologie','Architecture','Astrologie','Biochimie',
+            'Biologie','Botanique','Cosmogonie','Criminalistique','Economie','Géographie',
+            'Géologie','Glaciologie','Histoire','Hydrologie','Ichorologie','Mathématiques',
+            'Météorologie','Minéralogie','Occultisme','Océanographie','Paléontologie',
+            'Pharmacologie','Phrénologie','Physique','Politique','Sismologie','Sociologie',
+            'Stratégie','Volcanologie','Zoologie'
         ],
         competencesDiversListe:[
-            'Baratin',
-            'Bricolage',
-            'Discrétion',
-            'Dissimulation',
-            'Dressage',
-            'Équitation',
-            'Grimpe',
-            'Jeu',
-            'Langue: aforakien',
-            'Langue: arabe',
-            'Langue: bretinien',
-            'Langue: grec',
-            'Langue: zhongguo',
-            'Lecture à l\'envers',
-            'Lecture sur les lèvres',
-            'Natation',
-            'Négociation',
-            'Orientation',
-            'Parachutisme',
-            'Persuasion',
-            'Plongée',
+            'Baratin','Bricolage','Discrétion','Dissimulation','Dressage','Équitation',
+            'Grimpe','Jeu','Langue: aforakien','Langue: arabe','Langue: bretinien',            'Langue: grec','Langue: zhongguo','Lecture à l\'envers','Lecture sur les lèvres',
+            'Natation','Négociation','Orientation','Parachutisme','Persuasion','Plongée',
             'Syllips kranio'
+        ],
+        equipementArmesAFeuListe:[
+            {nom: 'Artémis E35', constructeur: 'KV', type: 'pistolet', cout: '250'},
+            {nom: 'Artémis S40', constructeur: 'KV', type: 'pistolet', cout: '700'},
+            {nom: 'Artémis V33', constructeur: 'KV', type: 'pistolet', cout: '560'},
+            {nom: 'P403 Preyhunter', constructeur: 'Badas', type: 'pistolet', cout: '640'},
+            {nom: 'P503 Warhawk', constructeur: 'Badas', type: 'pistolet', cout: '280'},
+            {nom: 'Protector', constructeur: 'Savage', type: 'pistolet', cout: '1250'},
+            {nom: 'Saturos', constructeur: 'Pados', type: 'pistolet', cout: '355'},
+            {nom: 'TA-3', constructeur: 'Taki', type: 'pistolet', cout: '320'},
+            {nom: 'TA-4', constructeur: 'Taki', type: 'pistolet', cout: '310'},
+            {nom: 'Aédé S60', constructeur: 'KV', type: 'mitrailleuse', cout: '21750'},
+            {nom: 'Gorgo', constructeur: 'Pados', type: 'mitrailleuse', cout: '19960'},
+            {nom: 'M909 Chainsaw', constructeur: 'Badas', type: 'mitrailleuse', cout: '10620'},
+            {nom: 'Fumbler', constructeur: 'Savage', type: 'mitraillette', cout: '1530'},
+            {nom: 'TA-6', constructeur: 'Taki', type: 'mitraillette', cout: '340'},
+            {nom: 'Toxo T97', constructeur: 'KV', type: 'fusil de précision', cout: '14145'},
+            {nom: 'Vauxhall', constructeur: 'Savage', type: 'fusil de précision', cout: '18450'},
+            {nom: 'Medousa', constructeur: 'Pados', type: 'fusil de chasse', cout: '2310'},
+            {nom: 'TA-7', constructeur: 'Taki', type: 'fusil de chasse', cout: '2470'},
+            {nom: 'Arès S50', constructeur: 'KV', type: 'fusil d\'assaut', cout: '4980'},
+            {nom: 'Erazer', constructeur: 'Savage', type: 'fusil d\'assaut', cout: '14025'},
+            {nom: 'K303 Widowmaker', constructeur: 'Badas', type: 'fusil d\'assaut', cout: '3420'},
+            {nom: 'C420 Boomer', constructeur: 'Badas', type: 'canon d\'assaut', cout: '12240'},
+            {nom: 'Thunderfyre', constructeur: 'Savage', type: 'canon d\'assaut', cout: '36525'}
+        ],
+        equipementArmesDiversListe:[
+            {nom: 'Bang', constructeur: '-', type: 'grenade explosive', cout: '60'},
+            {nom: 'Couteau', constructeur: '-', type: 'perforant', cout: '10'},
+            {nom: 'Dévastatron', constructeur: '-', type: 'grenade haut explosif', cout: '500'},
+            {nom: 'Flash', constructeur: '-', type: 'grenade incapacitante', cout: '50'},
+            {nom: 'Fumi', constructeur: '-', type: 'grenade fumigène', cout: '40'},
+            {nom: 'Griffes', constructeur: '-', type: 'tranchant', cout: '30'},
+            {nom: 'Lame', constructeur: '-', type: 'tranchant', cout: '100'},
+            {nom: 'Lame vibrante', constructeur: '-', type: 'tranchant', cout: '500'},
+            {nom: 'Masse', constructeur: '-', type: 'contondant', cout: '80'},
+            {nom: 'Masse pulsée', constructeur: '-', type: 'contondant', cout: '450'},
+            {nom: 'Poings rikiens', constructeur: '-', type: 'perforant', cout: '30'},
+            {nom: 'Pulsor', constructeur: '-', type: 'grenade telsa', cout: '800'}
+        ],
+        equipementProtectionsListe:[
+            {nom: 'Apollon 01k', constructeur: 'KV', type: 'khiton renforcé', cout: '200'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'casque léger', cout: '200'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'gants légers', cout: '200'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'bottes légères', cout: '200'},
+            {nom: 'Jacket X', constructeur: 'Savage', type: 'khiton renforcé', cout: '400'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'casque moyen', cout: '400'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'gants moyens', cout: '400'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'bottes moyennes', cout: '400'},
+            {nom: 'Apollon 02c', constructeur: 'KV', type: 'khiton blindé', cout: '600'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'casque lourd', cout: '600'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'gants lourds', cout: '600'},
+            {nom: 'Générique', constructeur: 'Divers', type: 'bottes lourdes', cout: '600'},
+            {nom: 'TAk-TT', constructeur: 'Taki', type: 'khiton blindé', cout: '700'},
+            {nom: 'Chimera B', constructeur: 'Daidalos', type: 'chlamyde renforcée', cout: '1800'},
+            {nom: 'Herkulos', constructeur: 'Pados', type: 'chlamyde renforcée', cout: '2000'},
+            {nom: 'Chimera T', constructeur: 'Daidalos', type: 'chlamyde blindée', cout: '2600'},
+            {nom: 'Apollon 03cc', constructeur: 'KV', type: 'chlamyde blindée', cout: '3000'},
+            {nom: 'TAk-MD', constructeur: 'Taki', type: 'armure légère', cout: '4800'},
+            {nom: 'R-more L', constructeur: 'Savage', type: 'armure légère', cout: '5400'},
+            {nom: 'R-more M', constructeur: 'Savage', type: 'armure moyenne', cout: '8800'},
+            {nom: 'Wall ST4', constructeur: 'Badas', type: 'armure moyenne', cout: '10000'},
+            {nom: 'Chimera X', constructeur: 'Daidalos', type: 'armure lourde', cout: '19000'},
+            {nom: 'R-more H', constructeur: 'Savage', type: 'armure lourde', cout: '20000'},
+            {nom: 'Wall RT5', constructeur: 'Badas', type: 'armure lourde', cout: '25000'}
+        ],
+        equipementAutokinitesListe:[
+            {nom: 'Gladios Asteri', constructeur: 'Godapos', type: 'Limousine', cout: '7200'},
+            {nom: 'Motita A', constructeur: 'Godapos', type: 'Limousine', cout: '9600'},
+            {nom: 'Wolff Mk IV', constructeur: 'Nyte Raider', type: 'Moto cross', cout: '2400'},
+            {nom: 'Grasina GL A', constructeur: 'Godapos', type: 'Moto cross', cout: '1200'},
+            {nom: 'Mary Mk I', constructeur: 'Wotan', type: 'Moto cross', cout: '640'},
+            {nom: 'Hawke Mk II', constructeur: 'Nyte Raider', type: 'Moto routière', cout: '3520'},
+            {nom: 'Domo Excelsior', constructeur: 'Godapos', type: 'Moto routière', cout: '2800'},
+            {nom: 'Adelaïde Mk II', constructeur: 'Wotan', type: 'Moto routière', cout: '2520'},
+            {nom: 'Tyger Mk 1', constructeur: 'Nyte Raider', type: 'Moto routière', cout: '5670'},
+            {nom: 'Hydra CX35', constructeur: 'Daidalos', type: 'Quadripode', cout: '2700000'},
+            {nom: 'VL8', constructeur: 'Phantasma', type: 'Sportive', cout: '21600'},
+            {nom: 'VL10', constructeur: 'Phantasma', type: 'Sportive', cout: '23040'},
+            {nom: 'Japet', constructeur: 'Siriti', type: 'Sportive', cout: '69120'},
+            {nom: 'Ouranos', constructeur: 'Siriti', type: 'Sportive', cout: '80000'},
+            {nom: 'Yseult V2', constructeur: 'Wotan', type: 'Sportive', cout: '42000'},
+            {nom: 'Margaret V6', constructeur: 'Wotan', type: 'Sportive', cout: '75600'},
+            {nom: 'Dory 2P T2i', constructeur: 'ZAP', type: 'Sportive', cout: '64000'},
+            {nom: 'KXX', constructeur: 'Nyte Raider', type: 'Trike de course', cout: '9000'},
+            {nom: 'Chimaera CX33', constructeur: 'Daidalos', type: 'Tripode', cout: '1536000'},
+            {nom: 'GS 01', constructeur: 'Daidalos', type: 'Van', cout: '9600'},
+            {nom: 'Motita B', constructeur: 'Godapos', type: 'Van', cout: '24000'},
+            {nom: 'HIZ-03', constructeur: 'Acheos', type: 'Van', cout: '2400'},
+            {nom: 'HIZ-04', constructeur: 'Acheos', type: 'Van', cout: '8000'},
+            {nom: 'Koros B', constructeur: 'Godapos', type: 'Voiture', cout: '2400'},
+            {nom: 'Koros A', constructeur: 'Godapos', type: 'Voiture', cout: '800'},
+            {nom: 'Koros G', constructeur: 'Godapos', type: 'Voiture', cout: '4800'},
+            {nom: 'Koros D', constructeur: 'Godapos', type: 'Voiture', cout: '9600'},
+            {nom: 'Koros V', constructeur: 'Godapos', type: 'Voiture', cout: '32000'},
+            {nom: 'Vanguard Mk I', constructeur: 'Nyte Raider', type: 'Voiture', cout: '4000'},
+            {nom: 'Vanguard Mk II', constructeur: 'Nyte Raider', type: 'Voiture', cout: '5760'},
+            {nom: 'Vanguard Mk III', constructeur: 'Nyte Raider', type: 'Voiture', cout: '7840'},
+            {nom: 'Lisbeth V1', constructeur: 'Wotan', type: 'Voiture', cout: '7200'}
+        ],
+        equipementEolesListe:[
+            {nom: 'KDA4c', constructeur: 'Kholos Dynamikos', type: 'Acrobatie', cout: '216000'},
+            {nom: 'ME-47E Kataigida', constructeur: 'Promethaios', type: 'Acrobatie', cout: '64000'},
+            {nom: 'Kip-134', constructeur: 'Kip', type: 'Aéronef d’affaires', cout: '108000'},
+            {nom: 'Kip-151', constructeur: 'Kip', type: 'Aéronef d’affaires', cout: '140000'},
+            {nom: 'ME-35D Gypas', constructeur: 'Promethaios', type: 'Chasseur', cout: '12000'},
+            {nom: 'ME-47C Floga', constructeur: 'Promethaios', type: 'Chasseur', cout: '280000'},
+            {nom: 'ME-49A Velos', constructeur: 'Promethaios', type: 'Chasseur', cout: '960000'},
+            {nom: 'Colibri', constructeur: 'Palodas', type: 'Hélicoptère', cout: '8400'},
+            {nom: 'Grue', constructeur: 'Palodas', type: 'Hélicoptère', cout: '16800'},
+            {nom: 'Frelon', constructeur: 'Palodas', type: 'Hélicoptère', cout: '31500'},
+            {nom: 'Guêpe', constructeur: 'Palodas', type: 'Hélicoptère de combat', cout: '112000'},
+            {nom: 'KP-9 Berserker', constructeur: 'Promethaios', type: 'Hélicoptère de combat', cout: '525000'},
+            {nom: 'KD-13', constructeur: 'Kholos Dynamikos', type: 'Passagers et fret', cout: '28800'},
+            {nom: 'DM-27', constructeur: 'Denler-Mancini', type: 'Passagers et fret', cout: '48000'},
+            {nom: 'DM-37', constructeur: 'Denler-Mancini', type: 'Passagers et fret', cout: '105000'},
+            {nom: 'DM-47', constructeur: 'Denler-Mancini', type: 'Passagers et fret', cout: '240000'},
+            {nom: 'KD330', constructeur: 'Kholos Dynamikos', type: 'Passagers et fret', cout: '48000'},
+            {nom: 'KD150', constructeur: 'Kholos Dynamikos', type: 'Passagers et fret', cout: '90000'},
+            {nom: 'T-023', constructeur: 'Thalès', type: 'Passagers et fret', cout: '134400'},
+            {nom: 'T-024', constructeur: 'Thalès', type: 'Passagers et fret', cout: '576000'},
+            {nom: 'Kraken Mk I', constructeur: 'Vanguard Int.', type: 'Passagers et fret', cout: '1440000'},
+            {nom: 'S-P03', constructeur: 'Thalès', type: 'Porte éoles', cout: '9360000'},
+            {nom: 'Leviathan Mk III', constructeur: 'Vanguard Int.', type: 'Porte éoles', cout: '9000000'}
+        ],
+        equipementHermaphoresListe:[
+            {nom: 'Thalophore Mk1', constructeur: 'Marathon', type: 'transport', cout: '7300'},
+            {nom: 'Hermaphore Mk2', constructeur: 'Marathon', type: 'surveillance', cout: '8300'},
+            {nom: 'Kipa K', constructeur: 'Daidalos', type: 'combat', cout: '8850'},
+            {nom: 'Tumbler', constructeur: 'Savage', type: 'combat', cout: '11300'},
+            {nom: 'Thalès K', constructeur: 'Daidalos', type: 'combat', cout: '14100'},
+            {nom: 'DMH-1', constructeur: 'Denler-Mancini', type: 'transport', cout: '14850'},
+            {nom: 'Sneaker', constructeur: 'Savage', type: 'infiltration', cout: '15300'},
+            {nom: 'Héphaïstos I2', constructeur: 'KV', type: 'infiltration', cout: '17200'},
+            {nom: 'TAh-1', constructeur: 'Taki', type: 'surveillance', cout: '21100'},
+            {nom: 'Hermès S10', constructeur: 'KV', type: 'surveillance', cout: '22600'},
+            {nom: 'AuGy K', constructeur: 'Daidalos', type: 'combat', cout: '23500'},
+            {nom: 'DMH-2', constructeur: 'Denler-Mancini', type: 'transport', cout: '32100'},
+            {nom: 'H109', constructeur: 'Badas', type: 'combat', cout: '43550'}
+        ],
+        equipementPhreakboxesListe:[
+            {nom: 'blue box', constructeur: '1', type: 'feed the cow/clamper', cout: '3000'},
+            {nom: 'blue box', constructeur: '2', type: 'feed the cow/clamper', cout: '6000'},
+            {nom: 'blue box', constructeur: '3', type: 'feed the cow/clamper', cout: '13500'},
+            {nom: 'blue box', constructeur: '4', type: 'feed the cow/clamper', cout: '18000'},
+            {nom: 'blue box', constructeur: '5', type: 'feed the cow/clamper', cout: '30000'},
+            {nom: 'bunny box', constructeur: '1', type: 'hopper', cout: '6000'},
+            {nom: 'bunny box', constructeur: '2', type: 'hopper', cout: '12000'},
+            {nom: 'bunny box', constructeur: '3', type: 'hopper', cout: '24000'},
+            {nom: 'bunny box', constructeur: '4', type: 'hopper', cout: '32000'},
+            {nom: 'bunny box', constructeur: '5', type: 'hopper', cout: '50000'},
+            {nom: 'cam box', constructeur: '1', type: 'watcher/action!', cout: '1000'},
+            {nom: 'cam box', constructeur: '2', type: 'watcher/action!', cout: '2000'},
+            {nom: 'cam box', constructeur: '3', type: 'watcher/action!', cout: '3000'},
+            {nom: 'cam box', constructeur: '4', type: 'watcher/action!', cout: '8000'},
+            {nom: 'cam box', constructeur: '5', type: 'watcher/action!', cout: '10000'},
+            {nom: 'gray box', constructeur: '1', type: 'coacher', cout: '1000'},
+            {nom: 'gray box', constructeur: '2', type: 'coacher', cout: '2000'},
+            {nom: 'gray box', constructeur: '3', type: 'coacher', cout: '6000'},
+            {nom: 'gray box', constructeur: '4', type: 'coacher', cout: '8000'},
+            {nom: 'gray box', constructeur: '5', type: 'coacher', cout: '15000'},
+            {nom: 'red box', constructeur: '1', type: 'blower', cout: '10000'},
+            {nom: 'red box', constructeur: '2', type: 'blower', cout: '20000'},
+            {nom: 'red box', constructeur: '3', type: 'blower', cout: '30000'},
+            {nom: 'red box', constructeur: '3', type: 'blower', cout: '37500'},
+            {nom: 'red box', constructeur: '5', type: 'blower', cout: '62500'},
+            {nom: 'tape box', constructeur: '1', type: 'stringer', cout: '500'},
+            {nom: 'tape box', constructeur: '2', type: 'stringer', cout: '1000'},
+            {nom: 'tape box', constructeur: '3', type: 'stringer', cout: '3000'},
+            {nom: 'tape box', constructeur: '4', type: 'stringer', cout: '4000'},
+            {nom: 'tape box', constructeur: '5', type: 'stringer', cout: '7500'},
+            {nom: 'white box', constructeur: '1', type: 'switcher/hit the cow', cout: '500'},
+            {nom: 'white box', constructeur: '2', type: 'switcher/hit the cow', cout: '1000'},
+            {nom: 'white box', constructeur: '3', type: 'switcher/hit the cow', cout: '3000'},
+            {nom: 'white box', constructeur: '4', type: 'switcher/hit the cow', cout: '4000'},
+            {nom: 'white box', constructeur: '5', type: 'switcher/hit the cow', cout: '7500'}
+        ],
+        equipementIchornetiqueListe:[
+            {nom: 'Gadget', constructeur: 'Gamma', type: 'Variable', cout: '6000'},
+            {nom: 'Main', constructeur: 'Gamma', type: 'AD + 1', cout: '7250'},
+            {nom: 'Nez', constructeur: 'Gamma', type: 'AC + 1', cout: '7250'},
+            {nom: 'Oreille', constructeur: 'Gamma', type: 'AC + 1', cout: '7250'},
+            {nom: 'Œil', constructeur: 'Gamma', type: 'AC + 1', cout: '8250'},
+            {nom: 'Bras', constructeur: 'Gamma', type: 'RO + 1 / TACH + 1', cout: '9250'},
+            {nom: 'Jambe', constructeur: 'Gamma', type: 'RO + 1 / TACH + 1', cout: '9750'},
+            {nom: 'Gadget', constructeur: 'Beta', type: 'Variable', cout: '10500'},
+            {nom: 'Crâne', constructeur: 'Gamma', type: 'ZOI + 1', cout: '11250'},
+            {nom: 'Main', constructeur: 'Beta', type: 'AD + 2', cout: '11750'},
+            {nom: 'Nez', constructeur: 'Beta', type: 'AC + 2', cout: '11750'},
+            {nom: 'Oreille', constructeur: 'Beta', type: 'AC + 2', cout: '11750'},
+            {nom: 'Bras', constructeur: 'Beta', type: 'RO + 2 / TACH + 2', cout: '12500'},
+            {nom: 'Œil', constructeur: 'Beta', type: 'AC + 2', cout: '12750'},
+            {nom: 'Torse', constructeur: 'Gamma', type: 'ZOI + 2', cout: '12750'},
+            {nom: 'Jambe', constructeur: 'Beta', type: 'RO + 2 / TACH + 2', cout: '13500'},
+            {nom: 'Crâne', constructeur: 'Beta', type: 'ZOI + 2', cout: '14500'},
+            {nom: 'Gadget', constructeur: 'Alfa', type: 'Variable', cout: '15500'},
+            {nom: 'Torse', constructeur: 'Beta', type: 'ZOI + 4', cout: '16000'},
+            {nom: 'Bras', constructeur: 'Alfa', type: 'RO + 3 / TACH + 3', cout: '16250'},
+            {nom: 'Main', constructeur: 'Alfa', type: 'AD + 3', cout: '16250'},
+            {nom: 'Nez', constructeur: 'Alfa', type: 'AC + 3', cout: '16250'},
+            {nom: 'Oreille', constructeur: 'Alfa', type: 'AC + 3', cout: '16250'},
+            {nom: 'Jambe', constructeur: 'Alfa', type: 'RO + 3 / TACH + 3', cout: '17250'},
+            {nom: 'Œil', constructeur: 'Alfa', type: 'AC + 3', cout: '17250'},
+            {nom: 'Crâne', constructeur: 'Alfa', type: 'ZOI + 3', cout: '17750'},
+            {nom: 'Torse', constructeur: 'Alfa', type: 'ZOI + 6', cout: '19250'},
+            {nom: 'Cœur', constructeur: 'Gamma', type: 'RO + 1 / TACH + 1', cout: '21250'},
+            {nom: 'Poumon', constructeur: 'Gamma', type: 'RO + 1 / ZOI + 1 / TACH + 1', cout: '21250'},
+            {nom: 'Cœur', constructeur: 'Beta', type: 'RO + 2 / TACH + 2', cout: '23000'},
+            {nom: 'Poumon', constructeur: 'Beta', type: 'RO + 2 / ZOI + 2 / TACH + 2', cout: '23000'},
+            {nom: 'Derme', constructeur: 'Gamma', type: 'ZOI + 5', cout: '23750'},
+            {nom: 'Cœur', constructeur: 'Alfa', type: 'RO + 3 / TACH + 3', cout: '24750'},
+            {nom: 'Poumon', constructeur: 'Alfa', type: 'RO + 3 / ZOI + 3 / TACH + 3', cout: '24750'},
+            {nom: 'Derme', constructeur: 'Beta', type: 'ZOI + 10', cout: '27000'},
+            {nom: 'Squelette', constructeur: 'Gamma', type: 'RO + 2 / ZOI + 5', cout: '28750'},
+            {nom: 'Derme', constructeur: 'Alfa', type: 'ZOI + 20', cout: '30250'},
+            {nom: 'Squelette', constructeur: 'Beta', type: 'RO + 4 / ZOI + 10', cout: '30500'},
+            {nom: 'Squelette', constructeur: 'Alfa', type: 'RO + 8 / ZOI + 20', cout: '32250'}
         ],
         contactsOccupationListe:[
             'Agent spécial',
@@ -669,7 +761,7 @@ paragonApp.service('personnageService', function(){
                              'Armes de poing',
                              'Armes d\'épaule',
                              'Premiers soins',
-                             'Une compétence "professionnelle"'
+                             'Une compétence de métier'
                         ]
                     },
                     {
@@ -696,7 +788,7 @@ paragonApp.service('personnageService', function(){
                              'Baratin',
                              'Séduction',
                              'Une étiquette au choix',
-                             'Une compétence académique au choix'
+                             'Une compétence de science au choix'
                     ]},
                     {
                         nom: 'Marionnettiste',
@@ -873,7 +965,53 @@ paragonApp.service('personnageService', function(){
             this.contactsListe.push( contact );
         },
         
-        equipementListe: [],
+        equipementListe: [],               
+        supprimerEquipement: function(equipement){
+            var index = this.equipementListe.indexOf(equipement);
+            this.equipementListe.splice(index,1);
+            //Le capital est auto-calculé à mesure
+        },        
+        ajouterEquipement: function(equipement){
+            var copieEquipement;
+            if(equipement){
+                copieEquipement = new self.Equipement(
+                    equipement.nom,
+                    equipement.constructeur,
+                    equipement.type,
+                    equipement.cout
+                );   
+            }
+            else{
+                copieEquipement = new self.Equipement(
+                    'Nom',
+                    'Constructeur',
+                    'Type',
+                    0
+                    );
+            }
+            this.equipementListe.push( copieEquipement );
+        },
+        
+        
+        /**------------>    CAPITAL         <------------------------**/
+                
+        _capitalMin: function(){  
+            var salaire = this.salaire.montant;   
+            var fortune = (this._axe.nom === 'Crésus')?self.constantes.bonusCresusDrachmes:0;
+            return salaire + ((salaire*12-salaire)/5)*(this.age-18)+fortune;
+        },
+        
+        _capitalEquipement: function(){
+            var coutEquipement = 0;
+            for(var i=0; i<this.equipementListe.length; i++){
+                coutEquipement += parseInt(this.equipementListe[i].cout);
+            }
+            return coutEquipement;
+        },
+        
+        capital: function(){
+            return this._capitalMin()-this._capitalEquipement();
+        }, 
         
         /*****************************************************************/
         /*******           Caractéristiques        ***********************/
@@ -1026,29 +1164,7 @@ paragonApp.service('personnageService', function(){
         //Toujours calculé
         robustesse: function(){
             return this.robustesseMin+this._robustesseBase;
-        },
-        
-        /**------------>    CAPITAL         <------------------------**/
-                
-        _capitalMin: function(){  
-            var salaire = this.salaire.montant;   
-            var fortune = (this._axe.nom === 'Crésus')?self.constantes.bonusCresusDrachmes:0;
-            return salaire + ((salaire*12-salaire)/5)*(this.age-18)+fortune;
-        },
-        
-        _capitalEquipement: function(){
-            var coutEquipement = 0;
-            
-            for(var i=0; i<this.equipementListe.length; i++){
-                coutEquipement += this.equipementListe[i].cout;
-            }
-            
-            return coutEquipement;
-        },
-        
-        capital: function(){
-            return this._capitalMin()-this._capitalEquipement();
-        },  
+        }, 
         
         /**------------>    IMPACT          <------------------------**/
                 

@@ -1,3 +1,127 @@
 <toolbar></toolbar>
-<h2>{{ etapeActuelle }}</h2>
-<p>Choisissez l'équipement du Paragon.</p>
+<h2><a class="btn btn-warning btn-small" ng-click="montrerAstuce=!montrerAstuce"><span class="glyphicon glyphicon-info-sign"></span></a>|{{ etapeActuelle }}</h2>
+<p ng-show="montrerAstuce">Choisis ici l'équipement de ton Paragon.
+    Pour ajouter un équipement, choisis en un dans la liste d'équipement en cliquant dessus, il apparaîtra dans la liste. Pour supprimer un équipement (c'est définitif...), clique sur son bouton <a><span class="glyphicon glyphicon-remove"/></a>.
+    <br>
+    Les listes d'équipement disposent toutes d'un champ pour filtrer, par exemple pour trouver tous les pistolets de la liste des armes à feu, il suffit de taper 'pistolet' et la liste se réduira d'elle-même... la recherche est faite sur l'intégralité de l'objet d'équipement, donc également son nom, son constructeur etc.
+</p>
+<hr/>
+<h3>Équipement du Paragon</h3>
+<br>
+<a ng-click="personnage.ajouterEquipement()" class="btn btn-primary" data-toggle="tooltip" title="Ajouter un équipement"><span class="glyphicon glyphicon-plus"></a>
+<div ng-show="!personnage.equipementListe.length">
+    <p>Aucun équipement pour le moment!</p>
+</div>
+<div ng-show="personnage.equipementListe.length">
+    <table class="table table_competences">
+        <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Constructeur/Qualité</td>
+                <td>Type/Effet</td>
+                <td>Coût</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- -->
+            <tr
+                ng-repeat="equipement in personnage.equipementListe">
+                <td class="long">{{ equipement.nom }}</td>
+                <td class="long">{{ equipement.constructeur }}</td>
+                <td class="long">{{ equipement.type }}</td>
+                <td class="long">{{ equipement.cout }}</td>
+                <td>                    
+                    <a ng-click="personnage.supprimerEquipement(equipement)"><span class="glyphicon-medium glyphicon glyphicon glyphicon-remove"></span></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3>Liste des Equipements</h3>
+<a class="btn btn-primary" ng-click="montrerListeArmesAFeu=!montrerListeArmesAFeu" 
+   data-toggle="tooltip" title="Armes à feu">Armes à feu</a>
+<a class="btn btn-primary" ng-click="montrerListeArmesDiverses=!montrerListeArmesDiverses" 
+   data-toggle="tooltip" title="Armes diverses">Armes diverses</a>
+<a class="btn btn-primary" ng-click="montrerListeProtections=!montrerListeProtections" 
+   data-toggle="tooltip" title="Protections">Protections</a>
+<a class="btn btn-primary" ng-click="montrerListeAutokinites=!montrerListeAutokinites" 
+   data-toggle="tooltip" title="Autokinites">Autokinites</a>
+<a class="btn btn-primary" ng-click="montrerListeEoles=!montrerListeEoles" 
+   data-toggle="tooltip" title="Éoles">Éoles</a>
+<a class="btn btn-primary" ng-click="montrerListeHermaphores=!montrerListeHermaphores" 
+   data-toggle="tooltip" title="Hermaphores">Hermaphores</a>
+<a class="btn btn-primary" ng-click="montrerListePhreakboxes=!montrerListePhreakboxes" 
+   data-toggle="tooltip" title="Phreakboxes">Phreakboxes</a>
+<br>    
+<ul class="equipement-liste">
+    <div ng-show="montrerListeArmesAFeu">
+        <h3>Armes à feu</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreArmesAFeu"/></p>
+        <li ng-repeat="equipement in constantes.equipementArmesAFeuListe | filter:filtreArmesAFeu | orderBy:'cout'" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Constructeur: ' + equipement.constructeur + '\n'
+               +'Type: ' + equipement.type }}">{{ equipement.nom + ' ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListeArmesDiverses">
+        <h3>Armes diverses</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreArmesDiverses"/></p>
+        <li ng-repeat="equipement in constantes.equipementArmesDiversListe | filter:filtreArmesDiverses | orderBy:'cout'" ng-click="personnage.ajouterEquipement(equipement);">{{ equipement.nom + ' ['+equipement.type+'] ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListeProtections">
+        <h3>Protections</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreProtections" data-toggle="tooltip"
+                           title="khiton, chlamyde, gant, casque, veste, armure etc."/></p>
+        <li ng-repeat="equipement in constantes.equipementProtectionsListe | filter:filtreProtections" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Constructeur: ' + equipement.constructeur + '\n'
+                +'Type: ' + equipement.type 
+               }}"> {{ equipement.nom + ' ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListeAutokinites">
+        <h3>Autokinites</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreAutokinites"/></p>
+        <li ng-repeat="equipement in constantes.equipementAutokinitesListe | filter:filtreAutokinites | orderBy:'cout'" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Constructeur: ' + equipement.constructeur + '\n' }}">{{ equipement.constructeur + ' '+equipement.nom + ' ['+equipement.type+'] ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListeEoles">
+        <h3>Éoles</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreEoles"/></p>
+        <li ng-repeat="equipement in constantes.equipementEolesListe | filter:filtreEoles | orderBy:'cout'" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Constructeur: ' + equipement.constructeur + '\n' }}">{{ equipement.constructeur + ' '+equipement.nom + ' ['+equipement.type+'] ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListeHermaphores">
+        <h3>Hermaphores</h3>
+        <p>Filtrer: <input type="text" ng-model="filtreHermaphores"/></p>
+        <li ng-repeat="equipement in constantes.equipementHermaphoresListe | filter:filtreHermaphores | orderBy:'cout'" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Constructeur: ' + equipement.constructeur + '\n' }}">{{ equipement.constructeur + ' '+equipement.nom + ' ['+equipement.type+'] ('+equipement.cout+' DR)' }}</li>
+    </div> 
+    <div ng-show="montrerListePhreakboxes">
+        <h3>Phreakboxes</h3>
+        <p>Filtrer: <input type="text" ng-model="filtrePhreakboxes"/></p>
+        <li ng-repeat="equipement in constantes.equipementPhreakboxesListe | filter:filtrePhreakboxes | orderBy:'constructeur'" ng-click="personnage.ajouterEquipement(equipement);" data-toggle="tooltip"
+        title="{{ 
+                'Phreak: ' + equipement.type + '\n' }}">
+            {{ equipement.nom + ' R' +equipement.constructeur+ ' ('+equipement.cout+' DR)' }}</li>
+    </div>
+    
+</ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

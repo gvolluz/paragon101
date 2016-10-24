@@ -1,6 +1,6 @@
 //CONTROLLER - PARAGON STEP 7
 paragonApp.controller('paragonStep7Controller', ['$scope', 'personnageService', function($scope, personnageService) {
-    $scope.etapeActuelle = 'ETAPE 7';
+    $scope.etapeActuelle = 'Récapitulatif';
     $scope.$parent.pagePrecedente = '#/paragonStep6/';
     //Retour à Home
     $scope.$parent.pageSuivante = '#/';
