@@ -706,6 +706,46 @@ paragonApp.service('personnageService', function(){
             {nom: 'Squelette', constructeur: 'Beta', type: 'RO + 4 / ZOI + 10', cout: '30500'},
             {nom: 'Squelette', constructeur: 'Alfa', type: 'RO + 8 / ZOI + 20', cout: '32250'}
         ],
+        contactsOccupationListe:[
+            'Agent spécial',
+            'Ambulancier',
+            'Armurier',
+            'Astéri du kinêma',
+            'Astéri du rolo podi',
+            'Charcuteur',
+            'Coach de syllips',
+            'Comptable',
+            'Coureur autokinite',
+            'Docker',
+            'Drew',
+            'Faucon',
+            'Forhandler',
+            'Gangster',
+            'Hétaire',
+            'Hoplite',
+            'Ichornéticien',
+            'Joueur de syllips',
+            'Journaliste',
+            'Marin',
+            'Marionnettiste',
+            'Mécanicien',
+            'Médecin',
+            'Membre de l\'Hydre',
+            'Membre des Corsaires',
+            'Membre des Pirates Égéens',
+            'Militaire à la retraite',
+            'Militaire en activité',
+            'Ombre',
+            'Philosophe',
+            'Phreaker',
+            'Pilote',
+            'Policier',
+            'Politicien',
+            'Récupérateur',
+            'Rhéto',
+            'Seahandler',
+            'Wyrlard'
+        ],
         languesListe: ['grec', 'bretinien', 'grec', 'zhongguo'],        
         sexesListe: ['Femme', 'Homme'],
         salairesListe: [
@@ -916,10 +956,10 @@ paragonApp.service('personnageService', function(){
             //Resetter les sofias!
             this.contactsSofias += contact.base;
         },        
-        ajouterContact: function(){
+        ajouterContact: function(occupation='Occupation'){
             var contact = new self.Contact(
                 self.nomGenerateur(),
-                'Occupation',
+                occupation,
                 0,0,false
             );
             this.contactsListe.push( contact );
