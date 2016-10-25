@@ -15,8 +15,10 @@ paragonApp.controller('paragonStep1Controller', ['$scope', '$log', 'personnageSe
     $scope.$watch('personnage', function(newValue, oldValue){
         personnageService.personnage = newValue;
     });
-
-    //TODO: quand on change de metatype, il faut enlever de la liste des
-    //compétences celles du metatype précédent (éventu "warning et reset total")
-
+    
+    $scope.$watch('personnage.metatype', function(newValue, oldValue){
+        if(oldValue !== newValue){
+            personnageService.personnage.changementMetatype(oldValue, newValue); 
+        }
+    });
 }]);
