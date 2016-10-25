@@ -13,7 +13,9 @@ paragonApp.controller('paragonStep3Controller', ['$scope', '$routeParams', 'pers
     });
 
     //Initialiser les compétences de metatype
-    $scope.personnage.initialiseCompetence();
+    if($scope.personnage.competencesListe.length === 1){//Au moins 1, la langue maternelle
+       $scope.personnage.initialiseCompetences();
+    }
     
     $scope.copyToClipboard = function(event) {
         var element = event.target;

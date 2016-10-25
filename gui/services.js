@@ -827,14 +827,14 @@ paragonApp.service('personnageService', function(){
                              'Armes de poing',
                              'Armes d\'épaule',
                              'Premiers soins',
-                             'Une compétence de métier'
+                             'Compétence de métier au choix'
                         ]
                     },
                     {
                         nom: 'Faucon',
                         competences:[
                              'Art martial au choix',
-                             'Arme de mêlée au choix',
+                             'Armes de mêlée',
                              'Acrobatie',
                              'Premiers soins'
                         ]
@@ -845,7 +845,7 @@ paragonApp.service('personnageService', function(){
                              'Discrétion',
                              'Dissimulation',
                              'Systèmes de sécurité',
-                             'Art martial: chemno lu'
+                             'Art martial au choix'
                         ]
                     },
                     {   
@@ -853,8 +853,8 @@ paragonApp.service('personnageService', function(){
                         competences:[
                              'Baratin',
                              'Séduction',
-                             'Une étiquette au choix',
-                             'Une compétence de science au choix'
+                             'Etiquette au choix',
+                             'Compétence de science au choix'
                     ]},
                     {
                         nom: 'Marionnettiste',
@@ -993,27 +993,94 @@ paragonApp.service('personnageService', function(){
             );
             this.competencesListe.push( competence );
         },
-        initialiseCompetence: function(){
-            var compActuelles = this.competencesListe;
+        initialiseCompetences: function(){
+            this.competencesListe.splice(1, this.competencesListe.length);
             var compDefaut = this.metatype.competences;
+            
             for(var i=0; i<compDefaut.length;i++){
-                //Ne créer que si la compétence n'est pas encore listée
+                var comp = new self.Competence(
+                        compDefaut[i],
+                        1,0,false
+                    );
+                this.competencesListe.push( comp );
+            }
+        },
+        changementMetatype: function(oldValue, newValue){
+            //On sait que les compétences de metatype
+            //sont à index 1 à 4
+            //Si le nouveau metatype a 1 ou plusieurs compétences
+            //gratuites identiques à l'ancien, il faut conserver les rangs.
+            //Il faut aussi gérer le cas de figure où une compétence
+            //de metatype était auparavant listée comme compétence normale
+            //donc
+            //et il faut conserver les autres compétences
+            
+            //1) créer la nouvelle liste (pour être sûr d'avoir les 
+            //compétences par défaut dans l'ordre correct pour le
+            //prochain passage ici...)
+            var nouvelleListe = [];
+            var defautListe = this.metatype.competences;
+            var ancienneListe = this.competencesListe;
+            
+            //Langue maternelle
+            var comp = new self.Competence(
+                        ancienneListe[0].nom,
+                        1,ancienneListe[0].base,false
+            );
+            nouvelleListe.push(comp); //langue maternelle
+            
+            //Compétences par défaut du metatype
+            for(var i=0;i<defautListe.length;i++){
+                comp = new self.Competence(
+                        defautListe[i],
+                        1,0,false
+                    );
+                nouvelleListe.push(comp);
+            }
+                        
+            //2) parcourir les existantes pour récupérer les rangs éventuels            
+            for(var i=0;i<ancienneListe.length;i++){
+                //Si on trouve la compétence i dans la nouvelle liste
+                //on récupère les points mis dans base.
+                //Sinon, on ajoute la compétence
+                //Attention à ne pas dépasser le rang max 
+                //(cas de la compétence 'normale' mise à 5 points devenue
+                //compétence par défaut avec un min de 1...)
+                //L'inverse ne pose pas de problème (max 4 point répartis donc
+                //passage de rang 4 à rang 5 au maximum)
+                
+                //Parcourir la nouvelle liste pour voir si on trouve
+                //la compétence actuelle
                 var trouve = false;
-                for(var j=0; j<compActuelles.length; j++){
-                    if( compActuelles[j].nom === compDefaut[i] ){
+                for(var j=0; j<nouvelleListe.length;j++){                    
+                    if(ancienneListe[i].nom === nouvelleListe[j].nom){
+                        nouvelleListe[j].base = ancienneListe[i].base;
+                        
+                        if(nouvelleListe[j].rang() > 5){
+                            nouvelleListe[j].base = 4;
+                            //Ne pas oublier de mettre à jour les Sofias,
+                            //ils ne sont tenus à jour que par la liste
+                            //de personnage...
+                            this.compSofias++;
+                        }                        
                         trouve = true;
                         break;
                     }
                 }
-
+                
+                //Si on n'a pas trouvé la compétence, on peut l'ajouter directement
+                //à la suite de la nouvelle liste
                 if(!trouve){
-                    var comp = new self.Competence(
-                        compDefaut[i],
-                        1,0,false
+                    comp = new self.Competence(
+                        ancienneListe[i].nom,
+                        0,ancienneListe[i].base,false
                     );
-                    compActuelles.push( comp );
+                    nouvelleListe.push(comp);
                 }
             }
+            
+            //3) remplacer l'existante par la nouvelle liste
+            this.competencesListe = nouvelleListe;
         },
         contactsListe: [],        
         supprimerContact: function(contact){
