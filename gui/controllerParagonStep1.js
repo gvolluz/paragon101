@@ -9,7 +9,7 @@ paragonApp.controller('paragonStep1Controller', ['$scope', '$log', 'personnageSe
     $scope.personnage = personnageService.personnage;
 
     $scope.genererNom = function(){
-        $scope.personnage.nom = personnageService.nomGenerateur();
+        $scope.personnage.nom = $scope.personnage.nomGenerateur();
     }
 
     $scope.$watch('personnage', function(newValue, oldValue){
