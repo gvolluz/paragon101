@@ -1,3 +1,4 @@
+'use strict';
 var paragonApp = angular.module('paragonApp', ['ngRoute', 'ngCookies']);
 
 //CONTROLLER - MAIN
