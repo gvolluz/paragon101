@@ -1,462 +1,14 @@
 //SERVICE
 paragonApp.service('personnageService', function(){
-    var self = this;
+    var self = this;   
     
-    /*****************************************************************************/
-    /*                        Générateur de noms                                 */
-    /*****************************************************************************/
-    
-    //Retourne un préfixe aléatoire selon une table
-    this.prefixe = function(){
-        //But : fabriquer des débuts de nom
-        //à la grecque ou bretinienne
-        //TODO: peut-être choisir selon l'origine...
-        var prefixes = [
-            'Aar', 'Ab','Aga','Alc','Amb', 'Aphr', 'Aphi', 'Ast', 'Aur','Azo',
-            'Baud', 'Barth', 'Ben', 'Bil', 'Bell', 'Barn', 'Bjor', 'Bjar', 'Bjur',
-            'Gab', 'Geor', 'Garn', 'Gu', 'Gre', 'Dav', 'Ded', 'Eli', 'Hec', 'Hen',
-            'Herm', 'Euth', 'Zach', 'Zen', 'Zeph', 'Zoil', 'Thal', 'Thol', 'Thul',
-            'Thi', 'Isi', 'Joc', 'Jach', 'Joun', 'Matt', 'Math', 'Madh', 'Max', 'Mith',
-            'Mar', 'Mab','Xeno', 'Xanth', 'Xan', 'Xun','Xin','Pos', 'Pas', 'Pal', 'Pil',
-            'Pri', 'Pro', 'Pto','Pta','Pyr','Rhad','Rhod','Rob','Rab','Rol','Rod','Syp',
-            'Spyr','Step','Sim','Soc','Soph','Ser','Tele','Tim','Tit','Tryp','Phr','Or',
-            'Ori','Ari','Ar','Ned'
-        ];
-
-        var index = this.de(0,prefixes.length-1);
-        return prefixes[index];
-    };//END prefixe
-
-    //Vérifie si les 3 derniers caractères sont une suite de consonnes
-    this.troisConsonnes = function(lettre1,lettre2,lettre3){
-        const regex = /[bcdfghjklmnpqrstvwxz]/i;
-
-        var patt = new RegExp(regex);
-        if(     true === patt.test(lettre1)
-           &&   true === patt.test(lettre2)
-           &&   true === patt.test(lettre3)){
-            return true;
-        }
-
-        return false;
-    };//END troisConsonnes
-
-    //Fournit le milieu du nom, aléatoirement
-    this.milieu = function(taille, actuel=''){
-        var paires = 'abecualdefegaheijikilimonopuoqrisateuvewxeyezea';
-
-        var lettre = '';
-        var name = '';
-        for(var i=0;i<taille;i++){
-            lettre = paires.substr(this.de(0,paires.length),1);
-
-            if(actuel.length > 2){
-                var lettreA = actuel.substr(i-1,1);
-                var lettreAA = actuel.substr(i-2,1);
-                //3 lettres identiques d'affilées, c'est moche
-                while(lettre === lettreA && lettre === lettreAA){
-                    lettre = paires.substr(this.de(0,paires.length),1);
-                }
-
-                //3 consonnes l'une après l'autre bof...
-                while(this.troisConsonnes(lettreAA, lettreA, lettre)){
-                    lettre = paires.substr(this.de(0,paires.length),1);
-                }
-
-                //certains couples sont impossibles (tw, tz etc.)
-                while(
-                        (lettreA === 't' && lettre == 'z')
-                    ||  (lettreA === 't' && lettre == 'w')
-                    ||  (lettreA === 'b' && lettre == 'x')
-                    ||  (lettreA === 'r' && lettre == 'h')
-                    ||  (lettreA === 'b' && lettre == 'q')
-                ){
-                    lettre = paires.substr(this.de(0,paires.length),1);
-                }
-            }
-
-            name += lettre;
-            actuel += lettre;
-        }
-
-        return name;
-    };//END milieu
-    
-    //Fournit le suffixe du nom selon une table
-    this.suffixe = function(){
-        //But : fabriquer des fins de nom
-        //à la grecque ou bretinienne
-        //TODO: peut-être choisir selon l'origine...
-        var suffixes = [
-            'poulos',            'palos',            'pilos',
-            'ousis',            'onis',            'nos',
-            'dato',            'mos',            'tzo',
-            'okis',            'akis',            'th',
-            'san',            'sen',            'son',
-            'sun',             'arsan',            'arsen',
-            'arson',            'arsun',            'ksan',
-            'ksen',            'kson',            'ksun',
-            'gan',            'gen',            'gon',
-            'gun',            'dran',            'dren',
-            'dron',            'drun',            'skan',
-            'sken',            'skon',            'skun',
-            'garn',            'gorn',            'gern',
-            'gurn',            'ate',             'ote',
-            'ocle'
-        ];
-
-        var index = this.de(0,suffixes.length-1);
-        return suffixes[index];
-    };//END suffixes
-
-    //Génère un prénom et un nom en utilisant les fonctions ci-dessus
-    this.nomGenerateur = function(){
-        var prenom = this.prefixe();
-        prenom += this.milieu(this.de(1,3),prenom);
-
-        var nom = this.prefixe();
-        nom += this.milieu(this.de(1,2),nom)+this.suffixe();
-
-        prenom = prenom.capitalizeFirstLetter();
-        nom = nom.capitalizeFirstLetter();
-
-        return prenom + ' ' + nom;
-    };//END nomGenerateur
-    
-    /*****************************************************************************/
-    /*                        Utilitaires                                        */
-    /*****************************************************************************/
-
-    //Tirage de dé
-    this.de = function(min,max){
-        return Math.floor(max*Math.random())+min;
-    };//END de
-    
-    //Génération d'un GUID 
-    this.guid = function(){
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-    };//END guid
-    
-    //Remise à zéro du personnage, soit totalement (dans ce cas toutes les 
-    //valeurs sont remises à zéro), soit partiellement (dans ce cas certaines valeurs
-    //telles que le guid, le nom, les compétences etc. sont conservées)
-    this.personnageRAZ = function(total=false){
-        var perso = this.personnage;
-        
-        //Quand on regénère aléatoirement un perso 
-        //on a pas forcément envie de changer son uid
-        //son nom et son âge, etc., mais juste ses stats, par contre
-        //pour un nouveau personnage si
-        if( true === total ){
-            perso.uuid = this.guid();
-            perso.nom = this.nomGenerateur();
-            perso.age = this.constantes.ageDefaut;
-            perso.sexe = this.constantes.sexesListe[0];
-            perso.profession = this.constantes.professionDefaut;
-            perso.origine = this.constantes.originesListe[0];
-            perso.competencesListe = [
-                new Competence(this.langueMaternelle(perso.origine),1,0,false)
-            ];
-            perso.contactsListe = [];
-            perso.equipementListe = [];
-        
-            perso.affinitePolitique = this.constantes.affinitesPolitiquesListe[0];
-            perso.affiniteGeopolitique = this.constantes.affinitesGeopolitiquesListe[0];
-            perso.affiniteMystique = this.constantes.affinitesMystiquesListe[0];
-            perso.affiniteMoeurs = this.constantes.affinitesMoeursListe[0];
-        }
-        
-        perso.metatype = this.constantes.metatypesListe[0];
-        perso.axePrecedentIndex = 0;
-        perso.axe(this.constantes.axesListe[0]);
-        perso.carSofias = this.constantes.carSofiasDepart;
-        perso.compSofias = this.constantes.compSofiasDepart;
-        perso.contactsSofias = this.constantes.contactsSofiasDepart;
-                
-        perso.robustesseMin = this.constantes.caracMin;
-        perso._robustesseBase = 0;
-        perso.adresseMin = this.constantes.caracMin;
-        perso._adresseBase = 0;
-        perso.astuceMin = this.constantes.caracMin;
-        perso._astuceBase = 0;
-        perso.acuiteMin = this.constantes.caracMin;
-        perso._acuiteBase = 0;
-        perso.prestanceMin = this.constantes.caracMin;
-        perso._prestanceBase = 0;
-        perso.determinationMin = this.constantes.caracMin;
-        perso._determinationBase = 0;
-        perso._zoisBase = 0;
-        perso.tachyosMin = this.constantes.tachMin;
-        perso._tachyosBase = 0;
-        perso._polemBase = 0;
-        perso._stoaBase = 0;
-    };
-    
-    this.personnageAleatoire = function(){
-        var personnage = this.personnage;
-        var constantes = this.constantes;
-        //Réinitialiser le personnage
-        this.personnageRAZ(false);
-        //0-5 metatype
-        var rand = this.de(0,5);
-        personnage.metatype = constantes.metatypesListe[rand];
-        //0-2 axe
-        var rand = this.de(0,2);
-        personnage.axe(constantes.axesListe[rand]);
-        //Caractéristiques
-        //TODO: randomizer l'ordre dans lequel les Caracs sont prises
-        //TODO: ajouter TACH
-        //TODO: pondérer fonction du metatype (selon CARACS maîtresses)
-        var min = 0;
-        var max = 15;
-        rand = this.de(min,max);
-        personnage.astuceBase(rand);
-        rand = this.de(min,max);
-        personnage.acuiteBase(rand);
-        rand = this.de(min,max);
-        personnage.adresseBase(rand);
-
-        //A partir de ce point, au maximum, on a 45 sofias utilisés, donc
-        //pour chaque prochain rand, on prend au maximum ce qu'il reste...
-        max = (personnage.carSofias<max) ? personnage.carSofias : max;
-        rand = this.de(min,max);
-        personnage.robustesseBase(rand);
-
-        max = (personnage.carSofias<max) ? personnage.carSofias : max;
-        rand = this.de(min,max);
-        personnage.determinationBase(rand);
-
-        personnage.prestanceBase(personnage.carSofias);
-
-        //Compétences de metatype
-        for(var i=0; i<personnage.metatype.competences.length;i++){
-            var comp = new Competence(
-                personnage.metatype.competences[i],
-                1,0,0,0,false
-            );
-            personnage.competencesListe.push( comp );
-        };
-    };
-    
-    this.redux = function(){
-        var p = this.personnage;
-        
-        var perso = {
-            nom: p.nom,
-            age: p.age,
-            sexe: p.sexe,
-            origine: p.origine,
-            capital: p.capital(),
-            
-            sofias: p.sofias(),
-            metatype: p.metatype.nom,
-            axe: p.axe.nom,
-            
-            acuite: p.acuite(),
-            adresse: p.adresse(),
-            astuce: p.astuce(),
-            determination: p.determination(),
-            prestance: p.prestance(),
-            robustesse: p.robustesse(),
-            
-            impact: p.impact(),
-            polem: p.polem(),
-            stoa: p.stoa(),
-            tachyos: p.tachyos(),
-            zois: p.zois()         
-            
-        };
-        
-        perso.affiniteMystique = p.affiniteMystique;
-        perso.affinitePolitique = p.affinitePolitique;
-        perso.affiniteGeopolitique = p.affiniteGeopolitique;
-        perso.affiniteMoeurs = p.affiniteMoeurs;
-        
-        perso.competences = [new Array(p.competencesListe.length)];
-        for(var i=0;i<p.competencesListe.length;i++){           
-            perso.competences[i] = {
-                nom: p.competencesListe[i].nom,
-                rang: p.competencesListe[i].rang()
-            };            
-        }
-        
-        perso.contacts = new Array(p.contactsListe.length);
-        for(var i=0;i<p.contactsListe.length;i++){            
-            perso.contacts[i] = {
-                nom: p.contactsListe[i].nom,
-                occupation: p.contactsListe[i].occupation,
-                rang: p.contactsListe[i].rang()
-            };        
-        }
-        
-        perso.equipement = new Array(p.equipementListe.length);
-        for(var i=0;i<p.equipementListe.length;i++){            
-            perso.equipement[i] = {
-                constructeur: p.equipementListe[i].constructeur,
-                nom: p.equipementListe[i].nom,
-                type: p.equipementListe[i].type,
-                cout: p.equipementListe[i].cout
-            }
-        }        
-        
-        return perso;
-    };//END redux
-    
-    this.csv = function(reduxPerso){ return 'Bientôt!';};   
-    this.pdf = function(reduxPerso){ return 'Bientôt!';};   
-        
-    this.latex = function(reduxPerso){
-        var archetype = '';
-        var lf = '\n';
-        //4 espaces = 1 tab
-        var tb = '    ';
-        var bs = '\\';
-        
-        archetype += '%%%%%%%%%%%%% ARCHETYPE DU '+reduxPerso.metatype+'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+lf;
-        
-        archetype += bs+'section{'+reduxPerso.metatype+'}'+lf;
-        
-        archetype += bs+'begin{introtext}'+lf;
-        archetype += reduxPerso.nom+' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a accumsan diam. Vivamus id metus viverra, blandit diam vitae, consequat odio. Etiam sed justo non augue imperdiet eleifend vel sit amet enim. Nullam nec ornare sapien. Etiam a ultrices massa, eget malesuada felis. In eros augue, laoreet ut dui ac, egestas condimentum ex. Aliquam erat volutpat. Vivamus mattis massa non sollicitudin fringilla.'+lf;
-        archetype += bs+'end{introtext}'+lf;
-        archetype += bs+'includegraphics[scale=0.6]{img/ArchetypePlaceholder.png}'+bs+bs+lf;
-        archetype += bs+'emph{'+reduxPerso.nom+', une fauconne enragée}'+lf;
-        archetype += bs+'vfill'+lf;
-        archetype += bs+'columnbreak'+lf;
-        archetype += lf;
-        archetype += bs+'noindent %otherwise we have the paragraph start indent!'+lf;
-        archetype += bs+'textbf{Données personnelles}'+lf;
-        archetype += bs+'begin{tabbing}'+lf;
-        archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
-        archetype += tb+'Metatype '+bs+'> : '+bs+'> '+reduxPerso.metatype+bs+bs+lf;
-        archetype += tb+'Axe'+bs+'>:'+bs+'>'+reduxPerso.axe+bs+bs+lf;
-        archetype += tb+'Politique'+bs+'>:'+bs+'>'+reduxPerso.affinitePolitique+bs+bs+lf;
-        archetype += tb+'Géopolitique'+bs+'>:'+bs+'>'+reduxPerso.affiniteGeopolitique+bs+bs+lf;
-        archetype += tb+'Moeurs'+bs+'>:'+bs+'>'+reduxPerso.affiniteMoeurs+bs+bs+lf;
-        archetype += tb+'Mystique'+bs+'>:'+bs+'>'+reduxPerso.affiniteMystique+lf;
-        archetype += bs+'end{tabbing}'+lf;
-        archetype += bs+'textbf{Caractéristiques}'+lf;
-        archetype += bs+'begin{tabbing}'+lf;
-        archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{AC}uité'+bs+'>:'+bs+'>'+reduxPerso.acuite+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{AD}resse'+bs+'>:'+bs+'>'+reduxPerso.adresse+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{AS}tuce'+bs+'>:'+bs+'>'+reduxPerso.astuce+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{DE}termination'+bs+'>:'+bs+'>'+reduxPerso.determination+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{PR}estance'+bs+'>:'+bs+'>'+reduxPerso.prestance+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{RO}bustesse'+bs+'>:'+bs+'>'+reduxPerso.robustesse+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{IM}pact'+bs+'>:'+bs+'>'+reduxPerso.impact+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{PO}lem'+bs+'>:'+bs+'>'+reduxPerso.polem+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{ST}oa'+bs+'>:'+bs+'>'+reduxPerso.stoa+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{TA}chyos'+bs+'>:'+bs+'>'+reduxPerso.tachyos+bs+bs+lf;
-        archetype += tb+bs+'textcolor{CaracCode}{ZO}is'+bs+'>:'+bs+'>'+reduxPerso.zois+lf;
-        archetype += bs+'end{tabbing}'+lf;
-        archetype += bs+'textbf{Compétences}'+lf;
-        archetype += bs+'begin{tabbing}'+lf;
-        archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
-        
-        for(var i=0;i<reduxPerso.competences.length;i++){            
-            archetype += tb+reduxPerso.competences[i].nom+bs+'>:'+bs+'>'+reduxPerso.competences[i].rang+bs+bs+lf;
-        }
-        
-        //!!!!! attention à supprimer le dernier \\ !!!!!!
-        archetype = archetype.substr(0,archetype.length-3)+lf;
-        
-        archetype += bs+'end{tabbing}'+lf;
-        archetype += bs+'textbf{Contacts}'+lf;
-        archetype += bs+'begin{tabbing}'+lf;
-        archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
-        
-        for(var i=0;i<reduxPerso.contacts.length;i++){            
-            archetype += tb+reduxPerso.contacts[i].nom+''+bs+'>:'+bs+'>'+reduxPerso.contacts[i].rang+bs+bs+lf;
-        }
-        
-        //!!!!! attention à supprimer le dernier \\ !!!!!!        
-        archetype = archetype.substr(0,archetype.length-3)+lf;
-        
-        archetype += bs+'end{tabbing}'+lf;
-        archetype += bs+'textbf{Équipement}'+lf;
-        archetype += bs+'begin{description}'+lf;
-        
-        for(var i=0;i<reduxPerso.equipement.length;i++){         
-            archetype += tb+bs+'item['+reduxPerso.equipement[i].type+'] '+reduxPerso.equipement[i].constructeur+' : '+reduxPerso.equipement[i].nom+ ' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
-        }
-        
-        archetype += bs+'end{description}'+lf;          
-        
-        return archetype;
-    };//END latex
-    
-    this.exporter = function(format='json'){
-        var perso = 'Format d\'exportation inconnu...';
-
-        switch(format){
-            case 'json':
-                perso = JSON.stringify(this.redux());
-                break;
-            case 'LaTeX':
-                perso = this.latex(this.redux());
-                break;
-            case 'csv':
-                perso = this.csv(this.redux());
-                break;
-            case 'pdf':
-                perso = this.pdf(this.redux());
-                break;
-        }
-        
-        return perso;
-    };// END exporter 
-
-    
-    /*****************************************************************************/
-    /*                        Objets                                             */
-    /*****************************************************************************/
-    
-    this.Competence = function(/* optional */ nom='',min=0,base=0,selfChanged=false){
-        this.nom = nom;
-        this.min = min;
-        this.base = base;
-        //Pour éviter les appels récursifs des watchs...
-        //Il semble que depuis 2012 il y a demande pour ajouter
-        //au core cette fonctionnalité dans la watch elle-même
-        //puisque le cas est fréquent...
-        this.selfChanged = selfChanged;
-        this.rang = function(){
-            return this.min+this.base;
-        };
-    };//END Competence
-    
-    this.Contact = function(/* optional */ nom='', occupation='', min=0,base=0,selfChanged=false){
-        this.nom = nom;
-        this.occupation = occupation;
-        this.min = min;
-        this.base = base;
-        //Pour éviter les appels récursifs des watchs
-        this.selfChanged = selfChanged;
-
-        this.rang = function(){
-            return this.min+this.base;
-        }
-    };//END Contact
-    
-    this.Equipement = function(/* optional */ nom='', constructeur='', type='', cout=0){
-        this.nom = nom;
-        this.constructeur = constructeur;
-        this.type = type;
-        this.cout = cout;
-    };//END Equipement
-
     /*****************************************************************************/
     /*                Constantes/valeurs par défaut                              */
     /*****************************************************************************/
     
-    this.constantes = {
+    self.constantes = {
+        formatsExportationListe: ['json', 'LaTeX', 'pdf', 'csv', 'html'],
+        formatExportation: 'html',
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
         competencesCombatListe:[
             'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
@@ -903,32 +455,619 @@ paragonApp.service('personnageService', function(){
         contactsSofiasDepart: 5
     };//END constantes
     
-    //TODO: intégrer à personnage
-    this.langueMaternelle = function(origine){
-        var index = self.constantes.originesListe.indexOf(origine);
-        var langue1 = 'Langue maternelle : ';
-        var langue2 = (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
-        return langue1+langue2;
-    };//END langueMaternelle
-    
     /*****************************************************************************/
-    /*                        Personnage                                         */
+    /*                        Objets                                             */
     /*****************************************************************************/
     
-    this.personnage = {    
+    this.Competence = function(/* optional */ nom='',min=0,base=0,selfChanged=false){
+        this.nom = nom;
+        this.min = min;
+        this.base = base;
+        //Pour éviter les appels récursifs des watchs...
+        //Il semble que depuis 2012 il y a demande pour ajouter
+        //au core cette fonctionnalité dans la watch elle-même
+        //puisque le cas est fréquent...
+        this.selfChanged = selfChanged;
+        this.rang = function(){
+            return this.min+this.base;
+        };
+    };//END Competence
+    
+    this.Contact = function(/* optional */ nom='', occupation='', min=0,base=0,selfChanged=false){
+        this.nom = nom;
+        this.occupation = occupation;
+        this.min = min;
+        this.base = base;
+        //Pour éviter les appels récursifs des watchs
+        this.selfChanged = selfChanged;
+
+        this.rang = function(){
+            return this.min+this.base;
+        }
+    };//END Contact
+    
+    this.Equipement = function(/* optional */ nom='', constructeur='', type='', cout=0){
+        this.nom = nom;
+        this.constructeur = constructeur;
+        this.type = type;
+        this.cout = cout;
+    };//END Equipement
+
+    this.Personnage = function(){
+        /*******************************************
+        *************** FONCTIONS ******************
+        ********************************************
+        *******************************************/
+            
+         /*****************************************************************************/
+        /*                        Générateur de noms                                 */
+        /*****************************************************************************/
+            
+        //Génération d'un GUID 
+        this.guid = function(){
+          function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
+          }
+          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+        };//END guid
+    
+        //Retourne un préfixe aléatoire selon une table
+        this.prefixe = function(){
+            //But : fabriquer des débuts de nom
+            //à la grecque ou bretinienne
+            //TODO: peut-être choisir selon l'origine...
+            var prefixes = [
+                'Aar', 'Ab','Aga','Alc','Amb', 'Aphr', 'Aphi', 'Ast', 'Aur','Azo',
+                'Baud', 'Barth', 'Ben', 'Bil', 'Bell', 'Barn', 'Bjor', 'Bjar', 'Bjur',
+                'Gab', 'Geor', 'Garn', 'Gu', 'Gre', 'Dav', 'Ded', 'Eli', 'Hec', 'Hen',
+                'Herm', 'Euth', 'Zach', 'Zen', 'Zeph', 'Zoil', 'Thal', 'Thol', 'Thul',
+                'Thi', 'Isi', 'Joc', 'Jach', 'Joun', 'Matt', 'Math', 'Madh', 'Max', 'Mith',
+                'Mar', 'Mab','Xeno', 'Xanth', 'Xan', 'Xun','Xin','Pos', 'Pas', 'Pal', 'Pil',
+                'Pri', 'Pro', 'Pto','Pta','Pyr','Rhad','Rhod','Rob','Rab','Rol','Rod','Syp',
+                'Spyr','Step','Sim','Soc','Soph','Ser','Tele','Tim','Tit','Tryp','Phr','Or',
+                'Ori','Ari','Ar','Ned'
+            ];
+
+            var index = this.de(0,prefixes.length-1);
+            return prefixes[index];
+        };//END prefixe
+
+        //Vérifie si les 3 derniers caractères sont une suite de consonnes
+        this.troisConsonnes = function(lettre1,lettre2,lettre3){
+            const regex = /[bcdfghjklmnpqrstvwxz]/i;
+
+            var patt = new RegExp(regex);
+            if(     true === patt.test(lettre1)
+               &&   true === patt.test(lettre2)
+               &&   true === patt.test(lettre3)){
+                return true;
+            }
+
+            return false;
+        };//END troisConsonnes
+
+        //Fournit le milieu du nom, aléatoirement
+        this.milieu = function(taille, actuel=''){
+            var paires = 'abecualdefegaheijikilimonopuoqrisateuvewxeyezea';
+
+            var lettre = '';
+            var name = '';
+            for(var i=0;i<taille;i++){
+                lettre = paires.substr(this.de(0,paires.length),1);
+
+                if(actuel.length > 2){
+                    var lettreA = actuel.substr(i-1,1);
+                    var lettreAA = actuel.substr(i-2,1);
+                    //3 lettres identiques d'affilées, c'est moche
+                    while(lettre === lettreA && lettre === lettreAA){
+                        lettre = paires.substr(this.de(0,paires.length),1);
+                    }
+
+                    //3 consonnes l'une après l'autre bof...
+                    while(this.troisConsonnes(lettreAA, lettreA, lettre)){
+                        lettre = paires.substr(this.de(0,paires.length),1);
+                    }
+
+                    //certains couples sont impossibles (tw, tz etc.)
+                    while(
+                            (lettreA === 't' && lettre == 'z')
+                        ||  (lettreA === 't' && lettre == 'w')
+                        ||  (lettreA === 'b' && lettre == 'x')
+                        ||  (lettreA === 'r' && lettre == 'h')
+                        ||  (lettreA === 'b' && lettre == 'q')
+                    ){
+                        lettre = paires.substr(this.de(0,paires.length),1);
+                    }
+                }
+
+                name += lettre;
+                actuel += lettre;
+            }
+
+            return name;
+        };//END milieu
+
+        //Fournit le suffixe du nom selon une table
+        this.suffixe = function(){
+            //But : fabriquer des fins de nom
+            //à la grecque ou bretinienne
+            //TODO: peut-être choisir selon l'origine...
+            var suffixes = [
+                'poulos',            'palos',            'pilos',
+                'ousis',            'onis',            'nos',
+                'dato',            'mos',            'tzo',
+                'okis',            'akis',            'th',
+                'san',            'sen',            'son',
+                'sun',             'arsan',            'arsen',
+                'arson',            'arsun',            'ksan',
+                'ksen',            'kson',            'ksun',
+                'gan',            'gen',            'gon',
+                'gun',            'dran',            'dren',
+                'dron',            'drun',            'skan',
+                'sken',            'skon',            'skun',
+                'garn',            'gorn',            'gern',
+                'gurn',            'ate',             'ote',
+                'ocle'
+            ];
+
+            var index = this.de(0,suffixes.length-1);
+            return suffixes[index];
+        };//END suffixes
+
+        //Génère un prénom et un nom en utilisant les fonctions ci-dessus
+        this.nomGenerateur = function(){
+            var prenom = this.prefixe();
+            prenom += this.milieu(this.de(1,3),prenom);
+
+            var nom = this.prefixe();
+            nom += this.milieu(this.de(1,2),nom)+this.suffixe();
+
+            prenom = prenom.capitalizeFirstLetter();
+            nom = nom.capitalizeFirstLetter();
+
+            return prenom + ' ' + nom;
+        };//END nomGenerateur
+
+        /*****************************************************************************/
+        /*                        Utilitaires                                        */
+        /*****************************************************************************/
+
+        //Tirage de dé
+        this.de = function(min,max){
+            return Math.floor(max*Math.random())+min;
+        };//END de
+
+        //Remise à zéro du personnage, soit totalement (dans ce cas toutes les 
+        //valeurs sont remises à zéro), soit partiellement (dans ce cas certaines valeurs
+        //telles que le guid, le nom, les compétences etc. sont conservées)
+        this.remiseAZero = function(total=false){
+            //Quand on regénère aléatoirement un perso 
+            //on a pas forcément envie de changer son uid
+            //son nom et son âge, etc., mais juste ses stats, par contre
+            //pour un nouveau personnage si
+            if( true === total ){
+                this.uuid = this.guid();
+                this.nom = this.nomGenerateur();
+                this.age = self.constantes.ageDefaut;
+                this.sexe = self.constantes.sexesListe[0];
+                this.profession = self.constantes.professionDefaut;
+                this.origine = self.constantes.originesListe[0];
+                this.competencesListe = [
+                    new self.Competence(this.langueMaternelle(this.origine),1,0,false)
+                ];
+                this.contactsListe = [];
+                this.equipementListe = [];
+
+                this.affinitePolitique = self.constantes.affinitesPolitiquesListe[0];
+                this.affiniteGeopolitique = self.constantes.affinitesGeopolitiquesListe[0];
+                this.affiniteMystique = self.constantes.affinitesMystiquesListe[0];
+                this.affiniteMoeurs = self.constantes.affinitesMoeursListe[0];
+            }
+
+            this.metatype = self.constantes.metatypesListe[0];
+            this.axePrecedentIndex = 0;
+            this.axe(self.constantes.axesListe[0]);
+            this.carSofias = self.constantes.carSofiasDepart;
+            this.compSofias = self.constantes.compSofiasDepart;
+            this.contactsSofias = self.constantes.contactsSofiasDepart;
+
+            this.robustesseMin = self.constantes.caracMin;
+            this._robustesseBase = 0;
+            this.adresseMin = self.constantes.caracMin;
+            this._adresseBase = 0;
+            this.astuceMin = self.constantes.caracMin;
+            this._astuceBase = 0;
+            this.acuiteMin = self.constantes.caracMin;
+            this._acuiteBase = 0;
+            this.prestanceMin = self.constantes.caracMin;
+            this._prestanceBase = 0;
+            this.determinationMin = self.constantes.caracMin;
+            this._determinationBase = 0;
+            this._zoisBase = 0;
+            this.tachyosMin = self.constantes.tachMin;
+            this._tachyosBase = 0;
+            this._polemBase = 0;
+            this._stoaBase = 0;
+        }; //END personnageRAZ
+
+        this.aleatoire = function(){
+            var constantes = self.constantes;
+            //Réinitialiser le personnage
+            this.remiseAZero(false);
+            //0-5 metatype
+            var rand = this.de(0,6);
+            this.metatype = constantes.metatypesListe[rand];
+            //0-2 axe
+            var rand = this.de(0,3);
+            this.axe(constantes.axesListe[rand]);
+            //Caractéristiques
+            //TODO: randomizer l'ordre dans lequel les Caracs sont prises
+            //TODO: ajouter TACH
+            //TODO: pondérer fonction du metatype (selon CARACS maîtresses)
+            var min = 0;
+            var max = 15;
+            rand = this.de(min,max);
+            this.astuceBase(rand);
+            rand = this.de(min,max);
+            this.acuiteBase(rand);
+            rand = this.de(min,max);
+            this.adresseBase(rand);
+
+            //A partir de ce point, au maximum, on a 45 sofias utilisés, donc
+            //pour chaque prochain rand, on prend au maximum ce qu'il reste...
+            max = (this.carSofias<max) ? this.carSofias : max;
+            rand = this.de(min,max);
+            this.robustesseBase(rand);
+
+            max = (this.carSofias<max) ? this.carSofias : max;
+            rand = this.de(min,max);
+            this.determinationBase(rand);
+
+            this.prestanceBase(this.carSofias);
+
+            //Compétences de metatype
+            for(var i=0; i<this.metatype.competences.length;i++){
+                var comp = new self.Competence(
+                    this.metatype.competences[i],
+                    1,0,false
+                );
+                this.competencesListe.push( comp );
+            };
+        }; //END personnageAleatoire
+        
+        /************** EXPORTATION **********************************/
+
+        this.redux = function(){
+            var perso = {
+                uuid: this.uuid,
+                nom: this.nom,
+                age: this.age,
+                sexe: this.sexe,
+                origine: this.origine,
+                capital: this.capital(),
+
+                sofias: this.sofias(),
+                metatype: this.metatype.nom,
+                axe: this._axe.nom,
+
+                acuite: this.acuite(),
+                adresse: this.adresse(),
+                astuce: this.astuce(),
+                determination: this.determination(),
+                prestance: this.prestance(),
+                robustesse: this.robustesse(),
+
+                impact: this.impact(),
+                polem: this.polem(),
+                stoa: this.stoa(),
+                tachyos: this.tachyos(),
+                zois: this.zois()         
+
+            };
+
+            perso.affiniteMystique = this.affiniteMystique.nom;
+            perso.affinitePolitique = this.affinitePolitique.nom;
+            perso.affiniteGeopolitique = this.affiniteGeopolitique.nom;
+            perso.affiniteMoeurs = this.affiniteMoeurs.nom;
+
+            perso.competences = [new Array(this.competencesListe.length)];
+            for(var i=0;i<this.competencesListe.length;i++){           
+                perso.competences[i] = {
+                    nom: this.competencesListe[i].nom,
+                    rang: this.competencesListe[i].rang()
+                };            
+            }
+
+            perso.contacts = new Array(this.contactsListe.length);
+            for(var i=0;i<this.contactsListe.length;i++){            
+                perso.contacts[i] = {
+                    nom: this.contactsListe[i].nom,
+                    occupation: this.contactsListe[i].occupation,
+                    rang: this.contactsListe[i].rang()
+                };        
+            }
+
+            perso.equipement = new Array(this.equipementListe.length);
+            for(var i=0;i<this.equipementListe.length;i++){            
+                perso.equipement[i] = {
+                    constructeur: this.equipementListe[i].constructeur,
+                    nom: this.equipementListe[i].nom,
+                    type: this.equipementListe[i].type,
+                    cout: this.equipementListe[i].cout
+                }
+            }        
+
+            return perso;
+        }; //END redux    
+        
+        this.extract = function(persoRedux){
+            this.uuid = persoRedux.uuid;
+            this.nom = persoRedux.nom;
+            this.age = persoRedux.age;
+            this.sexe = persoRedux.sexe;
+            this.origine = persoRedux.origine;
+            
+            //TODO: extract le reste...
+                
+        }; //END extract 
+
+        this.html = function(reduxPerso){ return '<div>Bientôt!</div>';}; //END html
+        this.csv = function(reduxPerso){ return 'Bientôt!';}; //END csv  
+        this.pdf = function(reduxPerso){ return 'Bientôt!';}; //END pdf     
+
+        this.latex = function(reduxPerso){
+            var archetype = '';
+            var lf = '\n';
+            //4 espaces = 1 tab
+            var tb = '    ';
+            var bs = '\\';
+
+            archetype += '%%%%%%%%%%%%% ARCHETYPE DU '+reduxPerso.metatype+'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+lf;
+
+            archetype += bs+'section{'+reduxPerso.metatype+'}'+lf;
+
+            archetype += bs+'begin{introtext}'+lf;
+            archetype += reduxPerso.nom+' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a accumsan diam. Vivamus id metus viverra, blandit diam vitae, consequat odio. Etiam sed justo non augue imperdiet eleifend vel sit amet enim. Nullam nec ornare sapien. Etiam a ultrices massa, eget malesuada felis. In eros augue, laoreet ut dui ac, egestas condimentum ex. Aliquam erat volutpat. Vivamus mattis massa non sollicitudin fringilla.'+lf;
+            archetype += bs+'end{introtext}'+lf;
+            archetype += bs+'includegraphics[scale=0.6]{img/ArchetypePlaceholder.png}'+bs+bs+lf;
+            archetype += bs+'emph{'+reduxPerso.nom+', une fauconne enragée}'+lf;
+            archetype += bs+'vfill'+lf;
+            archetype += bs+'columnbreak'+lf;
+            archetype += lf;
+            archetype += bs+'noindent %otherwise we have the paragraph start indent!'+lf;
+            archetype += bs+'textbf{Données personnelles}'+lf;
+            archetype += bs+'begin{tabbing}'+lf;
+            archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+            archetype += tb+'Metatype '+bs+'> : '+bs+'> '+reduxPerso.metatype+bs+bs+lf;
+            archetype += tb+'Axe'+bs+'>:'+bs+'>'+reduxPerso.axe+bs+bs+lf;
+            archetype += tb+'Politique'+bs+'>:'+bs+'>'+reduxPerso.affinitePolitique+bs+bs+lf;
+            archetype += tb+'Géopolitique'+bs+'>:'+bs+'>'+reduxPerso.affiniteGeopolitique+bs+bs+lf;
+            archetype += tb+'Moeurs'+bs+'>:'+bs+'>'+reduxPerso.affiniteMoeurs+bs+bs+lf;
+            archetype += tb+'Mystique'+bs+'>:'+bs+'>'+reduxPerso.affiniteMystique+lf;
+            archetype += bs+'end{tabbing}'+lf;
+            archetype += bs+'textbf{Caractéristiques}'+lf;
+            archetype += bs+'begin{tabbing}'+lf;
+            archetype += bs+'hspace{2.5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{AC}uité'+bs+'>:'+bs+'>'+reduxPerso.acuite+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{AD}resse'+bs+'>:'+bs+'>'+reduxPerso.adresse+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{AS}tuce'+bs+'>:'+bs+'>'+reduxPerso.astuce+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{DE}termination'+bs+'>:'+bs+'>'+reduxPerso.determination+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{PR}estance'+bs+'>:'+bs+'>'+reduxPerso.prestance+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{RO}bustesse'+bs+'>:'+bs+'>'+reduxPerso.robustesse+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{IM}pact'+bs+'>:'+bs+'>'+reduxPerso.impact+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{PO}lem'+bs+'>:'+bs+'>'+reduxPerso.polem+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{ST}oa'+bs+'>:'+bs+'>'+reduxPerso.stoa+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{TA}chyos'+bs+'>:'+bs+'>'+reduxPerso.tachyos+bs+bs+lf;
+            archetype += tb+bs+'textcolor{CaracCode}{ZO}is'+bs+'>:'+bs+'>'+reduxPerso.zois+lf;
+            archetype += bs+'end{tabbing}'+lf;
+            archetype += bs+'textbf{Compétences}'+lf;
+            archetype += bs+'begin{tabbing}'+lf;
+            archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+
+            for(var i=0;i<reduxPerso.competences.length;i++){            
+                archetype += tb+reduxPerso.competences[i].nom+bs+'>:'+bs+'>'+reduxPerso.competences[i].rang+bs+bs+lf;
+            }
+
+            //!!!!! attention à supprimer le dernier \\ !!!!!!
+            archetype = archetype.substr(0,archetype.length-3)+lf;
+
+            archetype += bs+'end{tabbing}'+lf;
+            archetype += bs+'textbf{Contacts}'+lf;
+            archetype += bs+'begin{tabbing}'+lf;
+            archetype += bs+'hspace{5cm} '+bs+'= '+bs+'hspace{0.5cm} '+bs+'= '+bs+'hspace{3cm} '+bs+'kill'+lf;
+
+            for(var i=0;i<reduxPerso.contacts.length;i++){            
+                archetype += tb+reduxPerso.contacts[i].nom+''+bs+'>:'+bs+'>'+reduxPerso.contacts[i].rang+bs+bs+lf;
+            }
+
+            //!!!!! attention à supprimer le dernier \\ !!!!!!        
+            archetype = archetype.substr(0,archetype.length-3)+lf;
+
+            archetype += bs+'end{tabbing}'+lf;
+            archetype += bs+'textbf{Équipement}'+lf;
+            archetype += bs+'begin{description}'+lf;
+
+            for(var i=0;i<reduxPerso.equipement.length;i++){         
+                archetype += tb+bs+'item['+reduxPerso.equipement[i].type+'] '+reduxPerso.equipement[i].constructeur+' : '+reduxPerso.equipement[i].nom+ ' ('+reduxPerso.equipement[i].cout+' DR)'+lf;
+            }
+
+            archetype += bs+'end{description}'+lf;          
+
+            return archetype;
+        };//END latex
+        
+        /************* Fonctions 'système' ******************/
+        
+        //Sauver un personnage dans le local storage
+        this.sauver = function(){
+            if (typeof(Storage) !== "undefined") {
+                var persoRedux = this.redux();
+
+                //Sauver
+                //1) récupérer la sauvegarde actuelle (un array json)
+                var listePersos = this.chargerListePersonnages();
+                
+                //2) ajouter le perso 'redux' à la liste
+                //peut-être l'a-ton déjà sauvé
+                var index = -1;
+                
+                for(let i=0;i<listePersos.length;i++){
+                    if(listePersos[i].uuid === persoRedux.uuid ){
+                        index = i;
+                        break;
+                    }
+                }                
+                    
+                if( index > -1 ){
+                    listePersos[index] = persoRedux;
+                }
+                else{
+                   listePersos.push(persoRedux); 
+                }
+                
+                //3) écraser la liste
+                localStorage.listePersos = JSON.stringify(listePersos);
+                //Mise à jour liste en mémoire
+                this.listePersonnages = listePersos;
+                console.log('Personnage '+persoRedux.uuid+' sauvé.');
+            } else {
+                alert('Votre browser ne supporte pas la sauvegarde locale.');
+            }
+        }; //END sauver
+        
+        //Charger le personnage au format redux du local storage
+        this.charger = function(uuid){
+            console.log('Recherche du personnage '+uuid);
+            if(typeof(uuid) === "undefined"){
+                alert('Personnage non défini!');
+                return;
+            }
+            
+            //1) récupérer la liste du local storage
+            var listePersos = this.chargerListePersonnages();
+            
+            //2) chercher le perso
+            var index = -1;
+
+            for(let i=0;i<listePersos.length;i++){
+                if(listePersos[i].uuid === uuid ){
+                    index = i;
+                    break;
+                }
+            }                
+
+            if( index === -1 ){
+                alert('Personnage non trouvé!');
+            }
+            else{
+                console.log('Personnage trouvé:\n'+JSON.stringify(listePersos[index]));
+                this.extract(listePersos[index]);
+            }
+            
+            //this.extract(persoRedux);
+        }; //END charger        
+        
+        this.chargerListePersonnages = function(){            
+            //1) récupérer la liste du local storage
+            var listePersos = localStorage.listePersos;
+                
+            if(     typeof(listePersos) === 'undefined'
+               ||   listePersos.length===0){
+                listePersos = '[]';
+            }
+            
+            listePersos = JSON.parse(listePersos);
+
+            //console.log('Liste des personnages chargée ('+listePersos.length+' persos):\n'+JSON.stringify(listePersos));
+            
+            return listePersos;
+        }; //END chargerListe      
+        
+        this.purgerListe = function(){ 
+            if( confirm('Tu veux vraiment effacer toute la liste?') ){
+                localStorage.removeItem('listePersos');
+                this.listePersonnages = new Array();
+            }
+        }; //END purgerListe
+        
+        this.exporter = function(){
+            var perso = '';
+        
+            var type = 'text/plain';
+            var ext = '.txt';
+            
+            switch(self.constantes.formatExportation){
+                case 'json':
+                    perso = JSON.stringify(this.redux());
+                    type = 'text/json';
+                    ext = '.json';
+                    break;
+                case 'LaTeX':
+                    perso = this.latex(this.redux());
+                    type = 'application/x-tex';
+                    ext = '.tex';
+                    break;
+                case 'csv':
+                    perso = this.csv(this.redux());
+                    type = 'text/csv';
+                    ext = '.csv';
+                    break;
+                case 'pdf':
+                    perso = this.pdf(this.redux());
+                    type = 'application/pdf';
+                    ext = '.pdf';
+                    break;
+                case 'html':
+                    perso = this.html(this.redux());
+                    type = 'text/html';
+                    ext = '.html';
+                    break;
+            }
+
+            var formBlob = new Blob([perso], { type: type });
+            var a = document.getElementById('personnageExport');
+            a.setAttribute('href', window.URL.createObjectURL(formBlob));
+            a.download = this.metatype.nom+'_'+this.nom+ext; 
+
+            var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+            
+            a.dispatchEvent(clickEvent);
+
+            return perso;
+        };// END exporter         
+        
+        this.langueMaternelle = function(origine){
+            var index = self.constantes.originesListe.indexOf(origine);
+            var langue1 = 'Langue maternelle : ';
+            var langue2 = (index>=0 && index<self.constantes.languesListe.length)?self.constantes.languesListe[index]:'inconnue';
+            return langue1+langue2;
+        };//END langueMaternelle
+        
+        /*********************** PROPRIETES *************************/
+        /*******************ET GETTERS/SETTERS **********************/
+        
+        this.listePersonnages = this.chargerListePersonnages();
+        
         //ID unique pour référence
-        uuid: this.guid(),
+        this.uuid = this.guid();
         //Données génériques
-        nom: this.nomGenerateur(),
-        age: this.constantes.ageDefaut,
-        sexe: this.constantes.sexesListe[0],
-        origine: this.constantes.originesListe[0],
-        profession: this.constantes.professionDefaut,
-        salaire: this.constantes.salairesListe[0],
-        metatype: this.constantes.metatypesListe[0],
-        axePrecedentIndex: 0,
-        _axe: this.constantes.axesListe[0],
-        axe: function(newValue){
+        this.nom = this.nomGenerateur();
+        this.age = self.constantes.ageDefaut;
+        this.sexe = self.constantes.sexesListe[0];
+        this.origine = self.constantes.originesListe[0];
+        this.profession = self.constantes.professionDefaut;
+        this.salaire = self.constantes.salairesListe[0];
+        this.metatype = self.constantes.metatypesListe[0];
+        this.axePrecedentIndex = 0;
+        this._axe = self.constantes.axesListe[0];
+        this.axe = function(newValue){
             if(arguments.length===0){
                 return this._axe;
             }
@@ -969,31 +1108,32 @@ paragonApp.service('personnageService', function(){
             }
             
             this._axe = newValue;
-        }, // END axe   
-        carSofias: this.constantes.carSofiasDepart,
-        compSofias: this.constantes.compSofiasDepart,
-        contactsSofias: this.constantes.contactsSofiasDepart,
-        sofias: function(){
+        }; // END axe   
+        
+        this.carSofias = self.constantes.carSofiasDepart;
+        this.compSofias = self.constantes.compSofiasDepart;
+        this.contactsSofias = self.constantes.contactsSofiasDepart;
+        this.sofias = function(){
           return this.carSofias+this.compSofias+this.contactsSofias;  
-        },
+        };
         //Compétences - de base au moins la langue maternelle
-        competencesListe: [
-            new this.Competence(this.langueMaternelle(this.constantes.originesListe[0]), 1,0,false)
-        ],               
-        supprimerCompetence: function(competence){
+        this.competencesListe = [
+            new self.Competence(this.langueMaternelle(self.constantes.originesListe[0]), 1,0,false)
+        ];               
+        this.supprimerCompetence = function(competence){
             var index = this.competencesListe.indexOf(competence);
             this.competencesListe.splice(index,1);
             //Resetter les sofias!
             this.compSofias += competence.base;
-        },        
-        ajouterCompetence: function(nom='Compétence'){
+        };        
+        this.ajouterCompetence = function(nom='Compétence'){
             var competence = new self.Competence(
                 nom,
                 0,0,false
             );
             this.competencesListe.push( competence );
-        },
-        initialiseCompetences: function(){
+        };
+        this.initialiseCompetences = function(){
             this.competencesListe.splice(1, this.competencesListe.length);
             var compDefaut = this.metatype.competences;
             
@@ -1004,8 +1144,8 @@ paragonApp.service('personnageService', function(){
                     );
                 this.competencesListe.push( comp );
             }
-        },
-        changementMetatype: function(oldValue, newValue){
+        };
+        this.changementMetatype = function(oldValue, newValue){
             //On sait que les compétences de metatype
             //sont à index 1 à 4
             //Si le nouveau metatype a 1 ou plusieurs compétences
@@ -1081,30 +1221,30 @@ paragonApp.service('personnageService', function(){
             
             //3) remplacer l'existante par la nouvelle liste
             this.competencesListe = nouvelleListe;
-        },
-        contactsListe: [],        
-        supprimerContact: function(contact){
+        }; //END changementMetatype
+        this.contactsListe = [];        
+        this.supprimerContact = function(contact){
             var index = this.contactsListe.indexOf(contact);
             this.contactsListe.splice(index,1);
             //Resetter les sofias!
             this.contactsSofias += contact.base;
-        },        
-        ajouterContact: function(occupation='Occupation'){
+        };        
+        this.ajouterContact = function(occupation='Occupation'){
             var contact = new self.Contact(
-                self.nomGenerateur(),
+                this.nomGenerateur(),
                 occupation,
                 0,0,false
             );
             this.contactsListe.push( contact );
-        },
+        };
         
-        equipementListe: [],               
-        supprimerEquipement: function(equipement){
+        this.equipementListe = [];               
+        this.supprimerEquipement = function(equipement){
             var index = this.equipementListe.indexOf(equipement);
             this.equipementListe.splice(index,1);
             //Le capital est auto-calculé à mesure
-        },        
-        ajouterEquipement: function(equipement){
+        };        
+        this.ajouterEquipement = function(equipement){
             var copieEquipement;
             if(equipement){
                 copieEquipement = new self.Equipement(
@@ -1123,32 +1263,32 @@ paragonApp.service('personnageService', function(){
                     );
             }
             this.equipementListe.push( copieEquipement );
-        },
+        };
         
-        affinitePolitique: this.constantes.affinitesPolitiquesListe[0],
-        affiniteGeopolitique: this.constantes.affinitesGeopolitiquesListe[0],
-        affiniteMystique: this.constantes.affinitesMystiquesListe[0],
-        affiniteMoeurs: this.constantes.affinitesMoeursListe[0],
+        this.affinitePolitique = self.constantes.affinitesPolitiquesListe[0];
+        this.affiniteGeopolitique = self.constantes.affinitesGeopolitiquesListe[0];
+        this.affiniteMystique = self.constantes.affinitesMystiquesListe[0];
+        this.affiniteMoeurs = self.constantes.affinitesMoeursListe[0];
         
         /**------------>    CAPITAL         <------------------------**/
                 
-        _capitalMin: function(){  
+        this._capitalMin = function(){  
             var salaire = this.salaire.montant;   
             var fortune = (this._axe.nom === 'Crésus')?self.constantes.bonusCresusDrachmes:0;
             return salaire + ((salaire*12-salaire)/5)*(this.age-18)+fortune;
-        },
+        };
         
-        _capitalEquipement: function(){
+        this._capitalEquipement = function(){
             var coutEquipement = 0;
             for(var i=0; i<this.equipementListe.length; i++){
                 coutEquipement += parseInt(this.equipementListe[i].cout);
             }
             return coutEquipement;
-        },
+        };
         
-        capital: function(){
+        this.capital = function(){
             return this._capitalMin()-this._capitalEquipement();
-        }, 
+        };
         
         /*****************************************************************/
         /*******           Caractéristiques        ***********************/
@@ -1157,9 +1297,9 @@ paragonApp.service('personnageService', function(){
         /**------------>    ACUITE         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        acuiteMin: this.constantes.caracMin,
-        _acuiteBase: 0,
-        acuiteBase: function(newValue){
+        this.acuiteMin = self.constantes.caracMin;
+        this._acuiteBase = 0;
+        this.acuiteBase = function(newValue){
             if(arguments.length===0){
                 return this._acuiteBase;
             }
@@ -1173,18 +1313,18 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._acuiteBase = newValue);
-        },
+        };
         //Toujours calculé
-        acuite: function(){
+        this.acuite = function(){
             return this.acuiteMin+this._acuiteBase;
-        },
+        };
         
         /**------------>    ADRESSE         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        adresseMin: self.constantes.caracMin,
-        _adresseBase: 0,
-        adresseBase: function(newValue){
+        this.adresseMin = self.constantes.caracMin;
+        this._adresseBase = 0;
+        this.adresseBase = function(newValue){
             if(arguments.length===0){
                 return this._adresseBase;
             }
@@ -1198,18 +1338,18 @@ paragonApp.service('personnageService', function(){
             }
                 
             return (this._adresseBase = newValue);
-        },
+        };
         //Toujours calculé
-        adresse: function(){
+        this.adresse = function(){
             return this.adresseMin+this._adresseBase;
-        },
+        };
         
         /**------------>    ASTUCE         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        astuceMin: this.constantes.caracMin,
-        _astuceBase: 0,
-        astuceBase: function(newValue){
+        this.astuceMin = self.constantes.caracMin;
+        this._astuceBase = 0;
+        this.astuceBase = function(newValue){
             if(arguments.length===0){
                 return this._astuceBase;
             }
@@ -1223,18 +1363,18 @@ paragonApp.service('personnageService', function(){
             }
                 
             return (this._astuceBase = newValue);
-        },
+        };
         //Toujours calculé
-        astuce: function(){
+        this.astuce = function(){
             return this.astuceMin+this._astuceBase;
-        },
+        };
                 
         /**------------>    DETERMINATION         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        determinationMin: this.constantes.caracMin,
-        _determinationBase: 0,
-        determinationBase: function(newValue){
+        this.determinationMin = self.constantes.caracMin;
+        this._determinationBase = 0;
+        this.determinationBase = function(newValue){
             if(arguments.length===0){
                 return this._determinationBase;
             }
@@ -1248,18 +1388,18 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._determinationBase = newValue);
-        },
+        };
         //Toujours calculé
-        determination: function(){
+        this.determination = function(){
             return this.determinationMin+this._determinationBase;
-        },
+        };
         
         /**------------>    PRESTANCE         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        prestanceMin: this.constantes.caracMin,
-        _prestanceBase: 0,
-        prestanceBase: function(newValue){
+        this.prestanceMin = self.constantes.caracMin;
+        this._prestanceBase = 0;
+        this.prestanceBase = function(newValue){
             if(arguments.length===0){
                 return this._prestanceBase;
             }
@@ -1272,18 +1412,18 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._prestanceBase = newValue);
-        },
+        };
         //Toujours calculé
-        prestance: function(){
+        this.prestance = function(){
             return this.prestanceMin+this._prestanceBase;
-        },
+        };
         
         /**------------>    ROBUSTESSE         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        robustesseMin: this.constantes.caracMin,
-        _robustesseBase: 0,
-        robustesseBase: function(newValue){
+        this.robustesseMin = self.constantes.caracMin;
+        this._robustesseBase = 0;
+        this.robustesseBase = function(newValue){
             if(arguments.length===0){
                 return this._robustesseBase;
             }
@@ -1296,16 +1436,16 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._robustesseBase = newValue);                       
-        },
+        };
         
         //Toujours calculé
-        robustesse: function(){
+        this.robustesse = function(){
             return this.robustesseMin+this._robustesseBase;
-        }, 
+        }; 
         
         /**------------>    IMPACT          <------------------------**/
                 
-        impact: function(){
+        this.impact = function(){
             var ro = this.robustesse();
             if(ro <= 5){
                 return "-1";
@@ -1319,14 +1459,14 @@ paragonApp.service('personnageService', function(){
             if(ro <= 18){
                 return "2D4";
             }
-        },
+        };
         
         /**------------>    POLEM         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        polemMin: 0,
-        _polemBase: 0,
-        polemBase: function(newValue){
+        this.polemMin = 0;
+        this._polemBase = 0;
+        this.polemBase = function(newValue){
             if(arguments.length===0){
                 return this._polemBase;
             }
@@ -1339,19 +1479,19 @@ paragonApp.service('personnageService', function(){
                 }
                 
                 return (this._polemBase = newValue);
-        },
+        };
         //Toujours calculé
-        polem: function(){
+        this.polem = function(){
             return this.polemMin+this._polemBase;
-        }, 
+        }; 
         
         
         /**------------>    STOA         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        stoaMin: function(){return 5*(this.determination());},
-        _stoaBase: 0,
-        stoaBase: function(newValue){
+        this.stoaMin = function(){return 5*(this.determination());};
+        this._stoaBase = 0;
+        this.stoaBase = function(newValue){
             if(arguments.length===0){
                 return this._stoaBase;
             }
@@ -1364,17 +1504,17 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._stoaBase = newValue);
-        },
+        };
         //Toujours calculé
-        stoa: function(){
+        this.stoa = function(){
             return this.stoaMin()+this._stoaBase;
-        },
+        };
         /**------------>    TACHYOS         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        tachyosMin: this.constantes.tachMin,
-        _tachyosBase: 0,
-        tachyosBase: function(newValue){
+        this.tachyosMin = self.constantes.tachMin;
+        this._tachyosBase = 0;
+        this.tachyosBase = function(newValue){
             if(arguments.length===0){
                 return this._tachyosBase;
             }
@@ -1388,19 +1528,19 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._tachyosBase = newValue);
-        },
+        };
         
         //Toujours calculé
-        tachyos: function(){
+        this.tachyos = function(){
             return this.tachyosMin+this._tachyosBase;
-        },
+        };
         
         /**------------>    ZOIS         <------------------------**/
         
         //Min ne change pas donc pas besoin de getter
-        zoisMin: function(){return this.robustesse();},
-        _zoisBase: 0,
-        zoisBase: function(newValue){
+        this.zoisMin = function(){return this.robustesse();};
+        this._zoisBase = 0;
+        this.zoisBase = function(newValue){
             if(arguments.length===0){
                 return this._zoisBase;
             }
@@ -1414,11 +1554,13 @@ paragonApp.service('personnageService', function(){
             }
 
             return (this._zoisBase = newValue);
-        },
+        };
         //Toujours calculé
-        zois: function(){
+        this.zois = function(){
             return this.zoisMin()+this._zoisBase;
-        }     
+        };
                
-    };   
+    }; //END Personnage
+    
+    this.personnage = new this.Personnage();  
 });
