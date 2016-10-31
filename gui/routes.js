@@ -3,63 +3,34 @@ paragonApp.config(function($routeProvider){
     $routeProvider
         .when('/', {
             templateUrl: 'pages/home.html',
-            controller: 'homeController'
+            controller: 'controllerHome'
         })
-        .when('/paragonStep1', {
-            templateUrl: 'pages/paragonStep1.html',
-            controller: 'paragonStep1Controller'          
+        .when('/etapeBase', {
+            templateUrl: 'pages/etapeBase.html',
+            controller: 'controllerEtapeBase'          
         })
-        .when('/paragonStep2', {
-            templateUrl: 'pages/paragonStep2.html',
-            controller: 'paragonStep2Controller'          
+        .when('/etapeCaracteristiques', {
+            templateUrl: 'pages/etapeCaracteristiques.html',
+            controller: 'controllerEtapeCaracteristiques'          
         })
-        .when('/paragonStep3', {
-            templateUrl: 'pages/paragonStep3.html',
-            controller: 'paragonStep3Controller'          
+        .when('/etapeCompetences', {
+            templateUrl: 'pages/etapeCompetences.html',
+            controller: 'controllerEtapeCompetences'          
         })
-        .when('/paragonStep3/:action', {
-            templateUrl: 'pages/paragonStep3.html',
-            controller: 'paragonStep3Controller'
+        .when('/etapeContacts/', {
+            templateUrl: 'pages/etapeContacts.html',
+            controller: 'controllerEtapeContacts'
         })
-        .when('/paragonStep4', {
-            templateUrl: 'pages/paragonStep4.html',
-            controller: 'paragonStep4Controller'          
+        .when('/etapeEquipement', {
+            templateUrl: 'pages/etapeEquipement.html',
+            controller: 'controllerEtapeEquipement'          
         })
-        .when('/paragonStep5', {
-            templateUrl: 'pages/paragonStep5.html',
-            controller: 'paragonStep5Controller'          
+        .when('/etapeAffinites', {
+            templateUrl: 'pages/etapeAffinites.html',
+            controller: 'controllerEtapeAffinites'          
         })
-        .when('/paragonStep6', {
-            templateUrl: 'pages/paragonStep6.html',
-            controller: 'paragonStep6Controller'          
+        .when('/etapeRecapitulatif', {
+            templateUrl: 'pages/etapeRecapitulatif.html',
+            controller: 'controllerEtapeRecapitulatif'          
         })
-        .when('/paragonStep7', {
-            templateUrl: 'pages/paragonStep7.html',
-            controller: 'paragonStep7Controller'          
-        })
-    /*
-        .when('/paragonStep8', {
-            templateUrl: 'pages/paragonStep8.html',
-            controller: 'paragonStep8Controller'          
-        })
-        .when('/paragonStep9', {
-            templateUrl: 'pages/paragonStep9.html',
-            controller: 'paragonStep9Controller'          
-        })
-        .when('/paragonStep10', {
-            templateUrl: 'pages/paragonStep10.html',
-            controller: 'paragonStep10Controller'          
-        })
-        .when('/paragonStep11', {
-            templateUrl: 'pages/paragonStep11.html',
-            controller: 'paragonStep11Controller'          
-        })
-        .when('/paragonStep12', {
-            templateUrl: 'pages/paragonStep12.html',
-            controller: 'paragonStep12Controller'          
-        })
-        .when('/paragonStep13', {
-            templateUrl: 'pages/paragonStep13.html',
-            controller: 'paragonStep13Controller'          
-        })*/
 });

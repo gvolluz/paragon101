@@ -1,6 +1,7 @@
 <toolbar></toolbar>
-<h2>{{ etapeActuelle }}</h2>
-<p>Répartissez vos Sofias de Caractéristiques entre vos Caractéristiques principales et dérivées. Les Caractéristiques primordiales pour le metatype choisi sont mises en évidence à titre indicatif.</p>
+<h2><a class="btn btn-warning btn-small" ng-click="montrerAstuce=!montrerAstuce"><span class="glyphicon glyphicon-info-sign"></span></a>|{{ etapeActuelle }}</h2>
+<p ng-show="montrerAstuce">{{ etapeAstuce }}</p>
+<hr>
 <table class="table table_caracteristiques">
     <thead>
         <tr>

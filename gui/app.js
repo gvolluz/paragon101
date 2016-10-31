@@ -2,7 +2,7 @@
 var paragonApp = angular.module('paragonApp', ['ngRoute', 'ngCookies']);
 
 //CONTROLLER - MAIN
-paragonApp.controller('mainController', ['$scope', '$log', 'personnageService', function($scope, $log, personnageService) {
+paragonApp.controller('controllerMain', ['$scope', '$log', 'personnageService', function($scope, $log, personnageService) {
     $scope.constantes = personnageService.constantes;
     $scope.personnage = personnageService.personnage;
 

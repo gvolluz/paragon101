@@ -35,26 +35,24 @@
         <script src="services.js"></script>
         <!-- controllers -->
         <script src="controllerHome.js"></script>
-        <script src="controllerParagonStep1.js"></script>
-        <script src="controllerParagonStep2.js"></script>
-        <script src="controllerParagonStep3.js"></script>
-        <script src="controllerParagonStep4.js"></script>
-        <script src="controllerParagonStep5.js"></script>
-        <script src="controllerParagonStep6.js"></script>
+        <script src="controllerEtapeBase.js"></script>
+        <script src="controllerEtapeCaracteristiques.js"></script>
+        <script src="controllerEtapeCompetences.js"></script>
+        <script src="controllerEtapeContacts.js"></script>
+        <script src="controllerEtapeEquipement.js"></script>
+        <script src="controllerEtapeAffinites.js"></script>
+        <script src="controllerEtapeRecapitulatif.js"></script>
         <script src="directives.js"></script>
     </head>
     <body>
-        <div ng-controller="mainController">
+        <div ng-controller="controllerMain">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <div>
                     <bread-crumb
                         position="header"
                         page-precedente="{{ pagePrecedente }}"
                         page-suivante="{{ pageSuivante }}">
                     </bread-crumb>
-                </div>
-                <div>
                     <recap-perso
                         show-recapitulatif="{{ showRecapitulatif }}"
                         uuid="{{ personnage.uuid }}"
@@ -71,7 +69,6 @@
                         capital="{{ personnage.capital() }}"
                     >
                     </recap-perso>
-                </div>
                 <div class="main-content">
                     <ng-view></ng-view>
                 </div>
