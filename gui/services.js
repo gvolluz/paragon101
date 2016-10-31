@@ -750,21 +750,36 @@ paragonApp.service('personnageService', function(){
                 capital: this.capital(),
 
                 sofias: this.sofias(),
+                carSofias: this.carSofias,
+                compSofias: this.compSofias,
+                contactsSofias: this.contactsSofias,
+                
                 metatype: this.metatype.nom,
                 axe: this._axe.nom,
+                salaire: this.salaire.nom,
 
                 acuite: this.acuite(),
+                _acuiteBase: this._acuiteBase,
                 adresse: this.adresse(),
+                _adresseBase: this._adresseBase,
                 astuce: this.astuce(),
+                _astuceBase: this._astuceBase,
                 determination: this.determination(),
+                _determinationBase: this._determinationBase,
                 prestance: this.prestance(),
+                _prestanceBase: this._prestanceBase,
                 robustesse: this.robustesse(),
+                _robustesseBase: this._robustesseBase,
 
                 impact: this.impact(),
                 polem: this.polem(),
+                _polemBase: this._polemBase,
                 stoa: this.stoa(),
+                _stoaBase: this._stoaBase,
                 tachyos: this.tachyos(),
-                zois: this.zois()         
+                _tachyosBase: this._tachyosBase,
+                zois: this.zois(),
+                _zoisBase: this._zoisBase,    
 
             };
 
@@ -777,6 +792,8 @@ paragonApp.service('personnageService', function(){
             for(var i=0;i<this.competencesListe.length;i++){           
                 perso.competences[i] = {
                     nom: this.competencesListe[i].nom,
+                    min: this.competencesListe[i].min,
+                    base: this.competencesListe[i].base,
                     rang: this.competencesListe[i].rang()
                 };            
             }
@@ -786,6 +803,7 @@ paragonApp.service('personnageService', function(){
                 perso.contacts[i] = {
                     nom: this.contactsListe[i].nom,
                     occupation: this.contactsListe[i].occupation,
+                    base: this.contactsListe[i].base,
                     rang: this.contactsListe[i].rang()
                 };        
             }
@@ -806,11 +824,98 @@ paragonApp.service('personnageService', function(){
         this.extract = function(persoRedux){
             this.uuid = persoRedux.uuid;
             this.nom = persoRedux.nom;
-            this.age = persoRedux.age;
+            this.age = parseInt(persoRedux.age);
             this.sexe = persoRedux.sexe;
             this.origine = persoRedux.origine;
             
-            //TODO: extract le reste...
+            this.carSofias = parseInt(persoRedux.carSofias);
+            this.compSofias = parseInt(persoRedux.compSofias);
+            this.contactsSofias = parseInt(persoRedux.contactsSofias); 
+
+            this._acuiteBase = parseInt(persoRedux._acuiteBase);
+            this._adresseBase = parseInt(persoRedux._adresseBase);
+            this._astuceBase = parseInt(persoRedux._astuceBase);
+            this._determinationBase = parseInt(persoRedux._determinationBase);
+            this._prestanceBase = parseInt(persoRedux._prestanceBase);
+            this._robustesseBase = parseInt(persoRedux._robustesseBase);
+                
+            this._polemBase = parseInt(persoRedux._polemBase);
+            this._stoaBase = parseInt(persoRedux._stoaBase);
+            this._tachyosBase = parseInt(persoRedux._tachyosBase);
+            this._zoisBase = parseInt(persoRedux._zoisBase);
+            
+            //Metatype
+            for(let i=0;i<self.constantes.metatypesListe.length;i++){
+                if(self.constantes.metatypesListe[i].nom === persoRedux.metatype){
+                    this.metatype = self.constantes.metatypesListe[i];
+                    break;
+                }
+            }
+            
+            //Axe
+            for(let i=0;i<self.constantes.axesListe.length;i++){
+                if(self.constantes.axesListe[i].nom === persoRedux.axe){
+                    this._axe = self.constantes.axesListe[i];
+                    this.axePrecedentIndex = i;
+                    break;
+                }
+            }
+            
+            //Salaire
+            for(let i=0;i<self.constantes.salairesListe.length;i++){
+                if(self.constantes.salairesListe[i].nom === persoRedux.salaire){
+                    this.salaire = self.constantes.salairesListe[i];
+                    break;
+                }
+            }
+            
+            //Compétences
+            this.competencesListe = new Array();
+            for(let i=0;i<persoRedux.competences.length;i++){
+                this.competencesListe.push(
+                    new self.Competence(
+                        persoRedux.competences[i].nom,
+                        persoRedux.competences[i].min,
+                        persoRedux.competences[i].base,
+                        false
+                    )
+                );            
+            }
+            
+            //Contacts            
+            this.contactsListe = new Array();
+            for(let i=0;i<persoRedux.contacts.length;i++){
+                this.contactsListe.push(
+                    new self.Contact(
+                        persoRedux.contacts[i].nom,
+                        persoRedux.contacts[i].occupation,
+                        0,
+                        persoRedux.contacts[i].base,
+                        false
+                    )
+                );            
+            }
+            //TODO: équipement   (problème, plusieurs listes...)         
+            this.equipementListe = new Array();
+            /*
+            equipementArmesAFeuListe
+            equipementArmesDiversListe
+            equipementProtectionsListe
+            equipementAutokinitesListe
+            equipementEolesListe
+            equipementHermaphoresListe
+            equipementPhreakboxesListe
+            equipementIchornetiqueListe
+
+
+            constructeur: this.equipementListe[i].constructeur,
+            nom: this.equipementListe[i].nom,
+            type: this.equipementListe[i].type,
+            cout: this.equipementListe[i].cout
+            */
+            
+            //TODO: affinités
+            
                 
         }; //END extract 
 
@@ -932,7 +1037,7 @@ paragonApp.service('personnageService', function(){
                 localStorage.listePersos = JSON.stringify(listePersos);
                 //Mise à jour liste en mémoire
                 this.listePersonnages = listePersos;
-                console.log('Personnage '+persoRedux.uuid+' sauvé.');
+                //console.log('Personnage '+persoRedux.uuid+' sauvé.');
             } else {
                 alert('Votre browser ne supporte pas la sauvegarde locale.');
             }
@@ -940,7 +1045,7 @@ paragonApp.service('personnageService', function(){
         
         //Charger le personnage au format redux du local storage
         this.charger = function(uuid){
-            console.log('Recherche du personnage '+uuid);
+            //console.log('Recherche du personnage '+uuid);
             if(typeof(uuid) === "undefined"){
                 alert('Personnage non défini!');
                 return;
@@ -963,7 +1068,7 @@ paragonApp.service('personnageService', function(){
                 alert('Personnage non trouvé!');
             }
             else{
-                console.log('Personnage trouvé:\n'+JSON.stringify(listePersos[index]));
+                //console.log('Personnage trouvé:\n'+JSON.stringify(listePersos[index]));
                 this.extract(listePersos[index]);
             }
             
