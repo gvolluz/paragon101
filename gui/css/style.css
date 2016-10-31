@@ -21,7 +21,7 @@
 }
 
 .competence-de-metatype{
-    background: #a56af2;
+    background: #777;
 }
 
 .competences-liste,
@@ -89,18 +89,25 @@
     width: 250px !important;
 }
 
-/******** classes génériques ********/
-.main-content{/* pour usage futur*/}
+
+.headerband{
+}
+
+.main-content{
+    position: relative;
+    top: 180px;
+    width: 80%;
+}
 
 .center{
     text-align: center !important;
 }
 
 .recap{
-    margin-top: 50px;
-    padding: 10px;
-    background-color: #428bca;
-    border-color: #357ebd;
+    position: fixed;
+    top: 45px;
+    padding: 1px 0 5px 50px;
+    background-color: #000;
     color: #FFF;
     -webkit-transition: all 0.8s ease;
     -moz-transition: all 0.8s ease;
@@ -110,21 +117,32 @@
     -webkit-border-radius: 0 0 20px 0;
     border-radius: 0 0 20px 0;
     width: 80%;
+    max-width: 790px;
 }
 
 .recap li{
     list-style: none;
 }
 
-.breadcrumb{
-    background: none;
-    display: inline;
-    max-height: 50px;
-}
-
 .breadcrumb-header{
     position: fixed;
     top: 0;    
+}
+
+.breadcrumb{    
+    background: #933;
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+    -webkit-border-radius: 0 0 20px 0;
+    border-radius: 0 0 20px 0;
+    
+    display: inline;
+    max-height: 50px;
+    width: 80%;
+    max-width: 800px;
 }
 
 .breadcrumb-footer{    
@@ -142,6 +160,15 @@
 
 .breadcrumb li{
     list-style: none;
+}
+
+.breadcrumb li a{
+    color: #FFF;
+}
+
+.breadcrumb li a:hover{
+    background: #FFF;
+    color: #000;
 }
 
 .toolbar{
@@ -166,4 +193,23 @@
 
 .glyphicon-remove:hover{
     color: #F55;
+}
+
+.btn-success {
+    color: #FFF;
+    
+    background-image: -webkit-linear-gradient(top,#7c1907 0,#5b1408 100%);
+    background-image: -o-linear-gradient(top,#7c1907 0,#5b1408 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#7c1907),to(#5b1408));
+    background-image: linear-gradient(to bottom,#7c1907 0,#5b1408 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7c1907', endColorstr='#ff5b1408', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #000;
+    width: 36px;
+}
+
+.btn-success:hover{
+    background: #FFF;
+    color: #000;
 }
