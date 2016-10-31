@@ -1,9 +1,10 @@
-//CONTROLLER - PARAGON STEP 3
-paragonApp.controller('paragonStep3Controller', ['$scope', '$routeParams', 'personnageService', function($scope, $routeParams, personnageService) {
+//CONTROLLER - Étape "Compétences"
+paragonApp.controller('controllerEtapeCompetences', ['$scope', '$routeParams', 'personnageService', function($scope, $routeParams, personnageService) {
 
     $scope.etapeActuelle = 'Compétences';
-    $scope.$parent.pagePrecedente = '#/paragonStep2/';
-    $scope.$parent.pageSuivante = '#/paragonStep4/';
+    $scope.etapeAstuce = '';//pas utilisée, nécessite de l'html
+    $scope.$parent.pagePrecedente = '#/etapeCaracteristiques/';
+    $scope.$parent.pageSuivante = '#/etapeContacts/';
 
     $scope.constantes = personnageService.constantes;
     $scope.personnage = personnageService.personnage;
