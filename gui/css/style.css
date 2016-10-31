@@ -4,20 +4,31 @@
 }
 
 .table_caracteristiques thead,
-.table_competences thead{
+.table_competences thead,
+.table-listePersonnages thead{
     font-weight: bold;
 }
 
 .table_caracteristiques td,
-.table_competences td{
+.table_competences td,
+.table-listePersonnages td{
     text-align: center;
     /*border: solid 1px;*/
 }
 
 .table_caracteristiques td input,
-.table_competences td input{
+.table_competences td input,
+.table-listePersonnages td input{
     text-align: center;
     width: 40px;
+}
+
+.table-listePersonnages td{
+    width: auto;
+    padding: 2px 5px;
+    border-bottom-style: solid;
+    border-bottom-color: #A88;
+    border-bottom-width: 1px;
 }
 
 .competence-de-metatype{
@@ -212,4 +223,9 @@
 .btn-success:hover{
     background: #FFF;
     color: #000;
+}
+
+.btn-success:active{
+    background: #000 !important; 
+    color: #FFF;
 }

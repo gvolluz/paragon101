@@ -15,8 +15,8 @@
 <div ng-show="personnage.listePersonnages.length === 0">
     <p>Aucun personnage sauvé</p>
 </div>
-<div class="liste-personnages" ng-show="personnage.listePersonnages.length > 0">
-    <table>
+<div ng-show="personnage.listePersonnages.length > 0">
+    <table class="table-listePersonnages" >
         <thead>
             <th>UUID</th>
             <th>Metatype</th>
@@ -28,7 +28,7 @@
             <th>Actions</th>
         </thead>
         <tr ng-repeat="persoRedux in personnage.listePersonnages">
-            <td>{{ persoRedux.uuid }}</td>
+            <td data-toggle="tooltip" title="{{ persoRedux.uuid }}">{{ persoRedux.uuid.substring(0,5)+'...' }}</td>
             <td>{{ persoRedux.metatype }}</td>
             <td>{{ persoRedux.axe }}</td>
             <td>{{ persoRedux.nom }}</td>
