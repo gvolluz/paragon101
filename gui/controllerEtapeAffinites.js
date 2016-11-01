@@ -11,4 +11,11 @@ paragonApp.controller('controllerEtapeAffinites', ['$scope', 'personnageService'
     $scope.$watch('personnage', function(newValue, oldValue){
         personnageService.personnage = newValue;
     });
+    
+    //http://stackoverflow.com/questions/24798365/angular-how-to-make-filter-by-case-sensitive
+    //https://docs.angularjs.org/api/ng/filter/filter
+    //Pas clair
+    $scope.comparerCategorieAffinite = function (actual, expected) {
+        return (''+actual).indexOf(''+expected) > -1;
+    };
 }]);
