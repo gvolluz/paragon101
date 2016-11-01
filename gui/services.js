@@ -680,10 +680,10 @@ paragonApp.service('personnageService', function(){
                 this.contactsListe = [];
                 this.equipementListe = [];
 
-                this.affinitePolitique = self.constantes.affinitesPolitiquesListe[0];
-                this.affiniteGeopolitique = self.constantes.affinitesGeopolitiquesListe[0];
-                this.affiniteMystique = self.constantes.affinitesMystiquesListe[0];
-                this.affiniteMoeurs = self.constantes.affinitesMoeursListe[0];
+                this.affinitePolitique = self.constantes.affinitesListe[5];
+                this.affiniteGeopolitique = self.constantes.affinitesListe[9];
+                this.affiniteMystique = self.constantes.affinitesListe[15];
+                this.affiniteMoeurs = self.constantes.affinitesListe[16];
             }
 
             this.metatype = self.constantes.metatypesListe[0];
@@ -1544,10 +1544,10 @@ paragonApp.service('personnageService', function(){
             this.equipementListe.push( copieEquipement );
         };
         
-        this.affinitePolitique = self.constantes.affinitesPolitiquesListe[0];
-        this.affiniteGeopolitique = self.constantes.affinitesGeopolitiquesListe[0];
-        this.affiniteMystique = self.constantes.affinitesMystiquesListe[0];
-        this.affiniteMoeurs = self.constantes.affinitesMoeursListe[0];
+        this.affinitePolitique = self.constantes.affinitesListe[5];
+        this.affiniteGeopolitique = self.constantes.affinitesListe[9];
+        this.affiniteMystique = self.constantes.affinitesListe[15];
+        this.affiniteMoeurs = self.constantes.affinitesListe[16];
         
         /**------------>    CAPITAL         <------------------------**/
                 
