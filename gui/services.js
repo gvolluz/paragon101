@@ -895,24 +895,152 @@ paragonApp.service('personnageService', function(){
                     )
                 );            
             }
-            //TODO: équipement   (problème, plusieurs listes...)         
+            //Equipement   (problème, plusieurs listes...)         
             this.equipementListe = new Array();
-            /*
-            equipementArmesAFeuListe
-            equipementArmesDiversListe
-            equipementProtectionsListe
-            equipementAutokinitesListe
-            equipementEolesListe
-            equipementHermaphoresListe
-            equipementPhreakboxesListe
-            equipementIchornetiqueListe
-
-
-            constructeur: this.equipementListe[i].constructeur,
-            nom: this.equipementListe[i].nom,
-            type: this.equipementListe[i].type,
-            cout: this.equipementListe[i].cout
-            */
+            
+            for(let i=0;i<persoRedux.equipement.length;i++){
+                //Parcourir chaque liste d'équipement pour trouver le bon
+                //mais éviter de tout parser à chaque passe
+                var trouve = false;
+                var piece = null;                
+                
+                for(let j=0;j<self.constantes.equipementArmesAFeuListe.length;j++){
+                    if(
+                        self.constantes.equipementArmesAFeuListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementArmesAFeuListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementArmesAFeuListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }          
+                
+                for(let j=0;j<self.constantes.equipementArmesDiversListe.length;j++){
+                    if(
+                        self.constantes.equipementArmesDiversListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementArmesDiversListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementArmesDiversListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementProtectionsListe.length;j++){
+                    if(
+                        self.constantes.equipementProtectionsListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementProtectionsListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementProtectionsListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementAutokinitesListe.length;j++){
+                    if(
+                        self.constantes.equipementAutokinitesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementAutokinitesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementAutokinitesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementEolesListe.length;j++){
+                    if(
+                        self.constantes.equipementEolesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementEolesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementEolesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                 
+                
+                for(let j=0;j<self.constantes.equipementHermaphoresListe.length;j++){
+                    if(
+                        self.constantes.equipementHermaphoresListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementHermaphoresListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementHermaphoresListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }              
+                
+                for(let j=0;j<self.constantes.equipementPhreakboxesListe.length;j++){
+                    if(
+                        self.constantes.equipementPhreakboxesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementPhreakboxesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementPhreakboxesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                 
+                
+                for(let j=0;j<self.constantes.equipementIchornetiqueListe.length;j++){
+                    if(
+                        self.constantes.equipementIchornetiqueListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementIchornetiqueListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementIchornetiqueListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }
+                       
+            }
             
             //TODO: affinités
             
