@@ -21,11 +21,11 @@
 <h3>Liste des Affinités</h3>
 <ul class="affinites-liste">
     <h4>Géopolitique</h4>
-    <li ng-repeat="affinite in constantes.affinitesGeopolitiquesListe | orderBy:'nom'" ng-click="personnage.affiniteGeopolitique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
+    <li ng-repeat="affinite in constantes.affinitesListe | filter:{categorie:'Géopolitique'}:comparerCategorieAffinite |  orderBy:'nom'" ng-click="personnage.affiniteGeopolitique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
     <h4>Politique</h4>
-    <li ng-repeat="affinite in constantes.affinitesPolitiquesListe | orderBy:'nom'" ng-click="personnage.affinitePolitique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
+    <li ng-repeat="affinite in constantes.affinitesListe | filter:{categorie:'Politique'}:comparerCategorieAffinite | orderBy:'nom'" ng-click="personnage.affinitePolitique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
     <h4>Mystiques</h4>
-    <li ng-repeat="affinite in constantes.affinitesMystiquesListe | orderBy:'nom'" ng-click="personnage.affiniteMystique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
+    <li ng-repeat="affinite in constantes.affinitesListe | filter:{categorie:'Mystique'}:comparerCategorieAffinite | orderBy:'nom'" ng-click="personnage.affiniteMystique = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
     <h4>Moeurs</h4>
-    <li ng-repeat="affinite in constantes.affinitesMoeursListe | orderBy:'nom'" ng-click="personnage.affiniteMoeurs = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
+    <li ng-repeat="affinite in constantes.affinitesListe | filter:{categorie:'Moeurs'}:comparerCategorieAffinite | orderBy:'nom'" ng-click="personnage.affiniteMoeurs = affinite;" data-toggle="tooltip" title="{{affinite.description}}">{{ affinite.nom }}</li>
 </ul>
