@@ -306,62 +306,81 @@ paragonApp.service('personnageService', function(){
             'Seahandler',
             'Wyrlard'
         ],
-        affinitesPolitiquesListe:[
-            {nom: 'Basiléiste',
-            description: 'Le Basiléiste est un passéiste, un conservateur pur et dur, le plus souvent impérialiste, voire, pour les plus extrêmes, fervent défenseur des monarchies absolues. Dans l\'Aftokratorias, il lorgne avec envie sur le Rike et la gloire du Köng. Dans le Rike, il est un fervent supporter de la maison köngale et regarde avec mépris l\'Aftokratorias. Dans les deux cas, il crache sur les OPE. En théorie, aucun Opéien n\'est Basiléiste, mais beaucoup de cadres de Kérberos le sont pourtant très ouvertement.'},
-             {nom: 'Démocrate',
+        affinitesListe:[
+            {categorie: 'Politique',
+			 nom: 'Basiléiste',
+             description: 'Le Basiléiste est un passéiste, un conservateur pur et dur, le plus souvent impérialiste, voire, pour les plus extrêmes, fervent défenseur des monarchies absolues. Dans l\'Aftokratorias, il lorgne avec envie sur le Rike et la gloire du Köng. Dans le Rike, il est un fervent supporter de la maison köngale et regarde avec mépris l\'Aftokratorias. Dans les deux cas, il crache sur les OPE. En théorie, aucun Opéien n\'est Basiléiste, mais beaucoup de cadres de Kérberos le sont pourtant très ouvertement.'},
+            {categorie: 'Politique',
+			 nom: 'Démocrate',
             description: 'Le Démocrate abhorre les notions d\'aristocratie, de mainmise d\'une élite féodale sur le pouvoir. Il défend vaillamment les droits du peuple, la liberté d\'expression, et s\'avère en général plutôt progressiste. Dans l\'Aftokratorias, il représente la majorité de la population. Dans le Rike, il est un fritenker, un dissident aux moeurs dissolues, étroitement surveillé par Leeds Garden. Dans les OPE, il représente la moitié la plus modérée de la population.'},
-             {nom: 'Néo-platonicien',
+            {categorie: 'Politique',
+			 nom: 'Néo-platonicien',
             description: 'Le Néo-Platonicien est un adepte du collectivisme, de la raison et de la Cité Juste. Il est généralement convaincu que seuls la mise en commun et le partage des richesses peuvent apporter le plus grand bien. Dans les OPE, il représente une bonne moitié de la population. Dans l\'Aftokratorias et le Rike, il est étroitement surveillé par le gouvernement, voire persécuté.'},
-             {nom: 'Anarchiste',
+            {categorie: 'Politique',
+			 nom: 'Anarchiste',
             description: 'L\'Anarchiste représente une frange plutôt réduite de la population de Gaïa, qui recherche un collectivisme total, niant tout droit aux biens individuels non utilisés; généralement très engagé politiquement, il refuse l\'idée d\'un pouvoir central, et en défend la mise en place de structures ordrées dépourvues d\'autorité centrale. Dans les OPE, il est vu comme un collectiviste extrémiste aux idées révolutionnaires. Dans l\'Aftokratorias, il est généralement mal vu, voire persécuté. Dans le Rike, il est littéralement pourchassé.'},
-             {nom: 'Sans avis',
-            description: 'La politique, c\'est pour les autres.'}
-        ],
-        affinitesGeopolitiquesListe:[
-             {nom: 'Iréniste',
+            {categorie: 'Politique',
+			 nom: 'Sans avis',
+            description: 'La politique, c\'est pour les autres.'},
+			{categorie: 'Géopolitique',
+			 nom: 'Iréniste',
             description: 'L\'Iréniste est un pacifiste, profondément humaniste, défenseur du rapprochement entre les peuples. Généralement désabusé, il est dégoûté par les excès de la Guerre Mondiale et fait tout pour aider son prochain.'},
-             {nom: 'Polémiste',
+            {categorie: 'Géopolitique',
+			 nom: 'Polémiste',
             description: 'Le Polémiste est un belliqueux, convaincu que "sa" nation aurait dû remporter la Guerre Mondiale. Revanchard, xénophobe, le Polémiste fait tout ce qui est en son pouvoir pour que la Guerre reprenne et que "sa" nation termine le travail.'},
-             {nom: 'Qabbaliste',
+            {categorie: 'Géopolitique',
+			 nom: 'Qabbaliste',
             description: 'Le Qabbaliste sait pertinemment que la Guerre Mondiale n\'a jamais pris fin. Conspirationniste actif, théoricien du complot, le Qabbaliste sait que des puissances occultes manipulent les gouvernements, et cachent au public "le" grand secret. Il se pourrait même que le Qabbaliste fasse partie du Complot, à son insu ou non.'},
-             {nom: 'Sans avis',
-            description: 'La géopolitique, c\'est pour les autres.'}
-        ],
-        affinitesMystiquesListe:[
-             {nom: 'Dévot',
+            {categorie: 'Géopolitique',
+			 nom: 'Sans avis',
+            description: 'La géopolitique, c\'est pour les autres.'},
+			{categorie: 'Mystique',
+			 nom: 'Dévot',
             description: 'Le Dévot respecte et défend les traditions ancestrales, qu\'elles soient hellénistiques ou nordiques. Certes, les Dieux ont abandonné les Humains, mais il reste de l\'espoir. Le Dévot fera tout ce qui est en son pouvoir pour convertir les autres et ramener les Dieux auprès des Humains.'},
-             {nom: 'Défaitiste',
+             {categorie: 'Mystique',
+			 nom: 'Défaitiste',
             description: 'Le Défaitiste a perdu toute illusion. l\'Âge d\'Or des Dieux de l\'Olympe (ou d\'Asgard) est révolue depuis longtemps. La fin des temps, le Ragnarök, sont proches. Il n\'y a plus aucun espoir, alors à quoi bon lutter ? Nombreux sont les Défaitistes qui abandonnent toute forme de morale pour laisser leurs plus bas instincts s\'exprimer. Beaucoup plus rares sont ceux qui font exactement l\'inverse en signe d\'expiation.'},
-             {nom: 'Monothéiste',
+             {categorie: 'Mystique',
+			 nom: 'Monothéiste',
             description: 'Le Monothéiste est plutôt rare dans les sociétés hellénistiques et bretiniennes, et se rencontre en général dans les Royaumes Arabes, c\'est à dire au Moyen-Orient. Adepte d\'un seul Dieu, celui d\'Abraham, il est plutôt secret, mais convaincu que son peuple a été choisi pour un grand dessein. Dans le Rike, le Monothéiste est persécuté. Dans l\'Aftokratorias et les OPE, plus tolérants, il est seulement tourné en dérision.'},
-             {nom: 'Chamaniste',
+             {categorie: 'Mystique',
+			 nom: 'Chamaniste',
             description: 'Le Chamaniste est influencé par les cultures euphoriennes d\'origine et vénère les esprits de Gaïa. Si les plus grands rassemblements de Chamanistes se trouvent dans les OPE, il n\'est pas rare que de nombreux jeunes Aftokratoriens, influencés par certaines astéris du rolo podi, le soient plus ou moins ouvertement. De même, la plupart des dews bretiniens, qui sont officiellement inféodés aux dieux de l\'Asgard, n\'ont pas oublié leurs traditions naturalistes, et peuvent être considérés comme des Chamanistes.'},
-             {nom: 'Humaniste',
+             {categorie: 'Mystique',
+			 nom: 'Humaniste',
             description: 'L\'Humaniste est un réaliste moderne, souvent philosophe ou attiré par les sciences, qui se veut rationnel. De toute évidence pour l\'Humaniste, les Dieux n\'ont jamais existé et ne sont que des créations de l\'esprit, inspirées jadis aux tribus et aux peuplades primitives par leurs peurs ancestrales. Encore plutôt rare avant-guerre, l\'affinité Humaniste ne cesse de se développer dans l\'Aftokratorias et dans les OPE. Dans le Rike, les Humanistes sont lynchés en place publique.'},
-             {nom: 'Sans avis',
-            description: 'Rien à cirer.'}
-        ],
-        affinitesMoeursListe:[
-             {nom: 'Agynécien',
+             {categorie: 'Mystique',
+			 nom: 'Sans avis',
+            description: 'Rien à cirer.'},
+			{categorie: 'Moeurs',
+			 nom: 'Agynécien',
             description: '(opposé: Gynécien) l\'Agynécien est un fervent défenseur de la cause féministe, voire un membre officiel de l\'Agynéciade. Rares sont les hommes nés avant-guerre à être Agynéciens, sauf dans les OPE où l\'égalité est une vertu nationale.'},
-             {nom: 'Déiciste',
+             {categorie: 'Moeurs',
+			 nom: 'Déiciste',
             description: '(opposé: Ragnarökien) convaincu par la Prophétie de la Pythie, le Déiciste met tout en œuvre pour contrer le retour des Titans, que cela soit avec l\'aide des Dieux ou pas.'},
-             {nom: 'Gynécien',
+             {categorie: 'Moeurs',
+			 nom: 'Gynécien',
             description: '(opposé: Agynécien) le Gynécien est un fervent défenseur du modèle familial traditionnel; il représente encore en cela la majorité des gens nés avant-guerre.'},
-             {nom: 'Hédoniste',
+             {categorie: 'Moeurs',
+			 nom: 'Hédoniste',
             description: '(opposé: Spartiate) l\'Hédoniste est un fervent partisan du relâchement des mœurs. Il défend l\'abolition de la prohibition, est généralement fêtard, soutient activement les homosexuels et la relation traditionnelle entre le maître et son élève.'},
-             {nom: 'Ichoricien',
+             {categorie: 'Moeurs',
+			 nom: 'Ichoricien',
             description: '(opposé: Raisonnable) l\'Ichoricien fait partie des très rares individus convaincus que l\'ichor est en réalité le sang des Titans, et non une simple boue énergétique. Généralement issu de milieux mystiques, il est souvent tourné en dérision par la majorité de la population, et utilisé comme bouc émissaire par la presse.'},
-             {nom: 'Podoniste',
+             {categorie: 'Moeurs',
+			 nom: 'Podoniste',
             description: '(opposé: Somatiste) le Podoniste est un fervent défenseur de l\'esclavage traditionnel. Comme leurs conditions de vie sont généralement meilleures que celles des ouvriers libres de l\'industrie, de nombreux esclaves athéniens sont Podonistes.'},
-             {nom: 'Ragnarökien',
+             {categorie: 'Moeurs',
+			 nom: 'Ragnarökien',
             description: '(opposé: Déiciste) convaincu par la Prophétie de la Pythie, le Ragnarökien fait tout pour œuvrer dans son sens et s\'attirer les faveurs des Titans. Mieux vaut être du côté des vainqueurs.'},
-             {nom: 'Raisonnable',
+             {categorie: 'Moeurs',
+			 nom: 'Raisonnable',
             description: '(opposé: Ichoricien) le Raisonnable, généralement membre de la communauté des philosophes ou sympathisant, sait pertinemment, toutes les études le prouvent d\'ailleurs, que l\'ichor n\'est pas le sang des Titans. Toute personne qui prétendrait le contraire ne serait qu\'un affabulateur - nous ne sommes pas dans une bobine de science-fiction, par Hermès !'},
-             {nom: 'Somatiste',
+             {categorie: 'Moeurs',
+			 nom: 'Somatiste',
             description: '(opposé: Podoniste) le Somatiste prône l\'abolition de l\'esclavage, sous quelque forme que cela soit, et est généralement un défenseur des libertés individuelles. Le courant de pensée Somatiste est de plus en plus répandu dans l\'Aftokratorias, au grand dam des esclaves athéniens.'},
-             {nom: 'Spartiate',
+             {categorie: 'Moeurs',
+			 nom: 'Spartiate',
             description: '(opposé: Hédoniste) le Spartiate est contre les relations éraste/éromène, contre les relations homosexuelles en général, contre l\'alcool, contre les drogues - de manière générale, il s\'agit d\'un puritain qui est contre pratiquement tous les plaisirs de la vie.'}
         ],
         languesListe: ['grec', 'bretinien', 'grec', 'zhongguo'],        
@@ -750,21 +769,36 @@ paragonApp.service('personnageService', function(){
                 capital: this.capital(),
 
                 sofias: this.sofias(),
+                carSofias: this.carSofias,
+                compSofias: this.compSofias,
+                contactsSofias: this.contactsSofias,
+                
                 metatype: this.metatype.nom,
                 axe: this._axe.nom,
+                salaire: this.salaire.nom,
 
                 acuite: this.acuite(),
+                _acuiteBase: this._acuiteBase,
                 adresse: this.adresse(),
+                _adresseBase: this._adresseBase,
                 astuce: this.astuce(),
+                _astuceBase: this._astuceBase,
                 determination: this.determination(),
+                _determinationBase: this._determinationBase,
                 prestance: this.prestance(),
+                _prestanceBase: this._prestanceBase,
                 robustesse: this.robustesse(),
+                _robustesseBase: this._robustesseBase,
 
                 impact: this.impact(),
                 polem: this.polem(),
+                _polemBase: this._polemBase,
                 stoa: this.stoa(),
+                _stoaBase: this._stoaBase,
                 tachyos: this.tachyos(),
-                zois: this.zois()         
+                _tachyosBase: this._tachyosBase,
+                zois: this.zois(),
+                _zoisBase: this._zoisBase,    
 
             };
 
@@ -777,6 +811,8 @@ paragonApp.service('personnageService', function(){
             for(var i=0;i<this.competencesListe.length;i++){           
                 perso.competences[i] = {
                     nom: this.competencesListe[i].nom,
+                    min: this.competencesListe[i].min,
+                    base: this.competencesListe[i].base,
                     rang: this.competencesListe[i].rang()
                 };            
             }
@@ -786,6 +822,7 @@ paragonApp.service('personnageService', function(){
                 perso.contacts[i] = {
                     nom: this.contactsListe[i].nom,
                     occupation: this.contactsListe[i].occupation,
+                    base: this.contactsListe[i].base,
                     rang: this.contactsListe[i].rang()
                 };        
             }
@@ -806,11 +843,253 @@ paragonApp.service('personnageService', function(){
         this.extract = function(persoRedux){
             this.uuid = persoRedux.uuid;
             this.nom = persoRedux.nom;
-            this.age = persoRedux.age;
+            this.age = parseInt(persoRedux.age);
             this.sexe = persoRedux.sexe;
             this.origine = persoRedux.origine;
             
-            //TODO: extract le reste...
+            this.carSofias = parseInt(persoRedux.carSofias);
+            this.compSofias = parseInt(persoRedux.compSofias);
+            this.contactsSofias = parseInt(persoRedux.contactsSofias); 
+
+            this._acuiteBase = parseInt(persoRedux._acuiteBase);
+            this._adresseBase = parseInt(persoRedux._adresseBase);
+            this._astuceBase = parseInt(persoRedux._astuceBase);
+            this._determinationBase = parseInt(persoRedux._determinationBase);
+            this._prestanceBase = parseInt(persoRedux._prestanceBase);
+            this._robustesseBase = parseInt(persoRedux._robustesseBase);
+                
+            this._polemBase = parseInt(persoRedux._polemBase);
+            this._stoaBase = parseInt(persoRedux._stoaBase);
+            this._tachyosBase = parseInt(persoRedux._tachyosBase);
+            this._zoisBase = parseInt(persoRedux._zoisBase);
+            
+            //Metatype
+            for(let i=0;i<self.constantes.metatypesListe.length;i++){
+                if(self.constantes.metatypesListe[i].nom === persoRedux.metatype){
+                    this.metatype = self.constantes.metatypesListe[i];
+                    break;
+                }
+            }
+            
+            //Axe
+            for(let i=0;i<self.constantes.axesListe.length;i++){
+                if(self.constantes.axesListe[i].nom === persoRedux.axe){
+                    this._axe = self.constantes.axesListe[i];
+                    this.axePrecedentIndex = i;
+                    break;
+                }
+            }
+            
+            //Salaire
+            for(let i=0;i<self.constantes.salairesListe.length;i++){
+                if(self.constantes.salairesListe[i].nom === persoRedux.salaire){
+                    this.salaire = self.constantes.salairesListe[i];
+                    break;
+                }
+            }
+            
+            //Compétences
+            this.competencesListe = new Array();
+            for(let i=0;i<persoRedux.competences.length;i++){
+                this.competencesListe.push(
+                    new self.Competence(
+                        persoRedux.competences[i].nom,
+                        persoRedux.competences[i].min,
+                        persoRedux.competences[i].base,
+                        false
+                    )
+                );            
+            }
+            
+            //Contacts            
+            this.contactsListe = new Array();
+            for(let i=0;i<persoRedux.contacts.length;i++){
+                this.contactsListe.push(
+                    new self.Contact(
+                        persoRedux.contacts[i].nom,
+                        persoRedux.contacts[i].occupation,
+                        0,
+                        persoRedux.contacts[i].base,
+                        false
+                    )
+                );            
+            }
+            //Equipement   (problème, plusieurs listes...)         
+            this.equipementListe = new Array();
+            
+            for(let i=0;i<persoRedux.equipement.length;i++){
+                //Parcourir chaque liste d'équipement pour trouver le bon
+                //mais éviter de tout parser à chaque passe
+                var trouve = false;
+                var piece = null;                
+                
+                for(let j=0;j<self.constantes.equipementArmesAFeuListe.length;j++){
+                    if(
+                        self.constantes.equipementArmesAFeuListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementArmesAFeuListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementArmesAFeuListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }          
+                
+                for(let j=0;j<self.constantes.equipementArmesDiversListe.length;j++){
+                    if(
+                        self.constantes.equipementArmesDiversListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementArmesDiversListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementArmesDiversListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementProtectionsListe.length;j++){
+                    if(
+                        self.constantes.equipementProtectionsListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementProtectionsListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementProtectionsListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementAutokinitesListe.length;j++){
+                    if(
+                        self.constantes.equipementAutokinitesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementAutokinitesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementAutokinitesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                
+                
+                for(let j=0;j<self.constantes.equipementEolesListe.length;j++){
+                    if(
+                        self.constantes.equipementEolesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementEolesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementEolesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                 
+                
+                for(let j=0;j<self.constantes.equipementHermaphoresListe.length;j++){
+                    if(
+                        self.constantes.equipementHermaphoresListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementHermaphoresListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementHermaphoresListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }              
+                
+                for(let j=0;j<self.constantes.equipementPhreakboxesListe.length;j++){
+                    if(
+                        self.constantes.equipementPhreakboxesListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementPhreakboxesListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementPhreakboxesListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }                 
+                
+                for(let j=0;j<self.constantes.equipementIchornetiqueListe.length;j++){
+                    if(
+                        self.constantes.equipementIchornetiqueListe[j].nom === persoRedux.equipement[i].nom
+                        &&
+                        self.constantes.equipementIchornetiqueListe[j].constructeur === persoRedux.equipement[i].constructeur
+                    ){
+                        trouve = true;
+                        piece = self.constantes.equipementIchornetiqueListe[j];
+                        break;
+                    }
+                }
+                
+                if(trouve){
+                    this.equipementListe.push(piece);
+                    continue;
+                }
+                       
+            }
+            
+            //Affinités
+            var affinitesTrouvees = 0;
+            for(let i=0;i<self.constantes.affinitesListe.length;i++){
+                //Si on a trouvé les 4 affinités, inutile de poursuivre
+                if(affinitesTrouvees === 4){
+                    break;
+                }
+                if(self.constantes.affinitesListe[i].nom === persoRedux.affiniteGeopolitique){
+                    this.affiniteGeopolitique = self.constantes.affinitesListe[i];
+                    affinitesTrouvees++;
+                    continue;
+                }
+                if(self.constantes.affinitesListe[i].nom === persoRedux.affinitePolitique){
+                    this.affinitePolitique = self.constantes.affinitesListe[i];
+                    affinitesTrouvees++;
+                    continue;
+                }
+                if(self.constantes.affinitesListe[i].nom === persoRedux.affiniteMystique){
+                    this.affiniteMystique = self.constantes.affinitesListe[i];
+                    affinitesTrouvees++;
+                    continue;
+                }
+                if(self.constantes.affinitesListe[i].nom === persoRedux.affiniteMoeurs){
+                    this.affiniteMoeurs = self.constantes.affinitesListe[i];
+                    affinitesTrouvees++;
+                    continue;
+                }                
+            }
+            
                 
         }; //END extract 
 
@@ -932,7 +1211,7 @@ paragonApp.service('personnageService', function(){
                 localStorage.listePersos = JSON.stringify(listePersos);
                 //Mise à jour liste en mémoire
                 this.listePersonnages = listePersos;
-                console.log('Personnage '+persoRedux.uuid+' sauvé.');
+                //console.log('Personnage '+persoRedux.uuid+' sauvé.');
             } else {
                 alert('Votre browser ne supporte pas la sauvegarde locale.');
             }
@@ -940,7 +1219,7 @@ paragonApp.service('personnageService', function(){
         
         //Charger le personnage au format redux du local storage
         this.charger = function(uuid){
-            console.log('Recherche du personnage '+uuid);
+            //console.log('Recherche du personnage '+uuid);
             if(typeof(uuid) === "undefined"){
                 alert('Personnage non défini!');
                 return;
@@ -963,7 +1242,7 @@ paragonApp.service('personnageService', function(){
                 alert('Personnage non trouvé!');
             }
             else{
-                console.log('Personnage trouvé:\n'+JSON.stringify(listePersos[index]));
+                //console.log('Personnage trouvé:\n'+JSON.stringify(listePersos[index]));
                 this.extract(listePersos[index]);
             }
             
