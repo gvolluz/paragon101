@@ -34,3 +34,11 @@ paragonApp.directive('breadCrumb', function(){
         }
     }
 });
+
+paragonApp.directive('toolbar', function(){
+    return{
+        templateUrl: 'directives/toolbar.html',
+        replace: true,
+        scope: true
+    }
+});

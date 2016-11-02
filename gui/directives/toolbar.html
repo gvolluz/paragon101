@@ -1,0 +1,11 @@
+<div class="toolbar">
+    <a ng-click="personnage.aleatoire();" class="btn btn-success" data-toggle="tooltip" title="Met des valeurs aléatoires dans les Caractéristiques etc."><span class="glyphicon glyphicon-random"></span></a>
+    <a ng-click="personnage.creer();" class="btn btn-success" data-toggle="tooltip" title="Générer un tout nouveau personnage"><span class="glyphicon glyphicon-plus"></span></a>
+    |
+    <label>Format d'exportation</label><select ng-model="constantes.formatExportation" ng-options="formatExportation for formatExportation in constantes.formatsExportationListe"></select>
+    <a ng-click="personnage.exporter();" class="btn btn-success" data-toggle="tooltip" title="Exporter le personnage"><span class="glyphicon glyphicon-export"></span></a>
+    |
+    <a ng-click="personnage.sauver();" class="btn btn-success" data-toggle="tooltip" title="Sauver le personnage courant"><span class="glyphicon glyphicon-save"></span></a>
+    <a ng-click="personnage.chargerListe();" class="btn btn-success" data-toggle="tooltip" title="Charger la liste des personnages sauvés"><span class="glyphicon glyphicon-open"></span></a>
+    <a ng-click="personnage.purgerListe();" class="btn btn-success" data-toggle="tooltip" title="Purger la liste des personnages sauvés"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
