@@ -1,13 +1,15 @@
 //SERVICE
 paragonApp.service('personnageService', function(){
-    var self = this;   
+    var self = this;
+    
+    self.currentVersion = 'v0.9.5';
     
     /*****************************************************************************/
     /*                Constantes/valeurs par défaut                              */
     /*****************************************************************************/
     
     self.constantes = {
-        formatsExportationListe: ['json', 'LaTeX', 'pdf', 'csv', 'html'],
+        formatsExportationListe: ['json', 'LaTeX', 'html'], //'pdf', 'csv', 
         formatExportation: 'html',
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
         competencesCombatListe:[
@@ -1093,7 +1095,343 @@ paragonApp.service('personnageService', function(){
                 
         }; //END extract 
 
-        this.html = function(reduxPerso){ return '<div>Bientôt!</div>';}; //END html
+        this.html = function(reduxPerso){
+            var render = '';
+            var temp = '';
+            var darkRed = '7a0e0e';
+            
+            //CSS
+            render += '<head>';            
+            render += '<style>';
+            
+            //A4 base
+            render += 'page {';
+            render += 'background: white;';
+            render += 'display: block;';
+            render += 'margin: 0 auto;';
+            render += 'margin-bottom: 0.5cm;';
+            render += 'box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);';
+            render += '}';
+            render += 'page[size="A4"] {';  
+            render += 'width: 21cm;';
+            render += 'height: 29.7cm;';
+            render += '}';
+            
+            render += '@media print {';
+            render += 'body, page {';
+            render += 'margin: 0;';
+            render += 'box-shadow: 0;';
+            render += '}';
+            render += '}';
+            
+            //Couleurs/mises en forme
+            render += 'body {background-color: #FFF;}';
+            render += 'h1   {color: #'+darkRed+';}';
+            render += 'h2   {color: #000;}';
+            render += 'h3   {color: #'+darkRed+';}';
+            render += 'h4   {color: #000;}';
+            render += 'p    {color: #000;}';
+            render += 'table    {color: #000;}';
+            
+            //Alignements
+            render += 'h1,h2,h3,h4   {text-align: center;}';
+            render += '.colgauche,.colcentre,.coldroite {float: left;}';
+            render += '#paragon-infos-de-base{float: left;}';
+            render += '#paragon-caracteristiques{clear: both; float: left;}';
+            render += '#paragon-derivees{float: right;}';
+            render += '#paragon-competences{clear: both; float: left;}';
+            render += '#paragon-competences-libres{float: right;}';
+            render += '#paragon-contacts{clear: both; float: left;}';
+            render += '#paragon-affinites{float: right;}';
+            render += '#paragon-equipement{clear: both; float: left;}';
+            render += '.right {text-align: right;}';
+            render += '.left {text-align: left;}';
+            render += '.center {text-align: center;}';
+            render += '.copyright {position:fixed; bottom:0;}';
+            
+            //Tailles
+            render += 'h1   {font-size: 2.0em;}';
+            render += 'h2   {font-size: 1.6em;}';
+            render += 'h3   {font-size: 1.2em;}';
+            render += 'h4   {font-size: 1.0em;}';
+            render += '#paragon-feuille-perso {width: 100%;}';
+            render += '.colgauche {width: 5%;}';
+            render += '.colcentre {width: 90%;}';
+            render += '.coldroite {width: 5%;}';
+            render += '.copyright {font-size: 0.7em;}';
+            
+            //Espacements
+            render += 'h1   {margin:0;}';
+            render += 'h2   {margin:0;}';
+            render += 'h3   {margin:0;}';
+            render += 'h4   {margin:0;}';
+            render += 'td,th {padding-right: 4px;}';
+            
+            //Divers
+            render += '.separateur-zones {clear: both; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: '+darkRed+';padding: 6px 0;margin: 6px 0;}';
+            
+            render += '</style>';
+            
+            render += '</head>';
+            
+            //BODY            
+            render += '<html><body>';
+            
+            render += '<div id="paragon-feuille-perso">';
+            
+            //Colonne de décoration gauche
+            render += '<div class="colgauche">&nbsp;</div>'//END colgauche;
+            
+            //Colonne principale au centre
+            render += '<div class="colcentre">';
+            render += '<h1>ICHORPUNK - eFeuille de Paragon</h1>';
+            
+            render += '<div class="separateur-zones"></div>';
+            
+            render += '<div id="paragon-infos-de-base">';   
+            render += '<table>';
+            render += '<tr>';            
+            render += '<td>';
+            render += '<strong>Nom: </strong>'+this.nom+' | <strong>Origine:  </strong>'+this.origine+' | <strong>Joueur:  </strong> __________________';
+            render += '</td>';
+            render += '<tr>'; 
+            render += '</tr>';
+            render += '<td>';
+            render += '<strong>Age: </strong>'+this.age+' | <strong>Sexe:  </strong>'+this.sexe+' | <strong>Metatype: </strong>'+this.metatype.nom+' | <strong>Axe:  </strong>'+this._axe.nom;
+            render += '</td>';
+            render += '</tr>';
+            render += '</table>'; 
+            render += '</div>';//END paragon-infos-de-base  
+            
+            render += '<div class="separateur-zones"></div>';
+            
+            render += '<div id="paragon-caracteristiques">';
+            render += '<h3>Caractéristiques</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="center">Nom</th>';
+            render += '<th class="center">Rang initial</th>';
+            render += '<th class="center">Bonus</th>';
+            render += '</tr>';
+            render += '</thead>';
+            render += '<tbody>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Acuité</strong></td>';
+            temp = (this.acuite()>9)?this.acuite():'&nbsp;'+this.acuite();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Adresse</strong></td>';
+            temp = (this.adresse()>9)?this.adresse():'&nbsp;'+this.adresse();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Astuce</strong></td>';
+            temp = (this.astuce()>9)?this.astuce():'&nbsp;'+this.astuce();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Détermination</strong></td>';
+            temp = (this.determination()>9)?this.determination():'&nbsp;'+this.determination();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Prestance</strong></td>';
+            temp = (this.prestance()>9)?this.prestance():'&nbsp;'+this.prestance();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Robustesse</strong></td>';
+            temp = (this.robustesse()>9)?this.robustesse():'&nbsp;'+this.robustesse();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-caracteristiques
+            
+            render += '<div id="paragon-derivees">';
+            render += '<h3>Dérivées</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="center">Nom</th>';
+            render += '<th class="center">Rang initial</th>';
+            render += '<th class="center">Bonus</th>';
+            render += '</tr>';
+            render += '</thead>';
+            render += '<tbody>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Impact</strong></td>';
+            render += '<td class="center">[&nbsp;'+this.impact()+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Polem</strong></td>';
+            temp = (this.polem()>9)?this.polem():'&nbsp;'+this.polem();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Stoa</strong></td>';
+            temp = (this.stoa()>9)?this.stoa():'&nbsp;'+this.stoa();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Tachyos</strong></td>';
+            temp = (this.tachyos()>9)?this.tachyos():'&nbsp;'+this.tachyos();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Zois</strong></td>';
+            temp = (this.zois()>9)?this.zois():'&nbsp;'+this.zois();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '<tr>';
+            render += '<td class="right"><strong>Sofias</strong></td>';
+            temp = (this.sofias()>9)?this.sofias():'&nbsp;'+this.sofias();
+            render += '<td class="center">[&nbsp;'+temp+'&nbsp;]</td>';
+            render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+            render += '</tr>';
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-derivees
+            
+            render += '<div class="separateur-zones"></div>';
+            
+            render += '<div id="paragon-contacts">';            
+            render += '<h3>Contacts</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="center">Nom</th>';
+            render += '<th class="center">Occupation</th>';
+            render += '<th class="center">Rang initial</th>';
+            render += '<th class="center">Bonus</th>';
+            render += '</tr>';
+            render += '</thead>';
+            
+            render += '<tbody>';            
+            for(let i=0;i<this.contactsListe.length;i++){
+                render += '<tr>';
+                render += '<td class="right">'+this.contactsListe[i].nom+'</td>';
+                render += '<td class="center">'+this.contactsListe[i].occupation+'</td>';
+                render += '<td class="center">[ '+this.contactsListe[i].rang()+' ]</td>';
+                render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+                render += '</tr>';
+            }                 
+            for(let i=0;i<3;i++){
+                render += '<tr>';
+                render += '<td class="center">________________</td>';
+                render += '<td class="center">________________</td>';
+                render += '<td class="center">[&nbsp;&nbsp;&nbsp;&nbsp;]</td>';
+                render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+                render += '</tr>';
+            }          
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-contacts
+            
+            render += '<div id="paragon-affinites">';            
+            render += '<h3>Affinités</h3>';
+            render += '<strong>Géopolitique:</strong> '+this.affiniteGeopolitique.nom+'<br>';
+            render += '<strong>Politique:</strong> '+this.affinitePolitique.nom+'<br>';
+            render += '<strong>Mystique:</strong> '+this.affiniteMystique.nom+'<br>';
+            render += '<strong>Moeurs:</strong> '+this.affiniteMoeurs.nom+'<br>';  
+            render += '</div>';//END paragon-affinites
+            
+            render += '<div class="separateur-zones"></div>';
+            
+            render += '<div id="paragon-competences">';
+            render += '<h3>Compétences</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="center">Nom</th>';
+            render += '<th class="center">Rang initial</th>';
+            render += '<th class="center">Bonus</th>';
+            render += '</tr>';
+            render += '</thead>';
+            
+            render += '<tbody>';            
+            for(let i=0;i<this.competencesListe.length;i++){
+                render += '<tr>';
+                render += '<td class="right">'+this.competencesListe[i].nom+'</td>';
+                render += '<td class="center">[ '+this.competencesListe[i].rang()+' ]</td>';
+                render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+                render += '</tr>';
+            }            
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-competences            
+            
+            render += '<div id="paragon-competences-libres">';
+            render += '<h3>&nbsp;</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="center">Nom</th>';
+            render += '<th class="center">Rang initial</th>';
+            render += '<th class="center">Bonus</th>';
+            render += '</tr>';
+            render += '</thead>';
+            
+            render += '<tbody>';            
+            for(let i=0;i<this.competencesListe.length;i++){
+                render += '<tr>';
+                render += '<td class="right">_________________</td>';
+                render += '<td class="center">[&nbsp;&nbsp;&nbsp;&nbsp;]</td>';
+                render += '<td class="center">(&nbsp;&nbsp;&nbsp;&nbsp;)</td>';
+                render += '</tr>';
+            }            
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-competences-libres 
+            
+            render += '<div class="separateur-zones"></div>';
+            
+            render += '<div id="paragon-equipement">';            
+            render += '<h3>Équipement</h3>';
+            render += '<table>';
+            render += '<thead>';
+            render += '<tr>';
+            render += '<th class="right">Nom</th>';
+            render += '<th class="right">Constructeur</th>';
+            render += '<th class="right">Description</th>';
+            render += '</tr>';
+            render += '</thead>';
+            
+            render += '<tbody>';            
+            for(let i=0;i<this.equipementListe.length;i++){
+                render += '<tr>';
+                render += '<td class="right">'+this.equipementListe[i].nom+'</td>';
+                render += '<td class="center">'+this.equipementListe[i].constructeur+'</td>';
+                render += '<td class="center">'+this.equipementListe[i].type+'</td>';
+                render += '</tr>';
+            }            
+            render += '</tbody>';
+            render += '</table>';
+            render += '</div>';//END paragon-equipement
+            
+            render += '</div>';//END colcentre
+            
+            //Colonne de décoration droite
+            render += '<div class="coldroite"><span class="copyright">'+self.currentVersion+'</span></div>'//END coldroite;
+            
+            render += '</div>';//END paragon-feuille-perso 
+                       
+            render += '</body></html>';
+            return render;
+        }; //END html
         this.csv = function(reduxPerso){ return 'Bientôt!';}; //END csv  
         this.pdf = function(reduxPerso){ return 'Bientôt!';}; //END pdf     
 

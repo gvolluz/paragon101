@@ -12,4 +12,7 @@ paragonApp.controller('controllerEtapeRecapitulatif', ['$scope', 'personnageServ
     $scope.$watch('personnage', function(newValue, oldValue){
         personnageService.personnage = newValue;
     });
+    
+    $('#feuille-personnage').html($scope.personnage.html($scope.personnage.redux()));
+    
 }]);
