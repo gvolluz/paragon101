@@ -12,45 +12,47 @@ paragonApp.service('personnageService', function(){
         formatsExportationListe: ['json', 'LaTeX', 'html'], //'pdf', 'csv', 
         formatExportation: 'html',
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
-        competencesCombatListe:[
-            'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
-            'Armes exotiques','Boxe bretinienne','Judo','Jiu-jitsu','Lutte grecque'
-        ],
-        competencesEtiquetteListe:[
-            'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
-            'Drachensee Ltd','Dockers','Drachen','Drews','Esclaves','Finance',
-            'Fritenkers','Froura','Gangs','GAT','Gotha','GRYDAN','Hétaires',
-            'Jul\'ek','Kalti Akab','Kérberos','kinêma','Leeds Garden',
-            'Maisons du Crime','Mao Huo','Marins','Mode','OPE','Paragons',
-            'Politiciens','Presse','Récupérateurs','Rike','Routiers','Sport autokinite',
-            'Sport éolien','Stratos','Shan Luwei Yuan','Syllips kranio','Vabensliga',
-            'Wyrlards','Zhongguo'
-        ],
-        competencesMetierListe:[
-            'Armurerie','Bureaucratie','Cartographie','Chant','Comptabilité','Commandement',
-            'Comédie','Contrefaçon','Criminalistique','Cryptographie','Danse','Déminage',
-            'Dessin','Droit','Électricité','Électronique','Hermaphorique','Hypnose',            'Ichornétique','Ichoromatique','Immobilisation','Imposture','Interrogatoire',
-            'Kinêma','Mécanique','Médecine','Métallurgie','Menuiserie','Musique',
-            'Oenologie','Peinture','Photographie','Phreaking','Pilotage autokinite',
-            'Pilotage éole','Pilotage fortigo','Pilotage hermaphore','Pilotage kini',
-            'Pilotage navire','Pilotage thalès','Pister','Plomberie','Premiers soins',
-            'Psychanalyse','Psychologie','Recherche documentaire','Sculpture',
-            'Sécurité','Serrurerie','Survie','Télécommunications','Taxidermie'
-        ],
-        competencesScienceListe:[
-            'Anthropologie','Archéologie','Architecture','Astrologie','Biochimie',
-            'Biologie','Botanique','Cosmogonie','Criminalistique','Economie','Géographie',
-            'Géologie','Glaciologie','Histoire','Hydrologie','Ichorologie','Mathématiques',
-            'Météorologie','Minéralogie','Occultisme','Océanographie','Paléontologie',
-            'Pharmacologie','Phrénologie','Physique','Politique','Sismologie','Sociologie',
-            'Stratégie','Volcanologie','Zoologie'
-        ],
-        competencesDiversListe:[
-            'Baratin','Bricolage','Discrétion','Dissimulation','Dressage','Équitation',
-            'Grimpe','Jeu','Langue: aforakien','Langue: arabe','Langue: bretinien',            'Langue: grec','Langue: zhongguo','Lecture à l\'envers','Lecture sur les lèvres',
-            'Natation','Négociation','Orientation','Parachutisme','Persuasion','Plongée',
-            'Syllips kranio'
-        ],
+        competencesListe: {
+            combat:[
+                'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
+                'Armes exotiques','Boxe bretinienne','Judo','Jiu-jitsu','Lutte grecque',
+                   ],
+            etiquette:[                
+                'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
+                'Drachensee Ltd','Dockers','Drachen','Drews','Esclaves','Finance',
+                'Fritenkers','Froura','Gangs','GAT','Gotha','GRYDAN','Hétaires',
+                'Jul\'ek','Kalti Akab','Kérberos','kinêma','Leeds Garden',
+                'Maisons du Crime','Mao Huo','Marins','Mode','OPE','Paragons',
+                'Politiciens','Presse','Récupérateurs','Rike','Routiers','Sport autokinite',
+                'Sport éolien','Stratos','Shan Luwei Yuan','Syllips kranio','Vabensliga',
+                'Wyrlards','Zhongguo',
+            ],
+            metier:[
+                'Armurerie','Bureaucratie','Cartographie','Chant','Comptabilité','Commandement',
+                'Comédie','Contrefaçon','Criminalistique','Cryptographie','Danse','Déminage',
+                'Dessin','Droit','Électricité','Électronique','Hermaphorique','Hypnose',            'Ichornétique','Ichoromatique','Immobilisation','Imposture','Interrogatoire',
+                'Kinêma','Mécanique','Médecine','Métallurgie','Menuiserie','Musique',
+                'Oenologie','Peinture','Photographie','Phreaking','Pilotage autokinite',
+                'Pilotage éole','Pilotage fortigo','Pilotage hermaphore','Pilotage kini',
+                'Pilotage navire','Pilotage thalès','Pister','Plomberie','Premiers soins',
+                'Psychanalyse','Psychologie','Recherche documentaire','Sculpture',
+                'Sécurité','Serrurerie','Survie','Télécommunications','Taxidermie',                
+            ],
+            science:[
+                'Anthropologie','Archéologie','Architecture','Astrologie','Biochimie',
+                'Biologie','Botanique','Cosmogonie','Criminalistique','Economie','Géographie',
+                'Géologie','Glaciologie','Histoire','Hydrologie','Ichorologie','Mathématiques',
+                'Météorologie','Minéralogie','Occultisme','Océanographie','Paléontologie',
+                'Pharmacologie','Phrénologie','Physique','Politique','Sismologie','Sociologie',
+                'Stratégie','Volcanologie','Zoologie',
+            ],
+            divers:[
+                'Baratin','Bricolage','Discrétion','Dissimulation','Dressage','Équitation',
+                'Grimpe','Jeu','Langue: aforakien','Langue: arabe','Langue: bretinien',            'Langue: grec','Langue: zhongguo','Lecture à l\'envers','Lecture sur les lèvres',
+                'Natation','Négociation','Orientation','Parachutisme','Persuasion','Plongée',
+                'Syllips kranio',
+            ]
+        },        
         equipementArmesAFeuListe:[
             {nom: 'Artémis E35', constructeur: 'KV', type: 'pistolet', cout: '250'},
             {nom: 'Artémis S40', constructeur: 'KV', type: 'pistolet', cout: '700'},
