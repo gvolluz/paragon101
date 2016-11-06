@@ -9,7 +9,7 @@ paragonApp.service('personnageService', function(){
     /*****************************************************************************/
     
     self.constantes = {
-        formatsExportationListe: ['json', 'LaTeX', 'html'], //'pdf', 'csv', 
+        formatsExportationListe: ['json', 'LaTeX', 'html'], 
         formatExportation: 'html',
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
         competencesCombatListe:[
@@ -1431,9 +1431,7 @@ paragonApp.service('personnageService', function(){
                        
             render += '</body></html>';
             return render;
-        }; //END html
-        this.csv = function(reduxPerso){ return 'Bientôt!';}; //END csv  
-        this.pdf = function(reduxPerso){ return 'Bientôt!';}; //END pdf     
+        }; //END html 
 
         this.latex = function(reduxPerso){
             var archetype = '';
@@ -1585,7 +1583,14 @@ paragonApp.service('personnageService', function(){
             }
             
             //this.extract(persoRedux);
-        }; //END charger        
+        }; //END charger     
+        
+        this.imprimer = function(){
+            var w = window.open();
+            w.document.write(this.html(this.redux));
+            w.print();
+            w.close();
+        };//END imprimer
         
         this.chargerListePersonnages = function(){            
             //1) récupérer la liste du local storage
