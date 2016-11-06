@@ -48,7 +48,16 @@
 .competences-liste li,
 .equipement-liste li,
 .affinites-liste li{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    
     margin-right: 5px;
+    margin-top: 3px;
     display: inline-flex;
     -webkit-border-radius: 5;
     -moz-border-radius: 5;
@@ -57,43 +66,42 @@
     color: #ffffff;
     font-size: 1em;
     font-weight: bold;
-    background: #8f0d0d;
+    
+    background-image: -webkit-linear-gradient(top,#7c1907 0,#5b1408 100%);
+    background-image: -o-linear-gradient(top,#7c1907 0,#5b1408 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#7c1907),to(#5b1408));
+    background-image: linear-gradient(to bottom,#7c1907 0,#5b1408 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7c1907', endColorstr='#ff5b1408', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
     padding: 5px 10px 5px 10px;
     
     width: auto;
-    text-align: center; 
+    text-align: center;    
+    
+    cursor: pointer;
 }
 
-.equipement-liste li{
-    margin-bottom: 5px;
-    font-weight: normal;
-    background: #888;
-}
-
-.equipement-liste li:hover{
-    background: #444;
-}
-
-.affinites-liste li{
-    margin-bottom: 5px;
-    font-weight: normal;
-    background: #444;
-    text-align: justify;
-}
-
+.competences-liste li:hover,
+.equipement-liste li:hover,
 .affinites-liste li:hover{
-    background: #222;
+    background: #FFF;
+    color: #000;
+    
+    border-color: #000;
 }
 
-.competences-liste .active{
-    background-color: #000;
+.competences-liste li:active,
+.equipement-liste li:active,
+.affinites-liste li:active{
+    background: #000 !important; 
     color: #FFF;
-}
-
-.competences-liste li:hover{
-    background: #e68f8f;
-    text-decoration: none;
-    cursor: copy;
+    
+    border-color: #000;
 }
 
 .long input {
