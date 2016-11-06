@@ -25,7 +25,7 @@
             <!-- -->
             <tr ng-controller="paragonStep3CompetencesController"
                 ng-repeat="competence in personnage.competencesListe">
-                <td class="long" ng-class="competence.min>0?'competence-de-metatype':''" ><input type="text" ng-model="competence.nom"/><a ng-click="pasteFromClipboard(competence)" data-toggle="tooltip" title="Coller '{{ clipBoard || 'presse-papier vide' }}' comme nom de compétence"><span class="glyphicon-medium glyphicon glyphicon-paste"></span></a></td>
+                <td class="long" ng-class="competence.min>0?'competence-de-metatype':''" ><input type="text" ng-model="competence.nom" disabled="1"/><a ng-click="pasteFromClipboard(competence)" data-toggle="tooltip" title="Coller '{{ clipBoard || 'presse-papier vide' }}' comme nom de compétence"><span class="glyphicon-medium glyphicon glyphicon-paste"></span></a></td>
                 <td ng-class="competence.min>0?'competence-de-metatype':''" >{{ competence.min }}</td>
                 <td ng-class="competence.min>0?'competence-de-metatype':''" ><input type="number" ng-model="competence.base" min="0" max="{{ 5-competence.min }}"/></td>
                 <td ng-class="competence.min>0?'competence-de-metatype':''" >{{ competence.rang() }}</td>
