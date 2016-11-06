@@ -46,22 +46,22 @@
 <ul class="competences-liste">
     <div ng-show="montrerListeCombat">
         <h4>Combat</h4>
-        <li ng-repeat="competence in constantes.competencesCombatListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
+        <li ng-repeat="competence in constantes.competencesListe.combat" ng-click="copyToClipboard($event);">{{ competence }}</li>
     </div>
     <div ng-show="montrerListeEtiquette">
         <h4>Étiquette</h4>
-            <li ng-repeat="competence in constantes.competencesEtiquetteListe" ng-click="copyToClipboard($event);">{{ 'Étiquette: '+competence }}</li>
+            <li ng-repeat="competence in constantes.competencesListe.etiquette" ng-click="copyToClipboard($event);">{{ 'Étiquette: '+competence }}</li>
     </div>
     <div ng-show="montrerListeMetier">
         <h4>Métier</h4>
-            <li ng-repeat="competence in constantes.competencesMetierListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
+            <li ng-repeat="competence in constantes.competencesListe.metier" ng-click="copyToClipboard($event);">{{ competence }}</li>
     </div>
     <div ng-show="montrerListeScience">
         <h4>Science</h4>
-        <li ng-repeat="competence in constantes.competencesScienceListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
+        <li ng-repeat="competence in constantes.competencesListe.science" ng-click="copyToClipboard($event);">{{ competence }}</li>
     </div>
     <div ng-show="montrerListeDivers">
         <h4>Divers</h4>
-        <li ng-repeat="competence in constantes.competencesDiversListe" ng-click="copyToClipboard($event);">{{ competence }}</li>
+        <li ng-repeat="competence in constantes.competencesListe.divers" ng-click="copyToClipboard($event);">{{ competence }}</li>
     </div>
 </ul>
