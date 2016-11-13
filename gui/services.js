@@ -14,8 +14,8 @@ paragonApp.service('personnageService', function(){
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
         competencesListe: {
             combat:[
-                'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
-                'Armes exotiques','Boxe bretinienne','Judo','Jiu-jitsu','Lutte grecque',
+                'Armes de mêlée','Armes de jet','Armes de poing','Armes d\'épaule','Armes lourdes',
+                'Armes exotiques','Corps à corps',
                    ],
             etiquette:[                
                 'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
@@ -399,56 +399,39 @@ paragonApp.service('personnageService', function(){
                     {
                         nom: 'Hoplite',
                         competences:[
-                             'Armes de poing',
-                             'Armes d\'épaule',
-                             'Premiers soins',
-                             'Compétence de métier au choix'
-                        ]
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de métier',
+                             'Compétence étiquette',
+                        ],
+                        description: 'L\'Hoplite est le combattant du groupe. Ancien des forces spéciales, vétéran de la grande guerre ou mercenaire sont des professions d\'origine évidentes pour l\'Hoplite, qui favorise l\'action.'
                     },
                     {
-                        nom: 'Faucon',
-                        competences:[
-                             'Art martial au choix',
-                             'Armes de mêlée',
-                             'Acrobatie',
-                             'Premiers soins'
-                        ]
+                        nom: 'Mètis',
+                        competences:[                             
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence de combat',
+                             'Compétence de métier',
+                        ],
+                        description: 'Le Mètis est le filou du groupe. Espion, cambrioleur, faussaire ou aventurier sont des professions d\'origine évidentes pour un Mètis, qui favorise la ruse (la mètis, pour laquelle Ulysse est célèbre).'
                     },
                     {
-                        nom: 'Ombre',
+                        nom: 'Philomathe',
                         competences:[
-                             'Discrétion',
-                             'Dissimulation',
-                             'Systèmes de sécurité',
-                             'Art martial au choix'
-                        ]
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de métier',                               
+                             'Compétence de métier',                               
+                        ],
+                        description: 'Le Philomathe est le puits de science du groupe. Philosophe de terrain, expert en criminalistique ou phreaker sont des professions d\'origine courantes pour un Philomathe, qui favorise la connaissance.'
                     },
-                    {   
-                        nom: 'Rhéto',
-                        competences:[
-                             'Baratin',
-                             'Séduction',
-                             'Etiquette au choix',
-                             'Compétence de science au choix'
-                    ]},
-                    {
-                        nom: 'Marionnettiste',
-                        competences:[
-                             'Pilotage: hermaphores',
-                             'Électronique',
-                             'Mécanique',
-                             'Armurerie'
-                        ]
-                    },
-                    {
-                        nom: 'Phreaker',
-                        competences:[
-                             'Phreaking',
-                             'Électronique',
-                             'Radio',
-                             'Électricité'
-                        ]
-                    }
                 ],
         //Valeurs de bonus des axes
         bonusCresusDrachmes: 500000,

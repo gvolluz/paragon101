@@ -2,22 +2,22 @@
 <p ng-show="montrerAstuce">{{ etapeAstuce }}</p>
 <hr>
 <label>Origine</label>&nbsp;&nbsp;<select ng-model="personnage.origine" ng-options="origine for origine in constantes.originesListe"></select>
-
 <br>
 <label>Nom</label>&nbsp;&nbsp;<input type="text" ng-model="personnage.nom" max="10"/>
 <a ng-click="genererNom();" class="btn btn-primary" data-toggle="tooltip" title="Super noms!">Aha !</a>
-
 <br>
-<label>Âge</label>&nbsp;&nbsp;<input type="number" ng-model="personnage.age" min="18" max="75"/>&nbsp;&nbsp;<label>Sexe</label>&nbsp;&nbsp;<select ng-model="personnage.sexe" ng-options="sexe for sexe in constantes.sexesListe"></select>
+<label>Âge</label>&nbsp;&nbsp;<input type="number" ng-model="personnage.age" min="18" max="75"/>&nbsp;&nbsp;<br>
+<label>Sexe</label>&nbsp;&nbsp;<select ng-model="personnage.sexe" ng-options="sexe for sexe in constantes.sexesListe"></select>
 <br>
-
 <label>Salaire mensuel</label>&nbsp;&nbsp;<select ng-model="personnage.salaire" ng-options="salaire.nom for salaire in constantes.salairesListe"></select>
+<br>
 <label>Capital actuel</label>&nbsp;&nbsp;<span>{{ personnage.capital() }}</span>
 <br>
 <label>Metatype</label>
 <select ng-model="personnage.metatype" ng-options="metatype.nom for metatype in constantes.metatypesListe"></select>
 <br>
-
+<span>{{ personnage.metatype.description }}</span>
+<br>
 <label>Axe</label>
 <select ng-model="personnage.axe" ng-model-options="{ getterSetter: true }" ng-options="axe.nom for axe in constantes.axesListe"></select>
 <br>
