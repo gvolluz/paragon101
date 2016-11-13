@@ -9,48 +9,50 @@ paragonApp.service('personnageService', function(){
     /*****************************************************************************/
     
     self.constantes = {
-        formatsExportationListe: ['json', 'LaTeX', 'html'], //'pdf', 'csv', 
+        formatsExportationListe: ['json', 'LaTeX', 'html'], 
         formatExportation: 'html',
         originesListe: ['Aftokratorias', 'Bretinia Rike', 'OPE', 'Zhongguo'],
-        competencesCombatListe:[
-            'Armes d\'épaule','Armes de jet','Armes lourdes','Armes de mêlée',
-            'Armes exotiques','Boxe bretinienne','Judo','Jiu-jitsu','Lutte grecque'
-        ],
-        competencesEtiquetteListe:[
-            'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
-            'Drachensee Ltd','Dockers','Drachen','Drews','Esclaves','Finance',
-            'Fritenkers','Froura','Gangs','GAT','Gotha','GRYDAN','Hétaires',
-            'Jul\'ek','Kalti Akab','Kérberos','kinêma','Leeds Garden',
-            'Maisons du Crime','Mao Huo','Marins','Mode','OPE','Paragons',
-            'Politiciens','Presse','Récupérateurs','Rike','Routiers','Sport autokinite',
-            'Sport éolien','Stratos','Shan Luwei Yuan','Syllips kranio','Vabensliga',
-            'Wyrlards','Zhongguo'
-        ],
-        competencesMetierListe:[
-            'Armurerie','Bureaucratie','Cartographie','Chant','Comptabilité','Commandement',
-            'Comédie','Contrefaçon','Criminalistique','Cryptographie','Danse','Déminage',
-            'Dessin','Droit','Électricité','Électronique','Hermaphorique','Hypnose',            'Ichornétique','Ichoromatique','Immobilisation','Imposture','Interrogatoire',
-            'Kinêma','Mécanique','Médecine','Métallurgie','Menuiserie','Musique',
-            'Oenologie','Peinture','Photographie','Phreaking','Pilotage autokinite',
-            'Pilotage éole','Pilotage fortigo','Pilotage hermaphore','Pilotage kini',
-            'Pilotage navire','Pilotage thalès','Pister','Plomberie','Premiers soins',
-            'Psychanalyse','Psychologie','Recherche documentaire','Sculpture',
-            'Sécurité','Serrurerie','Survie','Télécommunications','Taxidermie'
-        ],
-        competencesScienceListe:[
-            'Anthropologie','Archéologie','Architecture','Astrologie','Biochimie',
-            'Biologie','Botanique','Cosmogonie','Criminalistique','Economie','Géographie',
-            'Géologie','Glaciologie','Histoire','Hydrologie','Ichorologie','Mathématiques',
-            'Météorologie','Minéralogie','Occultisme','Océanographie','Paléontologie',
-            'Pharmacologie','Phrénologie','Physique','Politique','Sismologie','Sociologie',
-            'Stratégie','Volcanologie','Zoologie'
-        ],
-        competencesDiversListe:[
-            'Baratin','Bricolage','Discrétion','Dissimulation','Dressage','Équitation',
-            'Grimpe','Jeu','Langue: aforakien','Langue: arabe','Langue: bretinien',            'Langue: grec','Langue: zhongguo','Lecture à l\'envers','Lecture sur les lèvres',
-            'Natation','Négociation','Orientation','Parachutisme','Persuasion','Plongée',
-            'Syllips kranio'
-        ],
+        competencesListe: {
+            combat:[
+                'Armes de mêlée','Armes de jet','Armes de poing','Armes d\'épaule','Armes lourdes',
+                'Armes exotiques','Corps à corps',
+                   ],
+            etiquette:[                
+                'Ankh-Rose','Architectes','Brouwersliga','DEP','Dingdan shé yinshen',
+                'Drachensee Ltd','Dockers','Drachen','Drews','Esclaves','Finance',
+                'Fritenkers','Froura','Gangs','GAT','Gotha','GRYDAN','Hétaires',
+                'Jul\'ek','Kalti Akab','Kérberos','kinêma','Leeds Garden',
+                'Maisons du Crime','Mao Huo','Marins','Mode','OPE','Paragons',
+                'Politiciens','Presse','Récupérateurs','Rike','Routiers','Sport autokinite',
+                'Sport éolien','Stratos','Shan Luwei Yuan','Syllips kranio','Vabensliga',
+                'Wyrlards','Zhongguo',
+            ],
+            metier:[
+                'Armurerie','Bureaucratie','Cartographie','Chant','Comptabilité','Commandement',
+                'Comédie','Contrefaçon','Criminalistique','Cryptographie','Danse','Déminage',
+                'Dessin','Droit','Électricité','Électronique','Hermaphorique','Hypnose',            'Ichornétique','Ichoromatique','Immobilisation','Imposture','Interrogatoire',
+                'Kinêma','Mécanique','Médecine','Métallurgie','Menuiserie','Musique',
+                'Oenologie','Peinture','Photographie','Phreaking','Pilotage autokinite',
+                'Pilotage éole','Pilotage fortigo','Pilotage hermaphore','Pilotage kini',
+                'Pilotage navire','Pilotage thalès','Pister','Plomberie','Premiers soins',
+                'Psychanalyse','Psychologie','Recherche documentaire','Sculpture',
+                'Sécurité','Serrurerie','Survie','Télécommunications','Taxidermie',                
+            ],
+            science:[
+                'Anthropologie','Archéologie','Architecture','Astrologie','Biochimie',
+                'Biologie','Botanique','Cosmogonie','Criminalistique','Economie','Géographie',
+                'Géologie','Glaciologie','Histoire','Hydrologie','Ichorologie','Mathématiques',
+                'Météorologie','Minéralogie','Occultisme','Océanographie','Paléontologie',
+                'Pharmacologie','Phrénologie','Physique','Politique','Sismologie','Sociologie',
+                'Stratégie','Volcanologie','Zoologie',
+            ],
+            divers:[
+                'Baratin','Bricolage','Discrétion','Dissimulation','Dressage','Équitation',
+                'Grimpe','Jeu','Langue: aforakien','Langue: arabe','Langue: bretinien',            'Langue: grec','Langue: zhongguo','Lecture à l\'envers','Lecture sur les lèvres',
+                'Natation','Négociation','Orientation','Parachutisme','Persuasion','Plongée',
+                'Syllips kranio',
+            ]
+        },        
         equipementArmesAFeuListe:[
             {nom: 'Artémis E35', constructeur: 'KV', type: 'pistolet', cout: '250'},
             {nom: 'Artémis S40', constructeur: 'KV', type: 'pistolet', cout: '700'},
@@ -397,56 +399,39 @@ paragonApp.service('personnageService', function(){
                     {
                         nom: 'Hoplite',
                         competences:[
-                             'Armes de poing',
-                             'Armes d\'épaule',
-                             'Premiers soins',
-                             'Compétence de métier au choix'
-                        ]
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de combat',
+                             'Compétence de métier',
+                             'Compétence étiquette',
+                        ],
+                        description: 'L\'Hoplite est le combattant du groupe. Ancien des forces spéciales, vétéran de la grande guerre ou mercenaire sont des professions d\'origine évidentes pour l\'Hoplite, qui favorise l\'action.'
                     },
                     {
-                        nom: 'Faucon',
-                        competences:[
-                             'Art martial au choix',
-                             'Armes de mêlée',
-                             'Acrobatie',
-                             'Premiers soins'
-                        ]
+                        nom: 'Mètis',
+                        competences:[                             
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence étiquette',
+                             'Compétence de combat',
+                             'Compétence de métier',
+                        ],
+                        description: 'Le Mètis est le filou du groupe. Espion, cambrioleur, faussaire ou aventurier sont des professions d\'origine évidentes pour un Mètis, qui favorise la ruse (la mètis, pour laquelle Ulysse est célèbre).'
                     },
                     {
-                        nom: 'Ombre',
+                        nom: 'Philomathe',
                         competences:[
-                             'Discrétion',
-                             'Dissimulation',
-                             'Systèmes de sécurité',
-                             'Art martial au choix'
-                        ]
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de science',                               
+                             'Compétence de métier',                               
+                             'Compétence de métier',                               
+                        ],
+                        description: 'Le Philomathe est le puits de science du groupe. Philosophe de terrain, expert en criminalistique ou phreaker sont des professions d\'origine courantes pour un Philomathe, qui favorise la connaissance.'
                     },
-                    {   
-                        nom: 'Rhéto',
-                        competences:[
-                             'Baratin',
-                             'Séduction',
-                             'Etiquette au choix',
-                             'Compétence de science au choix'
-                    ]},
-                    {
-                        nom: 'Marionnettiste',
-                        competences:[
-                             'Pilotage: hermaphores',
-                             'Électronique',
-                             'Mécanique',
-                             'Armurerie'
-                        ]
-                    },
-                    {
-                        nom: 'Phreaker',
-                        competences:[
-                             'Phreaking',
-                             'Électronique',
-                             'Radio',
-                             'Électricité'
-                        ]
-                    }
                 ],
         //Valeurs de bonus des axes
         bonusCresusDrachmes: 500000,
@@ -1431,9 +1416,7 @@ paragonApp.service('personnageService', function(){
                        
             render += '</body></html>';
             return render;
-        }; //END html
-        this.csv = function(reduxPerso){ return 'Bientôt!';}; //END csv  
-        this.pdf = function(reduxPerso){ return 'Bientôt!';}; //END pdf     
+        }; //END html 
 
         this.latex = function(reduxPerso){
             var archetype = '';
@@ -1585,7 +1568,14 @@ paragonApp.service('personnageService', function(){
             }
             
             //this.extract(persoRedux);
-        }; //END charger        
+        }; //END charger     
+        
+        this.imprimer = function(){
+            var w = window.open();
+            w.document.write(this.html(this.redux));
+            w.print();
+            w.close();
+        };//END imprimer
         
         this.chargerListePersonnages = function(){            
             //1) récupérer la liste du local storage

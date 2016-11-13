@@ -5,7 +5,6 @@
 * gérer autres formats
     * csv
     * pdf
-* centraliser dans personnageService pour avoir accès partout
 
 ##Compétences
 
@@ -28,9 +27,6 @@
 
 ##Sauvegarde personnage
 
-* save dans local storage à chaque changement du personnage
-* option de chargement
-* lister les persos de l'espace local
 * OAuth pour sauver la liste de persos
     * Dropbox (prio 1)
     * Google
